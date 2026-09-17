@@ -1,0 +1,139 @@
+{
+  "sourceCommit": "eb011e727cf2e4299ad9a5585ee6a5ecf75b9e35",
+  "repository": "https://github.com/Dull-Pigeon/Project-Kinetica",
+  "summary": "Weapon motion translated into local deformation and material-specific particles. A personal Unity study in making contact feel different across Slime, Stone and Metal.",
+  "meta": [
+    [
+      "Role",
+      "Technical Art · Programming"
+    ],
+    [
+      "Engine",
+      "Unity 6 / URP"
+    ],
+    [
+      "Tools",
+      "C# · Shader Graph · Particle System"
+    ],
+    [
+      "Project",
+      "Personal technical study"
+    ]
+  ],
+  "media": {
+    "hero": {
+      "label": "Project Kinetica / Hero still",
+      "note": "Frame extracted from the final Showcase",
+      "src": "/assets/kinetica/hero.webp",
+      "alt": "Hammer impact deforming the blue Slime target, with droplets above its surface."
+    },
+    "showcase": {
+      "label": "Showcase film",
+      "note": "Final captured result",
+      "src": null,
+      "type": "external-video",
+      "poster": "/assets/kinetica/hero.webp",
+      "alt": "Project Kinetica Showcase poster.",
+      "caption": "Final Showcase · YouTube video coming soon.",
+      "start": 0,
+      "end": 0
+    },
+    "materials": {
+      "label": "Hammer → Slime / Stone / Metal",
+      "note": "Final captured result",
+      "src": null,
+      "type": "external-video",
+      "alt": "Metal, Slime and Stone comparison still.",
+      "poster": "/assets/kinetica/materials.webp",
+      "caption": "Original side-by-side comparison · Metal / Slime / Stone · Excerpt from the final film.",
+      "start": 15,
+      "end": 20
+    },
+    "weapons": {
+      "label": "Hammer / Sword / Spear → Slime",
+      "note": "Final captured result",
+      "src": null,
+      "type": "external-video",
+      "alt": "Spear, Hammer and Sword comparison still.",
+      "poster": "/assets/kinetica/weapons.webp",
+      "caption": "Original side-by-side comparison · Spear / Hammer / Sword · Excerpt from the final film.",
+      "start": 31,
+      "end": 38
+    },
+    "shader": {
+      "label": "Shader Graph / Local deformation",
+      "note": "Editor screenshot not supplied",
+      "src": null,
+      "alt": ""
+    },
+    "architecture": {
+      "label": "System architecture",
+      "note": "Annotated diagram not supplied",
+      "src": null,
+      "alt": ""
+    },
+    "debug": {
+      "label": "Impact Debug Panel",
+      "note": "Frame extracted from the final Showcase",
+      "src": "/assets/kinetica/debug.webp",
+      "alt": "Final Hammer–Slime Debug Panel showing a Squashed result, pressure 8.08 and solver deformation force 6.46."
+    }
+  },
+  "highlights": [
+    {
+      "title": "Track the contact region",
+      "label": "01 / Motion & collision",
+      "text": "A SphereCast sweeps the detection point’s travelled segment during an animation-driven attack window. A collider is processed once per swing.",
+      "detail": "Contact area and sweep radius are separate controls, so pressure tuning does not change collision thickness."
+    },
+    {
+      "title": "Evaluate before presenting",
+      "label": "02 / Impact solver",
+      "text": "Alignment, hardness and pressure classify each hit. The strength input is mass × velocity: a momentum-inspired control value for the authored response.",
+      "detail": "“Penetrated” is a result label; the system does not cut or fracture the mesh."
+    },
+    {
+      "title": "Localize and release the deformation",
+      "label": "03 / Shader Graph",
+      "text": "Material hardness and elasticity scale the displacement. Spatial falloff localizes it, while hold time, damped oscillation and reduced rebound control its recovery.",
+      "detail": "A MaterialPropertyBlock supplies per-object parameters. The frozen implementation uses contact area directly as the visual radius."
+    },
+    {
+      "title": "Share the evaluated impact",
+      "label": "04 / Data & presentation",
+      "text": "ScriptableObjects hold weapon and material presets. A common ImpactData event feeds VFX and Debug observers; deformation is called directly on the receiver.",
+      "detail": "Each material selects its particle prefab. Effects face the surface normal, with a small downward spawn offset."
+    }
+  ],
+  "materials": [
+    [
+      "Slime",
+      "Indentation + droplets",
+      "A local depression recovers as blue droplets leave the surface."
+    ],
+    [
+      "Stone",
+      "Brittle debris",
+      "Separate mesh particles burst away; the target remains intact."
+    ],
+    [
+      "Metal",
+      "Brief sparks",
+      "A short spark burst marks contact with the hard-surface target."
+    ]
+  ],
+  "iterations": [
+    [
+      "Contact area ≠ collision radius",
+      "Splitting the two controls corrected early contact on broad weapons without changing the pressure model."
+    ],
+    [
+      "Geometry is part of the shader",
+      "Slime’s topology and normals were revised to address faceting and uneven highlights during development."
+    ],
+    [
+      "A clearer third material",
+      "Carapace became Metal so the target and spark effect expressed the same material idea."
+    ]
+  ]
+}
