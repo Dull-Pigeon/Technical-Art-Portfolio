@@ -24,7 +24,7 @@ async function initialize() {
       button.type = 'button'; button.className = 'video-status'; button.textContent = 'Play on YouTube';
       status.replaceWith(button);
       const caption = frame.closest('figure')?.querySelector('figcaption');
-      if (caption) caption.textContent = caption.textContent.replace('YouTube video coming soon.', 'Watch on YouTube.');
+      if (caption && frame.dataset.playCaption) caption.textContent = frame.dataset.playCaption;
       button.addEventListener('click', () => {
         const source = new URL('https://www.youtube-nocookie.com/embed/' + id);
         for (const key of ['start', 'end']) if (Number(frame.dataset[key]) > 0) source.searchParams.set(key, frame.dataset[key]);

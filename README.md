@@ -18,18 +18,18 @@ Open http://localhost:8000. Stop with Ctrl+C. Edit CSS and refresh; after changi
 ## Files to edit
 
 - `content/site.json`: home, About and project listing.
-- `content/kinetica.json`: existing Kinetica copy and media posters.
+- `content/kinetica.json`: Kinetica copy, public source link, credits and media records.
 - `scripts/render.mjs`: shared templates.
 - `dist/styles.css`: existing visual system.
-- `dist/assets/kinetica/`: optimized still images only.
-- `dist/downloads/`: downloadable Breakdown.
+- `dist/assets/kinetica/`: optimized Showcase stills, architecture SVG and supplied Shader Graph captures.
+- `dist/downloads/project-kinetica-breakdown.pdf`: public final Breakdown.
 - `dist/video-config.json`: external Showcase URL.
 
 ## YouTube Showcase
 
-Set `showcaseUrl` in `dist/video-config.json` to the final HTTPS YouTube watch or youtu.be URL. Commit and push. No HTML/template edit or manual page rebuild is needed: the player reads this JSON at runtime. An empty or invalid value retains the existing poster and coming-soon label. The two comparison sections use the same film with their existing segment timing from `content/kinetica.json`. YouTube embedding must be enabled by the video owner.
+Set `showcaseUrl` in `dist/video-config.json` to the final HTTPS YouTube watch or youtu.be URL. Commit and push. No HTML/template edit or manual page rebuild is needed: the player reads this JSON at runtime. An empty or invalid value retains the finished poster/still presentation. The two comparison sections use the same film with their existing segment timing from `content/kinetica.json`. YouTube embedding must be enabled by the video owner.
 
-Never add MP4s, raw video, Base64 video, Unity files or third-party source assets. Existing optimized stills are retained.
+Never add MP4s, raw video, Base64 video, Unity files or third-party source assets. Existing optimized stills and technical captures are retained.
 
 ## Deployment
 

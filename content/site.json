@@ -3,8 +3,8 @@
   "github": "https://github.com/Dull-Pigeon",
   "email": null,
   "resume": null,
-  "intro": "Exploring how motion, materials and code shape real-time visual response.",
-  "about": "I’m a Computer Science undergraduate developing a practice in Technical Art, with a focus on shaders, VFX and the systems that connect them. My projects explore the relationship between technical decisions and readable visual feedback.",
+  "intro": "I build shaders, VFX and real-time systems that turn motion and material data into clear visual feedback.",
+  "about": "I’m a Computer Science undergraduate working across shaders, real-time VFX and interaction systems in Unity. I focus on how authored data, runtime logic and rendering work together to make technical behavior legible.",
   "projects": [
     {
       "slug": "kinetica",
@@ -18,10 +18,10 @@
     {
       "slug": "confluence",
       "name": "Project Confluence",
-      "category": "Next project",
+      "category": "Environment study",
       "engine": "Unreal Engine 5",
       "status": "In development",
-      "summary": "A future chapter in this portfolio. Case study to follow.",
+      "summary": "A climate-adaptive solarpunk megacity built around water, vertical infrastructure and public transit.",
       "published": false
     }
   ]

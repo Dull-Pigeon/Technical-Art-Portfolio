@@ -1,7 +1,8 @@
 {
   "sourceCommit": "eb011e727cf2e4299ad9a5585ee6a5ecf75b9e35",
-  "repository": "https://github.com/Dull-Pigeon/Project-Kinetica",
-  "summary": "Weapon motion translated into local deformation and material-specific particles. A personal Unity study in making contact feel different across Slime, Stone and Metal.",
+  "repository": "https://github.com/Dull-Pigeon/Project-Kinetica-Public",
+  "breakdown": "/downloads/project-kinetica-breakdown.pdf",
+  "summary": "A Technical Art study that translates weapon motion into localized vertex deformation and material-specific particles for Slime, Stone and Metal.",
   "meta": [
     [
       "Role",
@@ -34,7 +35,9 @@
       "type": "external-video",
       "poster": "/assets/kinetica/hero.webp",
       "alt": "Project Kinetica Showcase poster.",
-      "caption": "Final Showcase · YouTube video coming soon.",
+      "caption": "Final Showcase poster.",
+      "fallbackLabel": "Showcase poster",
+      "playCaption": "Final Showcase · Watch on YouTube.",
       "start": 0,
       "end": 0
     },
@@ -43,9 +46,11 @@
       "note": "Final captured result",
       "src": null,
       "type": "external-video",
-      "alt": "Metal, Slime and Stone comparison still.",
+      "alt": "Slime, Stone and Metal material-response comparison still.",
       "poster": "/assets/kinetica/materials.webp",
-      "caption": "Original side-by-side comparison · Metal / Slime / Stone · Excerpt from the final film.",
+      "caption": "Authored material comparison · Slime / Stone / Metal · Final Showcase still.",
+      "fallbackLabel": "Comparison still",
+      "playCaption": "Authored material comparison · Slime / Stone / Metal · Excerpt from the final Showcase.",
       "start": 15,
       "end": 20
     },
@@ -54,23 +59,37 @@
       "note": "Final captured result",
       "src": null,
       "type": "external-video",
-      "alt": "Spear, Hammer and Sword comparison still.",
+      "alt": "Hammer, Sword and Spear weapon-response comparison still.",
       "poster": "/assets/kinetica/weapons.webp",
-      "caption": "Original side-by-side comparison · Spear / Hammer / Sword · Excerpt from the final film.",
+      "caption": "Authored weapon comparison · Hammer / Sword / Spear · Final Showcase still.",
+      "fallbackLabel": "Comparison still",
+      "playCaption": "Authored weapon comparison · Hammer / Sword / Spear · Excerpt from the final Showcase.",
       "start": 31,
       "end": 38
     },
-    "shader": {
-      "label": "Shader Graph / Local deformation",
-      "note": "Editor screenshot not supplied",
-      "src": null,
-      "alt": ""
-    },
     "architecture": {
-      "label": "System architecture",
-      "note": "Annotated diagram not supplied",
-      "src": null,
-      "alt": ""
+      "label": "Frozen runtime architecture",
+      "src": "/assets/kinetica/architecture.svg",
+      "alt": "System architecture showing authored data, runtime evaluation, direct deformation calls and independent event subscribers.",
+      "caption": "Frozen runtime architecture · solid lines show direct calls and data flow; dashed lines show event broadcast.",
+      "width": 3000,
+      "height": 1275
+    },
+    "shaderSpatial": {
+      "label": "Shader Graph / Spatial falloff",
+      "src": "/assets/kinetica/shader-spatial-falloff.png",
+      "alt": "Unity Shader Graph crop for localized spatial deformation falloff.",
+      "caption": "Spatial falloff · the supplied Shader Graph capture localizes deformation around the impact point.",
+      "width": 2048,
+      "height": 336
+    },
+    "shaderTemporal": {
+      "label": "Shader Graph / Temporal response",
+      "src": "/assets/kinetica/shader-temporal-response.png",
+      "alt": "Three Unity Shader Graph panels for hold-time offset, oscillation and damping, and rebound shaping.",
+      "caption": "Temporal response · hold-time offset, oscillation and damping, and rebound shaping.",
+      "width": 2048,
+      "height": 2406
     },
     "debug": {
       "label": "Impact Debug Panel",
@@ -119,7 +138,7 @@
     [
       "Metal",
       "Brief sparks",
-      "A short spark burst marks contact with the hard-surface target."
+      "Stretched spark streaks mark contact with the hard-surface target."
     ]
   ],
   "iterations": [
@@ -134,6 +153,18 @@
     [
       "A clearer third material",
       "Carapace became Metal so the target and spark effect expressed the same material idea."
+    ]
+  ],
+  "credits": [
+    [
+      "Weapon assets",
+      "Low Poly Melee & Ranged Medieval Weapons",
+      "TUFFPOLYGON / Unity Asset Store"
+    ],
+    [
+      "Showcase music",
+      "“Chill Bro”",
+      "Diego Nava / Mixkit"
     ]
   ]
 }
