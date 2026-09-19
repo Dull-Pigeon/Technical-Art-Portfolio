@@ -43,34 +43,34 @@
       "end": 0
     },
     "materials": {
-      "label": "Hammer → Slime / Stone / Metal",
+      "label": "Hammer → Metal / Slime / Stone",
       "note": "Final captured result",
       "src": null,
       "type": "external-video",
-      "alt": "Slime, Stone and Metal material-response comparison still.",
-      "poster": "/assets/kinetica/materials-video-frame.webp",
-      "caption": "Authored material comparison · Slime / Stone / Metal · Frame from the final Showcase.",
+      "alt": "Metal, Slime and Stone material-response comparison still.",
+      "poster": "/assets/kinetica/materials-video-frame.webp?v=20260919",
+      "caption": "Authored material comparison · Metal / Slime / Stone · Frame from the final Showcase.",
       "fallbackLabel": "Comparison still",
       "playLabel": "Play Project Kinetica material comparison",
-      "playCaption": "Authored material comparison · Slime / Stone / Metal · Excerpt from the final Showcase.",
-      "width": 1280,
-      "height": 720,
+      "playCaption": "Authored material comparison · Metal / Slime / Stone · Excerpt from the final Showcase.",
+      "width": 1920,
+      "height": 1080,
       "start": 15,
       "end": 20
     },
     "weapons": {
-      "label": "Hammer / Sword / Spear → Slime",
+      "label": "Spear / Hammer / Sword → Slime",
       "note": "Final captured result",
       "src": null,
       "type": "external-video",
-      "alt": "Hammer, Sword and Spear weapon-response comparison still.",
-      "poster": "/assets/kinetica/weapons-video-frame.webp",
-      "caption": "Authored weapon comparison · Hammer / Sword / Spear · Frame from the final Showcase.",
+      "alt": "Spear, Hammer and Sword weapon-response comparison still.",
+      "poster": "/assets/kinetica/weapons-video-frame.webp?v=20260919",
+      "caption": "Authored weapon comparison · Spear / Hammer / Sword · Frame from the final Showcase.",
       "fallbackLabel": "Comparison still",
       "playLabel": "Play Project Kinetica weapon comparison",
-      "playCaption": "Authored weapon comparison · Hammer / Sword / Spear · Excerpt from the final Showcase.",
-      "width": 1280,
-      "height": 720,
+      "playCaption": "Authored weapon comparison · Spear / Hammer / Sword · Excerpt from the final Showcase.",
+      "width": 1920,
+      "height": 1080,
       "start": 31,
       "end": 38
     },
@@ -133,6 +133,11 @@
   ],
   "materials": [
     [
+      "Metal",
+      "Brief sparks",
+      "Stretched spark streaks mark contact with the hard-surface target."
+    ],
+    [
       "Slime",
       "Indentation + droplets",
       "A local depression recovers as blue droplets leave the surface."
@@ -141,11 +146,6 @@
       "Stone",
       "Brittle debris",
       "Separate mesh particles burst away; the target remains intact."
-    ],
-    [
-      "Metal",
-      "Brief sparks",
-      "Stretched spark streaks mark contact with the hard-surface target."
     ]
   ],
   "iterations": [
