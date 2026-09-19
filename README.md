@@ -27,7 +27,7 @@ Open http://localhost:8000. Stop with Ctrl+C. Edit CSS and refresh; after changi
 
 ## YouTube Showcase
 
-Set `showcaseUrl` in `dist/video-config.json` to the final HTTPS YouTube watch or youtu.be URL. Commit and push. No HTML/template edit or manual page rebuild is needed: the player reads this JSON at runtime. An empty or invalid value retains the finished poster/still presentation. The two comparison sections use the same film with their existing segment timing from `content/kinetica.json`. YouTube embedding must be enabled by the video owner.
+The final Project Kinetica Showcase is published on YouTube: [Watch the Showcase](https://youtu.be/U2FNPUOYYns?si=NcpO51QfnYB17_hm). `dist/video-config.json` is the canonical runtime configuration for that URL; no local video is stored in this repository. The two comparison sections use the same film with their existing segment timing from `content/kinetica.json`, and playback uses YouTube's privacy-enhanced embed domain.
 
 Never add MP4s, raw video, Base64 video, Unity files or third-party source assets. Existing optimized stills and technical captures are retained.
 

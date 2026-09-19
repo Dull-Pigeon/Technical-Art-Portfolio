@@ -12,6 +12,27 @@ export function youtubeId(value) {
   } catch { return null; }
 }
 
+function activateFrame(frame, id) {
+  if (frame.dataset.activated === 'true') return;
+  frame.dataset.activated = 'true';
+  frame.classList.remove('is-ready');
+  frame.removeAttribute('role');
+  frame.removeAttribute('tabindex');
+  frame.removeAttribute('aria-label');
+
+  const source = new URL('https://www.youtube-nocookie.com/embed/' + id);
+  for (const key of ['start', 'end']) if (Number(frame.dataset[key]) > 0) source.searchParams.set(key, frame.dataset[key]);
+  source.searchParams.set('autoplay', '1');
+
+  const player = document.createElement('iframe');
+  player.src = source.href;
+  player.title = 'Project Kinetica Showcase';
+  player.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+  player.allowFullscreen = true;
+  player.referrerPolicy = 'strict-origin-when-cross-origin';
+  frame.replaceChildren(player);
+}
+
 async function initialize() {
   try {
     const response = await fetch(new URL('./video-config.json', import.meta.url), {cache: 'no-cache'});
@@ -19,22 +40,20 @@ async function initialize() {
     const id = youtubeId((await response.json()).showcaseUrl);
     if (!id) return;
     document.querySelectorAll('[data-external-video]').forEach(frame => {
-      const status = frame.querySelector('.video-status');
-      const button = document.createElement('button');
-      button.type = 'button'; button.className = 'video-status'; button.textContent = 'Play on YouTube';
-      status.replaceWith(button);
       const caption = frame.closest('figure')?.querySelector('figcaption');
       if (caption && frame.dataset.playCaption) caption.textContent = frame.dataset.playCaption;
-      button.addEventListener('click', () => {
-        const source = new URL('https://www.youtube-nocookie.com/embed/' + id);
-        for (const key of ['start', 'end']) if (Number(frame.dataset[key]) > 0) source.searchParams.set(key, frame.dataset[key]);
-        source.searchParams.set('autoplay', '1');
-        const player = document.createElement('iframe');
-        player.src = source.href; player.title = 'Project Kinetica Showcase';
-        player.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
-        player.allowFullscreen = true; player.referrerPolicy = 'strict-origin-when-cross-origin';
-        frame.replaceChildren(player);
-      }, {once:true});
+      frame.classList.add('is-ready');
+      frame.tabIndex = 0;
+      frame.setAttribute('role', 'button');
+      frame.setAttribute('aria-label', frame.dataset.playLabel || 'Play Project Kinetica Showcase');
+
+      const activate = event => {
+        if (event.type === 'keydown' && !['Enter', ' '].includes(event.key)) return;
+        event.preventDefault();
+        activateFrame(frame, id);
+      };
+      frame.addEventListener('click', activate);
+      frame.addEventListener('keydown', activate);
     });
   } catch { /* Retain the poster when the configuration cannot be loaded. */ }
 }
