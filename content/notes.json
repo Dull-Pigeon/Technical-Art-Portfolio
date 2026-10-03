@@ -1,0 +1,29 @@
+[
+  {
+    "slug": "kinetica-impact-response-retrospective",
+    "date": "2026-10-03",
+    "project": "Project Kinetica",
+    "title": "Project Kinetica — From Impact Iteration to Final Technical Art Breakdown",
+    "summary": "A brief retrospective on separating collision controls, refining material response, and presenting the frozen study through the Showcase and Breakdown.",
+    "tags": ["Unity", "Shader Graph", "Technical Art"],
+    "media": [],
+    "body": [
+      {
+        "heading": "Separate the controls",
+        "paragraphs": ["Project Kinetica connects weapon motion, impact evaluation, localized vertex deformation and material-specific particles. One recorded iteration separated contact area from collision radius: broad weapons could otherwise register contact too early. Keeping those controls separate allowed collision thickness to change without changing the pressure model."]
+      },
+      {
+        "heading": "Refine the visible response",
+        "paragraphs": ["Slime’s topology and normals were revised to address faceting and uneven highlights. Carapace became Metal so the target and its spark effect expressed the same material idea. These iterations made geometry, naming and visible feedback part of the same authored response."]
+      },
+      {
+        "heading": "Present the study with its limits",
+        "paragraphs": ["The final presentation brings together a Showcase, Technical Breakdown and public selected source tied to the frozen implementation. The comparison frames show authored responses rather than controlled physical measurements. Vertex displacement does not change topology or collision geometry, and no performance benchmark is claimed.", "The retrospective ends at that frozen study. Its useful lesson is to explain both the visible result and the controls behind it; implementation detail and supporting evidence remain in the case study and Breakdown."],
+        "links": [
+          {"label": "Project Kinetica case study →", "url": "/projects/kinetica/"},
+          {"label": "Technical Breakdown PDF ↓", "url": "/downloads/project-kinetica-breakdown.pdf"}
+        ]
+      }
+    ]
+  }
+]
