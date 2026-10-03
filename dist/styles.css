@@ -19,6 +19,6 @@ figcaption{padding:12px 16px;background:var(--paper);font-size:.8125rem;line-hei
 @media(max-width:580px){.home-notes{padding-top:35px}.note-preview h3{font-size:22px}.notes-index{padding:35px 0 40px}.home-notes .section-heading h2{font-size:28px}.notes-index h1{font-size:38px}.note-meta{font-size:.75rem}.note-summary{font-size:16px}.note-body h2{font-size:25px}}
 
 
-/* Actions share the Explore button; title links keep their heading hierarchy. */
-.action-link{gap:.75rem;text-decoration:none}.action-label{min-width:0}.action-arrow{flex:none;line-height:inherit}.heading-link{display:inline-flex;align-items:baseline;max-width:100%}.button .action-label{line-height:1.65}.footer-links{flex-wrap:wrap}.colophon{align-items:center}
+/* Primary actions keep the Explore button; secondary actions stay as text. */
+.action-link{display:inline-flex;align-items:baseline;max-width:100%;gap:.75rem;text-decoration:none}.text-link{color:var(--accent)}.text-link:hover{color:#0c4862}.button.action-link{align-items:center}.action-label{min-width:0}.action-arrow{flex:none;line-height:inherit}.heading-link{display:inline-flex;align-items:baseline;max-width:100%}.button .action-label{line-height:1.65}.footer-links{flex-wrap:wrap}.colophon{align-items:center}
 @media(max-width:580px){header{height:auto;min-height:108px;flex-wrap:wrap;padding-block:18px;gap:14px}header nav{width:100%;justify-content:space-between;gap:14px}}

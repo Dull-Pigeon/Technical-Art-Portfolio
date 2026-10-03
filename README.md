@@ -37,7 +37,18 @@ Rerun `node scripts/render.mjs`, then both Python checks above and `node --check
 
 Preserve the visual design. Notes describe ongoing work or supplied retrospectives, not finished functionality that has not been demonstrated. Base project claims on supplied project material. The initial Kinetica retrospective uses the existing public content and its frozen-source constraints; its date records this note's publication date, not a project milestone. Confluence notes require real supplied progress, text and media before publication.
 
-Interaction styling uses the renderer's shared `action` helper: standalone actions use the filled Explore button; linked headings use one title link without a duplicate call to action. Arrows use a consistent gap: `↓` for downloads, `←` for returns, `↗` for destinations and `↑` for the page top. Navigation stays plain, without arrows or underlines. The homepage Development Notes heading opens the index, and the Notes navigation item targets the homepage section. Note pages align with the main content container.
+Interaction styling uses the renderer's shared `action` helper. Text links are the default; opt into the existing filled button only for primary actions, such as Explore case study or the Kinetica Technical Breakdown download. Public selected source, returns, footer links and all Development Note actions stay as text. Linked headings provide a single entry without duplicate CTAs. Main navigation stays plain, without arrows or underlines; keyboard focus remains visible. Preserve the existing type, spacing and color system.
+
+| Indicator | Meaning |
+| --- | --- |
+| → | Internal forward navigation: project, note or index |
+| ← | Return to a parent/index page |
+| ↗ | External destination outside the portfolio |
+| ↓ | Download a file (with a download attribute) |
+| ↑ | Back to top |
+| ▶ | Video playback, using the existing centered poster play icon |
+
+The helper chooses internal/external arrows from the URL and uses explicit back directions, with a consistent text-to-arrow gap. Site-relative links and absolute links within the portfolio URL are internal. PDF links are downloads; opening an image uses forward navigation. The homepage Development Notes heading opens the index, and the Notes navigation item targets the homepage section. Note pages align with the main content container. Keep completed work dominant and Notes editorial; do not turn whole rows into competing boxed CTAs.
 
 ## YouTube Showcase
 
