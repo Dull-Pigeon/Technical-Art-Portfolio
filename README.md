@@ -37,6 +37,8 @@ Rerun `node scripts/render.mjs`, then both Python checks above and `node --check
 
 Preserve the visual design. Notes describe ongoing work or supplied retrospectives, not finished functionality that has not been demonstrated. Base project claims on supplied project material. The initial Kinetica retrospective uses the existing public content and its frozen-source constraints; its date records this note's publication date, not a project milestone. Confluence notes require real supplied progress, text and media before publication.
 
+Interaction styling uses the renderer's shared `action` helper: standalone actions use the filled Explore button; linked headings use one title link without a duplicate call to action. Arrows use a consistent gap: `↓` for downloads, `←` for returns, `↗` for destinations and `↑` for the page top. Navigation stays plain, without arrows or underlines. The homepage Development Notes heading opens the index, and the Notes navigation item targets the homepage section. Note pages align with the main content container.
+
 ## YouTube Showcase
 
 The final Project Kinetica Showcase is published on YouTube: [Watch the Showcase](https://youtu.be/U2FNPUOYYns?si=NcpO51QfnYB17_hm). `dist/video-config.json` is the canonical runtime configuration for that URL; no local video is stored in this repository. The two comparison sections use the same film with their existing segment timing from `content/kinetica.json`, and playback uses YouTube's privacy-enhanced embed domain.
