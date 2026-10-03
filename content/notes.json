@@ -20,8 +20,8 @@
         "heading": "Present the study with its limits",
         "paragraphs": ["The final presentation brings together a Showcase, Technical Breakdown and public selected source tied to the frozen implementation. The comparison frames show authored responses rather than controlled physical measurements. Vertex displacement does not change topology or collision geometry, and no performance benchmark is claimed.", "The retrospective ends at that frozen study. Its useful lesson is to explain both the visible result and the controls behind it; implementation detail and supporting evidence remain in the case study and Breakdown."],
         "links": [
-          {"label": "Project Kinetica case study →", "url": "/projects/kinetica/"},
-          {"label": "Technical Breakdown PDF ↓", "url": "/downloads/project-kinetica-breakdown.pdf"}
+          {"label": "Technical Breakdown PDF ↓", "url": "/downloads/project-kinetica-breakdown.pdf", "primary": true},
+          {"label": "Project Kinetica case study →", "url": "/projects/kinetica/"}
         ]
       }
     ]

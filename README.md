@@ -29,7 +29,7 @@ Open http://localhost:8000. Stop with Ctrl+C. Edit CSS and refresh; after changi
 
 `content/notes.json` is an array of published notes. The renderer produces `/notes/` and `/notes/<slug>/`, sorted by publication date (newest first), and adds the latest three to the homepage between Selected Work and About. An empty array shows an empty state; one note is sufficient. Existing project case studies remain the primary portfolio content.
 
-To add a note, append an object with a unique lowercase, hyphen-separated `slug`, an ISO `date` (`YYYY-MM-DD`, the publication date), `project`, `title`, `summary`, `body`, and `media`. `body` contains sections with an optional `heading`, a `paragraphs` array of plain text, and optional `links` (`label` and `url`). Optional `tags` is an array of strings. Text is escaped by the renderer; HTML and Markdown are not interpreted. Keep published slugs stable and do not silently rewrite old notes when adding new ones.
+To add a note, append an object with a unique lowercase, hyphen-separated `slug`, an ISO `date` (`YYYY-MM-DD`, the publication date), `project`, `title`, `summary`, `body`, and `media`. `body` contains sections with an optional `heading`, a `paragraphs` array of plain text, and optional `links` (`label` and `url`, with `primary: true` only for an important download). Link order in JSON is preserved; place the primary PDF download before related secondary links. Optional `tags` is an array of strings. Text is escaped by the renderer; HTML and Markdown are not interpreted. Keep published slugs stable and do not silently rewrite old notes when adding new ones.
 
 Use only supplied media. Store note-specific images under `dist/assets/notes/<slug>/`; existing project images may be referenced directly. Optional `hero` and each `media` item use `src`, meaningful `alt`, positive integer `width` and `height`, and optional `caption`. URLs must be site-relative (for example `/assets/notes/<slug>/image.webp`) or HTTPS. Images retain their aspect ratios; optimize supplied files consistently with existing assets. No placeholder imagery or local video.
 
@@ -37,7 +37,9 @@ Rerun `node scripts/render.mjs`, then both Python checks above and `node --check
 
 Preserve the visual design. Notes describe ongoing work or supplied retrospectives, not finished functionality that has not been demonstrated. Base project claims on supplied project material. The initial Kinetica retrospective uses the existing public content and its frozen-source constraints; its date records this note's publication date, not a project milestone. Confluence notes require real supplied progress, text and media before publication.
 
-Interaction styling uses the renderer's shared `action` helper. Text links are the default; opt into the existing filled button only for primary actions, such as Explore case study or the Kinetica Technical Breakdown download. Public selected source, returns, footer links and all Development Note actions stay as text. Linked headings provide a single entry without duplicate CTAs. Main navigation stays plain, without arrows or underlines; keyboard focus remains visible. Preserve the existing type, spacing and color system.
+## Visual interaction grammar
+
+Interaction styling uses the renderer's shared `action` helper. Text links are the default; opt into the existing filled button only for primary actions, such as Explore case study or the Kinetica Technical Breakdown download. Public selected source, returns, footer links and Development Note navigation stay as text. A note may present its primary PDF download as one button, placed before the related case-study text link. Linked headings provide a single entry without duplicate CTAs. Main navigation stays plain, without arrows or underlines; keyboard focus remains visible. Preserve the existing type, spacing and color system.
 
 | Indicator | Meaning |
 | --- | --- |
@@ -48,7 +50,7 @@ Interaction styling uses the renderer's shared `action` helper. Text links are t
 | ↑ | Back to top |
 | ▶ | Video playback, using the existing centered poster play icon |
 
-The helper chooses internal/external arrows from the URL and uses explicit back directions, with a consistent text-to-arrow gap. Site-relative links and absolute links within the portfolio URL are internal. PDF links are downloads; opening an image uses forward navigation. The homepage Development Notes heading opens the index, and the Notes navigation item targets the homepage section. Note pages align with the main content container. Keep completed work dominant and Notes editorial; do not turn whole rows into competing boxed CTAs.
+The helper chooses internal/external arrows from the URL. The shared `back` helper renders `←` plus the parent page/section name only: `Portfolio`, `Selected Work` or `Development Notes`. Do not add ‘Back to’, ‘Return to’ or ‘All’ prefixes. Use title case for `Selected Work` everywhere. All arrows retain the same `.75rem` gap from the text. Site-relative links and absolute links within the portfolio URL are internal. PDF links are downloads; opening an image uses forward navigation. The homepage Development Notes heading opens the index, and the Notes navigation item targets the homepage section. Note pages align with the main content container. Keep completed work dominant and Notes editorial; do not turn whole rows into competing boxed CTAs. The homepage Notes heading/content boundary and Notes/About boundary use the existing thin divider color. Redistribute spacing around the bottom divider without widening the overall gap. Preserve this grammar when extending templates or content.
 
 ## YouTube Showcase
 
