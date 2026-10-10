@@ -22,3 +22,10 @@ figcaption{padding:12px 16px;background:var(--paper);font-size:.8125rem;line-hei
 /* Primary actions keep the Explore button; secondary actions stay as text. */
 .action-link{display:inline-flex;align-items:baseline;max-width:100%;gap:.75rem;text-decoration:none}.text-link{color:var(--accent)}.text-link:hover{color:#0c4862}.button.action-link{align-items:center}.action-label{min-width:0}.action-arrow{flex:none;line-height:inherit}.heading-link{display:inline-flex;align-items:baseline;max-width:100%}.button .action-label{line-height:1.65}.footer-links{flex-wrap:wrap}.colophon{align-items:center}
 @media(max-width:580px){header{height:auto;min-height:108px;flex-wrap:wrap;padding-block:18px;gap:14px}header nav{width:100%;justify-content:space-between;gap:14px}}
+
+/* Section evidence stays near its text; technical figures retain their proportions. */
+.note-section-media{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;margin:24px 0;align-items:start}
+.note-section-media>.note-media{grid-column:1/-1;margin:0;border:0;background:var(--paper)}
+.note-section-media>.note-media-paired{grid-column:auto}
+.note-section-media>.note-media-portrait{max-width:640px;width:100%;justify-self:center}
+@media(max-width:850px){.note-section-media{grid-template-columns:minmax(0,1fr)}}

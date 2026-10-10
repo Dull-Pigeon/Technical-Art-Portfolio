@@ -39,11 +39,12 @@ const noteUrl = value => {
  if (!/^\/(?!\/)/.test(value) && !/^https:\/\//.test(value)) throw new Error('Note URLs must be site-relative or HTTPS');
  return value;
 };
-const noteImage = image => {
+const noteImage = (image,eager=false) => {
  noteUrl(image.src);
  requiredText(image.alt, 'image alt text');
  if (!Number.isInteger(image.width) || image.width <= 0 || !Number.isInteger(image.height) || image.height <= 0) throw new Error('Note images require positive integer dimensions');
- return `<figure class="media note-media"><img src="${e(image.src)}" alt="${e(image.alt)}" width="${image.width}" height="${image.height}" loading="lazy">${image.caption?`<figcaption>${e(image.caption)}</figcaption>`:''}</figure>`;
+ if (image.layout !== undefined && !['paired','portrait'].includes(image.layout)) throw new Error('Invalid note image layout');
+ return `<figure class="media note-media${image.layout?' note-media-'+image.layout:''}"><img src="${e(image.src)}" alt="${e(image.alt)}" width="${image.width}" height="${image.height}" loading="${eager?'eager':'lazy'}">${image.caption?`<figcaption>${e(image.caption)}</figcaption>`:''}</figure>`;
 };
 if (!Array.isArray(notes)) throw new Error('Notes must be an array');
 for (const note of notes) {
@@ -54,11 +55,21 @@ for (const note of notes) {
  if (!Array.isArray(note.body) || !note.body.length || !Array.isArray(note.media)) throw new Error('Note body and media must be arrays');
  if (note.tags !== undefined && (!Array.isArray(note.tags) || note.tags.some(tag => typeof tag !== 'string' || !tag.trim()))) throw new Error('Invalid note tags');
  if (note.hero) noteImage(note.hero);
- note.media.forEach(noteImage);
+ note.media.forEach(image => noteImage(image));
  for (const block of note.body) {
   if (block.heading !== undefined) requiredText(block.heading, 'heading');
   if (!Array.isArray(block.paragraphs) || !block.paragraphs.length) throw new Error('Note sections require paragraphs');
   block.paragraphs.forEach(value => requiredText(value, 'paragraph'));
+  if (block.media !== undefined) {
+   if (!Array.isArray(block.media)) throw new Error('Note section media must be an array');
+   block.media.forEach(image => noteImage(image));
+   for (let i=0; i<block.media.length; i++) {
+    if (block.media[i].layout === 'paired') {
+     if (block.media[i+1]?.layout !== 'paired') throw new Error('Paired note images must be adjacent pairs');
+     i++;
+    }
+   }
+  }
   if (block.links !== undefined) {
    if (!Array.isArray(block.links)) throw new Error('Note links must be an array');
    block.links.forEach(link => { requiredText(link.label, 'link label'); noteUrl(link.url); if (link.primary !== undefined && typeof link.primary !== 'boolean') throw new Error('Note link primary must be a boolean'); });
@@ -82,7 +93,7 @@ writeFileSync(new URL('404.html',root),shell('Page not found','Page not found',`
 mkdirSync(new URL('notes/',root),{recursive:true});
 writeFileSync(new URL('notes/index.html',root),shell('Development Notes','Notes on ongoing Technical Art and game-development work.',`<section class="notes-index">${back('/#notes','Portfolio')}<div class="eyebrow">TECHNICAL ART / DEVELOPMENT</div><h1>Development Notes.</h1>${noteList(notes)}</section>`,'notes'));
 for (const note of notes) {
- const body = `<article class="note-page">${back('/notes/','Development Notes')}<div class="note-heading">${noteMeta(note)}<h1>${e(note.title)}</h1><p class="note-summary">${e(note.summary)}</p></div>${note.hero?noteImage(note.hero):''}<div class="note-body">${note.body.map(block => `<section>${block.heading?`<h2>${e(block.heading)}</h2>`:''}${block.paragraphs.map(p => `<p>${e(p)}</p>`).join('')}${block.links?.length?`<div class="note-links">${block.links.map(link => action(noteUrl(link.url),link.label,link.primary?'button':'text-link')).join('')}</div>`:''}</section>`).join('')}${note.media.map(noteImage).join('')}${note.tags?.length?`<div class="tags" aria-label="Technical tags">${note.tags.map(tag => `<span>${e(tag)}</span>`).join('')}</div>`:''}</div><div class="end-link">${back('/notes/','Development Notes')}</div></article>`;
+ const body = `<article class="note-page">${back('/notes/','Development Notes')}<div class="note-heading">${noteMeta(note)}<h1>${e(note.title)}</h1><p class="note-summary">${e(note.summary)}</p></div>${note.hero?noteImage(note.hero,true):''}<div class="note-body">${note.body.map(block => `<section>${block.heading?`<h2>${e(block.heading)}</h2>`:''}${block.paragraphs.map(p => `<p>${e(p)}</p>`).join('')}${block.media?.length?`<div class="note-section-media">${block.media.map(image => noteImage(image)).join('')}</div>`:''}${block.links?.length?`<div class="note-links">${block.links.map(link => action(noteUrl(link.url),link.label,link.primary?'button':'text-link')).join('')}</div>`:''}</section>`).join('')}${note.media.map(image => noteImage(image)).join('')}${note.tags?.length?`<div class="tags" aria-label="Technical tags">${note.tags.map(tag => `<span>${e(tag)}</span>`).join('')}</div>`:''}</div><div class="end-link">${back('/notes/','Development Notes')}</div></article>`;
  mkdirSync(new URL('notes/'+note.slug+'/',root),{recursive:true});
  writeFileSync(new URL('notes/'+note.slug+'/index.html',root),shell(note.title,note.summary,body,'notes'));
 }
