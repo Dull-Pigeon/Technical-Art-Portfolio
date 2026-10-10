@@ -39,12 +39,24 @@ const noteUrl = value => {
  if (!/^\/(?!\/)/.test(value) && !/^https:\/\//.test(value)) throw new Error('Note URLs must be site-relative or HTTPS');
  return value;
 };
-const noteImage = (image,eager=false) => {
+const noteImageContent = (image,eager=false) => {
  noteUrl(image.src);
  requiredText(image.alt, 'image alt text');
  if (!Number.isInteger(image.width) || image.width <= 0 || !Number.isInteger(image.height) || image.height <= 0) throw new Error('Note images require positive integer dimensions');
  if (image.layout !== undefined && !['paired','portrait'].includes(image.layout)) throw new Error('Invalid note image layout');
- return `<figure class="media note-media${image.layout?' note-media-'+image.layout:''}"><img src="${e(image.src)}" alt="${e(image.alt)}" width="${image.width}" height="${image.height}" loading="${eager?'eager':'lazy'}">${image.caption?`<figcaption>${e(image.caption)}</figcaption>`:''}</figure>`;
+ return `<img src="${e(image.src)}" alt="${e(image.alt)}" width="${image.width}" height="${image.height}" loading="${eager?'eager':'lazy'}">`;
+};
+const noteImage = (image,eager=false) => `<figure class="media note-media${image.layout?' note-media-'+image.layout:''}">${noteImageContent(image,eager)}${image.caption?`<figcaption>${e(image.caption)}</figcaption>`:''}</figure>`;
+const noteSectionMedia = item => {
+ if (item.images === undefined) return noteImage(item);
+ if (item.layout !== 'paired' || !Array.isArray(item.images) || item.images.length !== 2) throw new Error('Note comparisons require two images and paired layout');
+ requiredText(item.caption, 'comparison caption');
+ const panels = item.images.map(image => {
+  if (!image || image.images !== undefined || image.layout !== undefined || image.caption !== undefined) throw new Error('Comparison panels must be plain images without layout or captions');
+  return noteImageContent(image);
+ });
+ if (item.images[0].width !== item.images[1].width || item.images[0].height !== item.images[1].height) throw new Error('Comparison images require identical dimensions');
+ return `<figure class="media note-media note-comparison"><div class="note-comparison-panels">${panels.join('')}</div><figcaption>${e(item.caption)}</figcaption></figure>`;
 };
 if (!Array.isArray(notes)) throw new Error('Notes must be an array');
 for (const note of notes) {
@@ -62,10 +74,10 @@ for (const note of notes) {
   block.paragraphs.forEach(value => requiredText(value, 'paragraph'));
   if (block.media !== undefined) {
    if (!Array.isArray(block.media)) throw new Error('Note section media must be an array');
-   block.media.forEach(image => noteImage(image));
+   block.media.forEach(item => noteSectionMedia(item));
    for (let i=0; i<block.media.length; i++) {
-    if (block.media[i].layout === 'paired') {
-     if (block.media[i+1]?.layout !== 'paired') throw new Error('Paired note images must be adjacent pairs');
+    if (block.media[i].layout === 'paired' && block.media[i].images === undefined) {
+     if (block.media[i+1]?.layout !== 'paired' || block.media[i+1].images !== undefined) throw new Error('Paired note images must be adjacent pairs');
      i++;
     }
    }
@@ -93,7 +105,7 @@ writeFileSync(new URL('404.html',root),shell('Page not found','Page not found',`
 mkdirSync(new URL('notes/',root),{recursive:true});
 writeFileSync(new URL('notes/index.html',root),shell('Development Notes','Notes on ongoing Technical Art and game-development work.',`<section class="notes-index">${back('/#notes','Portfolio')}<div class="eyebrow">TECHNICAL ART / DEVELOPMENT</div><h1>Development Notes.</h1>${noteList(notes)}</section>`,'notes'));
 for (const note of notes) {
- const body = `<article class="note-page">${back('/notes/','Development Notes')}<div class="note-heading">${noteMeta(note)}<h1>${e(note.title)}</h1><p class="note-summary">${e(note.summary)}</p></div>${note.hero?noteImage(note.hero,true):''}<div class="note-body">${note.body.map(block => `<section>${block.heading?`<h2>${e(block.heading)}</h2>`:''}${block.paragraphs.map(p => `<p>${e(p)}</p>`).join('')}${block.media?.length?`<div class="note-section-media">${block.media.map(image => noteImage(image)).join('')}</div>`:''}${block.links?.length?`<div class="note-links">${block.links.map(link => action(noteUrl(link.url),link.label,link.primary?'button':'text-link')).join('')}</div>`:''}</section>`).join('')}${note.media.map(image => noteImage(image)).join('')}${note.tags?.length?`<div class="tags" aria-label="Technical tags">${note.tags.map(tag => `<span>${e(tag)}</span>`).join('')}</div>`:''}</div><div class="end-link">${back('/notes/','Development Notes')}</div></article>`;
+ const body = `<article class="note-page">${back('/notes/','Development Notes')}<div class="note-heading">${noteMeta(note)}<h1>${e(note.title)}</h1><p class="note-summary">${e(note.summary)}</p></div>${note.hero?noteImage(note.hero,true):''}<div class="note-body">${note.body.map(block => `<section>${block.heading?`<h2>${e(block.heading)}</h2>`:''}${block.paragraphs.map(p => `<p>${e(p)}</p>`).join('')}${block.media?.length?`<div class="note-section-media">${block.media.map(item => noteSectionMedia(item)).join('')}</div>`:''}${block.links?.length?`<div class="note-links">${block.links.map(link => action(noteUrl(link.url),link.label,link.primary?'button':'text-link')).join('')}</div>`:''}</section>`).join('')}${note.media.map(image => noteImage(image)).join('')}${note.tags?.length?`<div class="tags" aria-label="Technical tags">${note.tags.map(tag => `<span>${e(tag)}</span>`).join('')}</div>`:''}</div><div class="end-link">${back('/notes/','Development Notes')}</div></article>`;
  mkdirSync(new URL('notes/'+note.slug+'/',root),{recursive:true});
  writeFileSync(new URL('notes/'+note.slug+'/index.html',root),shell(note.title,note.summary,body,'notes'));
 }

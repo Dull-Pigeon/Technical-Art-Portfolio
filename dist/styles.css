@@ -28,4 +28,5 @@ figcaption{padding:12px 16px;background:var(--paper);font-size:.8125rem;line-hei
 .note-section-media>.note-media{grid-column:1/-1;margin:0;border:0;background:var(--paper)}
 .note-section-media>.note-media-paired{grid-column:auto}
 .note-section-media>.note-media-portrait{max-width:640px;width:100%;justify-self:center}
-@media(max-width:850px){.note-section-media{grid-template-columns:minmax(0,1fr)}}
+.note-comparison-panels{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;align-items:start}
+@media(max-width:850px){.note-section-media,.note-comparison-panels{grid-template-columns:minmax(0,1fr)}}

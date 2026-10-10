@@ -40,9 +40,9 @@
     "hero": {
       "src": "/assets/notes/confluence-from-prototypes-to-district-blockout/coastal-district-blockout.webp",
       "width": 2400,
-      "height": 1340,
+      "height": 1350,
       "alt": "Early Unreal Engine 5 coastal district graybox with terraced terrain, white building masses and a provisional local rail corridor beside the ocean.",
-      "caption": "Project Confluence · Early coastal district blockout in Unreal Engine 5. Terrain, buildings, and transit geometry remain provisional."
+      "caption": "Project Confluence · Early coastal district blockout in Unreal Engine 5."
     },
     "media": [],
     "body": [
@@ -51,18 +51,8 @@
         "paragraphs": [
           "Project Confluence is an ongoing Environment Technical Art study exploring climate-adaptive high-density urbanism. Its central idea is that a future city continuously adapts its inherited infrastructure instead of replacing it.",
           "The worldbuilding direction combines mountainous island settlements, dense mixed-use development, ecological infrastructure, and rail-based public transportation. Local trams follow the islands' urban corridors, while cross-sea railways belong to a separate regional network.",
-          "The current production focus is one representative coastal district, not the entire city. Establishing a coherent relationship between everyday urban life, steep terrain, public transit, and the ocean is the first environment design challenge.",
-          "The District Master Plan v0.1 explores how the station, neighborhood streets, residential areas, public spaces, and vertical circulation might connect across three terrain levels. These are planning proposals that still require validation in Unreal Engine."
-        ],
-        "media": [
-          {
-            "src": "/assets/notes/confluence-from-prototypes-to-district-blockout/district-master-plan-v01.webp",
-            "width": 3200,
-            "height": 4160,
-            "alt": "District Master Plan v0.1 showing proposed station, neighborhood and residential zones at 30m, 50m and 70m, with walking routes, public spaces and vertical connections.",
-            "caption": "District Master Plan v0.1 · Proposed spatial organization and circulation. Planning diagram; not completed geometry.",
-            "layout": "portrait"
-          }
+          "The current production focus is one representative coastal district, not the entire city. The design challenge is to establish a coherent relationship between steep terrain, everyday urban life, public transportation, and the ocean.",
+          "An early District Master Plan explores how the station, neighborhood streets, residential areas, public spaces, and vertical circulation might connect across three terrain levels. These arrangements remain planning proposals to be validated in Unreal Engine."
         ]
       },
       {
@@ -70,31 +60,40 @@
         "paragraphs": [
           "Before beginning the formal environment, I used a separate UE5 sandbox to learn Blueprint workflows through small experiments.",
           "One procedural Actor uses exposed module count, mesh, and spacing parameters to construct repeated Static Mesh Components in the editor. The Construction Script allows changes to regenerate the arrangement without manually replacing each component.",
-          "The two examples demonstrate the same Blueprint with different module counts and spacing values. This establishes a basic parameter-driven construction workflow without committing to a full procedural city system."
+          "The experiments demonstrate how changing a small set of parameters can produce different arrangements from the same construction logic.",
+          "This establishes an initial parameter-driven workflow, but it is not yet a procedural city-generation system."
         ],
         "media": [
           {
-            "src": "/assets/notes/confluence-from-prototypes-to-district-blockout/blueprint-five-modules.webp",
-            "width": 2475,
-            "height": 2050,
-            "alt": "Unreal Engine editor showing five repeated mesh modules; Module Count is 5 and Spacing is 150.",
-            "caption": "Five modules generated with a spacing parameter of 150.",
-            "layout": "paired"
-          },
-          {
-            "src": "/assets/notes/confluence-from-prototypes-to-district-blockout/blueprint-three-modules.webp",
-            "width": 2475,
-            "height": 2050,
-            "alt": "Unreal Engine editor showing three repeated mesh modules; Module Count is 3 and Spacing is 250.",
-            "caption": "Three modules generated with a spacing parameter of 250.",
-            "layout": "paired"
+            "layout": "paired",
+            "images": [
+              {
+                "src": "/assets/notes/confluence-from-prototypes-to-district-blockout/blueprint-five-modules.webp",
+                "width": 1574,
+                "height": 1525,
+                "alt": "Focused Unreal Engine viewport showing five repeated mesh modules, with the original Spacing 150.0 and Module Count 5 parameters below."
+              },
+              {
+                "src": "/assets/notes/confluence-from-prototypes-to-district-blockout/blueprint-three-modules.webp",
+                "width": 1574,
+                "height": 1525,
+                "alt": "Focused Unreal Engine viewport showing three repeated mesh modules, with the original Spacing 250.0 and Module Count 3 parameters below."
+              }
+            ],
+            "caption": "Parameter-driven Blueprint construction · Five modules at spacing 150 compared with three modules at spacing 250."
           },
           {
             "src": "/assets/notes/confluence-from-prototypes-to-district-blockout/blueprint-construction-logic.webp",
             "width": 2612,
             "height": 685,
             "alt": "Blueprint graph looping from zero to module count minus one, adding Static Mesh Components, setting their mesh and placing them along Z using index multiplied by spacing.",
-            "caption": "Blueprint construction logic · Iterating over module count, adding Static Mesh Components and assigning relative positions."
+            "caption": "Construction Script logic · Module iteration, Static Mesh Component creation and relative positioning."
+          }
+        ],
+        "links": [
+          {
+            "label": "Open full-size Blueprint graph",
+            "url": "/assets/notes/confluence-from-prototypes-to-district-blockout/blueprint-construction-logic.webp"
           }
         ]
       },
@@ -102,25 +101,28 @@
         "heading": "Prototype environmental wetness",
         "paragraphs": [
           "The next experiment focused on material behavior. After exploring Material Instances, Material Functions, UVs, and world-aligned mapping, I developed an initial MF_WaterlineWetness prototype.",
-          "The function calculates a height-based wetness mask using world-space position relative to an adjustable waterline. Additional noise controls introduce variation along the boundary and transition region.",
-          "The tests separate the visible material response from the underlying mask, making it easier to inspect where the transition occurs."
+          "The function calculates a height-based wetness mask using world-space position relative to an adjustable waterline. Noise controls introduce variation along the boundary and within the transition region.",
+          "The experiment separates the visible concrete material response from the underlying mask visualization, helping identify how the wetness boundary behaves.",
+          "This is a material prototype rather than a dynamic water simulation or completed tidal system."
         ],
         "media": [
           {
-            "src": "/assets/notes/confluence-from-prototypes-to-district-blockout/waterline-wetness-material.webp",
-            "width": 1480,
-            "height": 1612,
-            "alt": "Concrete test column with a subtle height-based wetness material transition on its lower surface.",
-            "caption": "Initial waterline wetness material test on a concrete surface.",
-            "layout": "paired"
-          },
-          {
-            "src": "/assets/notes/confluence-from-prototypes-to-district-blockout/waterline-wetness-diagnostic.webp",
-            "width": 1415,
-            "height": 1605,
-            "alt": "Test column with a contrasting diagnostic mask revealing the waterline transition and an irregular boundary.",
-            "caption": "Diagnostic visualization of the height-based wetness transition and boundary variation.",
-            "layout": "paired"
+            "layout": "paired",
+            "images": [
+              {
+                "src": "/assets/notes/confluence-from-prototypes-to-district-blockout/waterline-wetness-material.webp",
+                "width": 720,
+                "height": 540,
+                "alt": "Close view of a concrete test surface showing the subtle height-based wetness response above and below its irregular transition."
+              },
+              {
+                "src": "/assets/notes/confluence-from-prototypes-to-district-blockout/waterline-wetness-diagnostic.webp",
+                "width": 720,
+                "height": 540,
+                "alt": "Matching close view of the test surface with a diagnostic mask revealing the irregular waterline transition across both visible faces."
+              }
+            ],
+            "caption": "Waterline wetness experiment · Concrete material response and diagnostic mask visualization."
           }
         ]
       },
@@ -128,7 +130,7 @@
         "heading": "Investigate real-time rendering",
         "paragraphs": [
           "Further experiments explored exposure, atmospheric fog, Lumen global illumination, reflections, and Nanite visualization.",
-          "A simple red-surface lighting study was used to inspect how material color and indirect illumination influence surrounding surfaces. The experiments helped establish an initial understanding of Unreal Engine's rendering workflow before environmental art production."
+          "A simple red-surface lighting study was used to inspect how material color and indirect illumination influence surrounding surfaces. These experiments provided an introduction to Unreal Engine's rendering workflow before beginning formal environment production."
         ],
         "media": [
           {
@@ -136,7 +138,7 @@
             "width": 2312,
             "height": 1610,
             "alt": "Red test column standing on a light floor in a simple Unreal Engine lighting study.",
-            "caption": "UE5 lighting study · Red surface and surrounding floor used to inspect indirect illumination and color contribution."
+            "caption": "Lumen lighting study · Red surface and surrounding floor used to inspect indirect illumination."
           }
         ]
       },
@@ -144,19 +146,11 @@
         "heading": "Begin the coastal district blockout",
         "paragraphs": [
           "With the initial engine studies completed, I created the formal ProjectConfluence project and its first working level, L_District_Blockout_01.",
-          "The current Landscape covers approximately 252 × 504 meters, with three principal terrain elevations around 30m, 50m, and 70m. Initial graybox work establishes building masses, a local coastal tram corridor and station, bridge approaches, steep terrain, and distant-island context.",
-          "The first blockout prioritizes terrain hierarchy, transit alignment, building placement, and the overall relationship between the inhabited terraces and the ocean.",
-          "The current planning iteration examines how the station area, middle neighborhood street, upper residential zone, and connecting pedestrian routes might form a coherent district. These circulation proposals have not yet been fully implemented."
-        ],
-        "media": [
-          {
-            "src": "/assets/notes/confluence-from-prototypes-to-district-blockout/district-graybox-top-view.webp",
-            "width": 860,
-            "height": 1507,
-            "alt": "Top-down district graybox showing terraced coastal terrain, preliminary white building masses and a long local rail corridor.",
-            "caption": "District graybox · Top-down view of the three-tier coastal layout, preliminary building masses, and local rail corridor.",
-            "layout": "portrait"
-          }
+          "The current Landscape covers approximately 252 × 504 meters, with three principal terrain elevations around 30m, 50m, and 70m.",
+          "Initial graybox work establishes building masses, a local coastal tram corridor and station, bridge approaches, steep terrain, and distant-island context.",
+          "The blockout prioritizes terrain hierarchy, transit alignment, architectural massing, and the overall relationship between inhabited terraces and the ocean.",
+          "The current planning iteration examines how the station area, middle neighborhood street, upper residential zone, and connecting pedestrian routes might form a coherent district.",
+          "These circulation proposals remain under evaluation."
         ]
       },
       {
@@ -164,7 +158,7 @@
         "paragraphs": [
           "Confluence remains in early development.",
           "The current district is a graybox environment, while the Blueprint, material, and rendering experiments were developed separately in the UE5 learning sandbox.",
-          "Procedural city generation, dynamic water behavior, final environmental assets, and the full transit system have not yet been implemented.",
+          "Procedural city generation, dynamic water behavior, final environment assets, and the full transit system have not yet been implemented.",
           "The next phase focuses on validating pedestrian circulation, architectural massing, terrain connections, and transit geometry before developing more advanced procedural environment tools.",
           "The objective is to build a coherent, technically grounded environment rather than expand the city before its fundamental spatial relationships are resolved."
         ]
