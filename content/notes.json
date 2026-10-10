@@ -49,19 +49,15 @@
       {
         "heading": "Establish an environment direction",
         "paragraphs": [
-          "Project Confluence is an ongoing Environment Technical Art study exploring climate-adaptive high-density urbanism. Its central idea is that a future city continuously adapts its inherited infrastructure instead of replacing it.",
-          "The worldbuilding direction combines mountainous island settlements, dense mixed-use development, ecological infrastructure, and rail-based public transportation. Local trams follow the islands' urban corridors, while cross-sea railways belong to a separate regional network.",
-          "The current production focus is one representative coastal district, not the entire city. The design challenge is to establish a coherent relationship between steep terrain, everyday urban life, public transportation, and the ocean.",
-          "An early District Master Plan explores how the station, neighborhood streets, residential areas, public spaces, and vertical circulation might connect across three terrain levels. These arrangements remain planning proposals to be validated in Unreal Engine."
+          "Project Confluence is an ongoing Environment Technical Art study exploring climate-adaptive high-density urbanism. It imagines a future city that continuously adapts its inherited infrastructure, combining mountainous island settlements, dense mixed-use development, ecological infrastructure, and rail-based public transportation. Local trams follow the islands' urban corridors, while cross-sea railways form a separate regional network.",
+          "The current production focus is a single representative coastal district. The aim is to establish a coherent relationship between steep terrain, everyday urban life, public transportation, and the ocean. An early District Master Plan explores how the station, neighborhood streets, residential areas, public spaces, and vertical circulation might connect across three terrain levels. These arrangements remain planning proposals to be validated in Unreal Engine."
         ]
       },
       {
         "heading": "Explore parameter-driven construction",
         "paragraphs": [
-          "Before beginning the formal environment, I used a separate UE5 sandbox to learn Blueprint workflows through small experiments.",
-          "One procedural Actor uses exposed module count, mesh, and spacing parameters to construct repeated Static Mesh Components in the editor. The Construction Script allows changes to regenerate the arrangement without manually replacing each component.",
-          "The experiments demonstrate how changing a small set of parameters can produce different arrangements from the same construction logic.",
-          "This establishes an initial parameter-driven workflow, but it is not yet a procedural city-generation system."
+          "Before beginning the formal environment, I used a separate UE5 sandbox to learn Blueprint workflows through small experiments. One procedural Actor uses exposed module count, mesh, and spacing parameters to construct repeated Static Mesh Components in the editor. Its Construction Script regenerates the arrangement when those parameters change, allowing the layout to be adjusted without manually replacing each component.",
+          "The comparison shows how a small set of parameters can produce different arrangements from the same construction logic. This establishes an initial parameter-driven workflow; procedural city generation has not yet been implemented."
         ],
         "media": [
           {
@@ -100,10 +96,8 @@
       {
         "heading": "Prototype environmental wetness",
         "paragraphs": [
-          "The next experiment focused on material behavior. After exploring Material Instances, Material Functions, UVs, and world-aligned mapping, I developed an initial MF_WaterlineWetness prototype.",
-          "The function calculates a height-based wetness mask using world-space position relative to an adjustable waterline. Noise controls introduce variation along the boundary and within the transition region.",
-          "The experiment separates the visible concrete material response from the underlying mask visualization, helping identify how the wetness boundary behaves.",
-          "This is a material prototype rather than a dynamic water simulation or completed tidal system."
+          "The next experiment focused on material behavior. After exploring Material Instances, Material Functions, UVs, and world-aligned mapping, I developed an initial MF_WaterlineWetness prototype. The function calculates a height-based wetness mask using world-space position relative to an adjustable waterline, with noise controls introducing variation along the boundary and within the transition region.",
+          "The study compares the visible concrete material response with the underlying mask visualization to clarify how the wetness boundary behaves. It remains a material prototype; dynamic water simulation and a completed tidal system are outside its current scope."
         ],
         "media": [
           {
@@ -129,8 +123,7 @@
       {
         "heading": "Investigate real-time rendering",
         "paragraphs": [
-          "Further experiments explored exposure, atmospheric fog, Lumen global illumination, reflections, and Nanite visualization.",
-          "A simple red-surface lighting study was used to inspect how material color and indirect illumination influence surrounding surfaces. These experiments provided an introduction to Unreal Engine's rendering workflow before beginning formal environment production."
+          "Further experiments explored exposure, atmospheric fog, Lumen global illumination, reflections, and Nanite visualization. A simple red-surface lighting study was used to inspect how material color and indirect illumination influence surrounding surfaces. Together, these experiments provided an introduction to Unreal Engine's rendering workflow before beginning formal environment production."
         ],
         "media": [
           {
@@ -145,22 +138,15 @@
       {
         "heading": "Begin the coastal district blockout",
         "paragraphs": [
-          "With the initial engine studies completed, I created the formal ProjectConfluence project and its first working level, L_District_Blockout_01.",
-          "The current Landscape covers approximately 252 × 504 meters, with three principal terrain elevations around 30m, 50m, and 70m.",
-          "Initial graybox work establishes building masses, a local coastal tram corridor and station, bridge approaches, steep terrain, and distant-island context.",
-          "The blockout prioritizes terrain hierarchy, transit alignment, architectural massing, and the overall relationship between inhabited terraces and the ocean.",
-          "The current planning iteration examines how the station area, middle neighborhood street, upper residential zone, and connecting pedestrian routes might form a coherent district.",
-          "These circulation proposals remain under evaluation."
+          "With the initial engine studies completed, I created the formal ProjectConfluence project and its first working level, L_District_Blockout_01. The current Landscape covers approximately 252 × 504 meters, with three principal terrain elevations around 30m, 50m, and 70m. Initial graybox work establishes building masses, a local coastal tram corridor and station, bridge approaches, steep terrain, and distant-island context.",
+          "The blockout prioritizes terrain hierarchy, transit alignment, architectural massing, and the relationship between inhabited terraces and the ocean. Within that framework, the current planning iteration examines how the station area, middle neighborhood street, upper residential zone, and connecting pedestrian routes might form a coherent district. These circulation proposals remain under evaluation."
         ]
       },
       {
         "heading": "Scope and next steps",
         "paragraphs": [
-          "Confluence remains in early development.",
-          "The current district is a graybox environment, while the Blueprint, material, and rendering experiments were developed separately in the UE5 learning sandbox.",
-          "Procedural city generation, dynamic water behavior, final environment assets, and the full transit system have not yet been implemented.",
-          "The next phase focuses on validating pedestrian circulation, architectural massing, terrain connections, and transit geometry before developing more advanced procedural environment tools.",
-          "The objective is to build a coherent, technically grounded environment rather than expand the city before its fundamental spatial relationships are resolved."
+          "Confluence remains in early development. The current district is a graybox environment, while the Blueprint, material, and rendering experiments were developed separately in the UE5 learning sandbox. Procedural city generation, dynamic water behavior, final environment assets, and the full transit system have not yet been implemented.",
+          "The next phase focuses on validating pedestrian circulation, architectural massing, terrain connections, and transit geometry before developing more advanced procedural environment tools. The objective is to resolve the district's fundamental spatial relationships and build a coherent, technically grounded environment before expanding the city."
         ]
       }
     ]
