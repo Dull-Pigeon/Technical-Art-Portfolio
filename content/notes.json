@@ -84,8 +84,8 @@
           },
           {
             "src": "/assets/notes/confluence-from-prototypes-to-district-blockout/blueprint-construction-logic.webp",
-            "width": 2612,
-            "height": 685,
+            "width": 2661,
+            "height": 707,
             "alt": "Blueprint graph looping from zero to module count minus one, adding Static Mesh Components, setting their mesh and placing them along Z using index multiplied by spacing.",
             "caption": "Construction Script logic · Module iteration, Static Mesh Component creation and relative positioning."
           }
@@ -135,8 +135,8 @@
         "media": [
           {
             "src": "/assets/notes/confluence-from-prototypes-to-district-blockout/indirect-lighting-study.webp",
-            "width": 2312,
-            "height": 1610,
+            "width": 1920,
+            "height": 1080,
             "alt": "Red test column standing on a light floor in a simple Unreal Engine lighting study.",
             "caption": "Lumen lighting study · Red surface and surrounding floor used to inspect indirect illumination."
           }
