@@ -82,14 +82,9 @@
             "src": "/assets/notes/confluence-from-prototypes-to-district-blockout/blueprint-construction-logic.webp",
             "width": 2661,
             "height": 707,
+            "disclosure": "Supporting evidence / Construction Script logic",
             "alt": "Blueprint graph looping from zero to module count minus one, adding Static Mesh Components, setting their mesh and placing them along Z using index multiplied by spacing.",
             "caption": "Construction Script logic · Module iteration, Static Mesh Component creation and relative positioning."
-          }
-        ],
-        "links": [
-          {
-            "label": "Open full-size Blueprint graph",
-            "url": "/assets/notes/confluence-from-prototypes-to-district-blockout/blueprint-construction-logic.webp"
           }
         ]
       },
