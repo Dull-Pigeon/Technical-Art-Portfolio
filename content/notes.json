@@ -56,7 +56,7 @@
       {
         "heading": "Explore parameter-driven construction",
         "paragraphs": [
-          "Before beginning the formal environment, I used a separate UE5 sandbox to learn Blueprint workflows through small experiments. One procedural Actor uses exposed module count, mesh, and spacing parameters to construct repeated Static Mesh Components in the editor. Its Construction Script regenerates the arrangement when those parameters change, allowing the layout to be adjusted without manually replacing each component.",
+          "Early Blueprint workflow experiments were developed in a separate UE5 sandbox before formal environment production began. One procedural Actor uses exposed module count, mesh, and spacing parameters to construct repeated Static Mesh Components in the editor. Its Construction Script regenerates the arrangement when those parameters change, allowing the layout to be adjusted without manually replacing each component.",
           "The comparison shows how a small set of parameters can produce different arrangements from the same construction logic. This establishes an initial parameter-driven workflow; procedural city generation has not yet been implemented."
         ],
         "media": [
@@ -91,7 +91,7 @@
       {
         "heading": "Prototype environmental wetness",
         "paragraphs": [
-          "The next experiment focused on material behavior. After exploring Material Instances, Material Functions, UVs, and world-aligned mapping, I developed an initial MF_WaterlineWetness prototype. The function calculates a height-based wetness mask using world-space position relative to an adjustable waterline, with noise controls introducing variation along the boundary and within the transition region.",
+          "The next experiment focused on material behavior. An initial MF_WaterlineWetness prototype followed studies of Material Instances, Material Functions, UVs, and world-aligned mapping. The function calculates a height-based wetness mask using world-space position relative to an adjustable waterline, with noise controls introducing variation along the boundary and within the transition region.",
           "The study compares the visible concrete material response with the underlying mask visualization to clarify how the wetness boundary behaves. It remains a material prototype; dynamic water simulation and a completed tidal system are outside its current scope."
         ],
         "media": [
@@ -133,7 +133,7 @@
       {
         "heading": "Begin the coastal district blockout",
         "paragraphs": [
-          "With the initial engine studies completed, I created the formal ProjectConfluence project and its first working level, L_District_Blockout_01. The current Landscape covers approximately 252 × 504 meters, with three principal terrain elevations around 30m, 50m, and 70m. Initial graybox work establishes building masses, a local coastal tram corridor and station, bridge approaches, steep terrain, and distant-island context.",
+          "Formal environment production began with the ProjectConfluence project and its first working level, L_District_Blockout_01, following the initial engine studies. The current Landscape covers approximately 252 × 504 meters, with three principal terrain elevations around 30m, 50m, and 70m. Initial graybox work establishes building masses, a local coastal tram corridor and station, bridge approaches, steep terrain, and distant-island context.",
           "The blockout prioritizes terrain hierarchy, transit alignment, architectural massing, and the relationship between inhabited terraces and the ocean. Within that framework, the current planning iteration examines how the station area, middle neighborhood street, upper residential zone, and connecting pedestrian routes might form a coherent district. These circulation proposals remain under evaluation."
         ]
       },

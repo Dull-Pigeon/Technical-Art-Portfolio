@@ -3,8 +3,8 @@
   "github": "https://github.com/Dull-Pigeon",
   "email": null,
   "resume": null,
-  "intro": "I build shaders, VFX and real-time systems that turn motion and material data into clear visual feedback.",
-  "about": "I’m a Computer Science undergraduate working across shaders, real-time VFX and interaction systems in Unity. I focus on how authored data, runtime logic and rendering work together to make technical behavior legible.",
+  "intro": "Shaders, VFX and real-time systems that turn motion and material data into clear visual feedback.",
+  "about": "Computer Science undergraduate focused on Technical Art across Unity and Unreal Engine 5, with an emphasis on how authored data, runtime logic and rendering produce readable visual behavior. Project Kinetica is a completed Unity material-response study; current development centers on Project Confluence, an early UE5 coastal district environment. The work combines district blockout with separate sandbox experiments in parameter-driven Blueprint construction, height-based material wetness and real-time rendering.",
   "projects": [
     {
       "slug": "kinetica",
