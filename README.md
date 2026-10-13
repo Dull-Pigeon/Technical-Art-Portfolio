@@ -25,6 +25,8 @@ Open http://localhost:8000. Stop with Ctrl+C. Edit CSS and refresh; after changi
 - `dist/downloads/project-kinetica-breakdown.pdf`: public final Breakdown.
 - `dist/video-config.json`: external Showcase URL.
 
+`content/site.json` also defines the ordered `focusAreas` array of nonempty labels shared by the homepage intro and every page footer. Update this list once when the portfolio's scope changes; keep the mobile footer scope and back-to-top arrow visible. Native evidence disclosures use a shared marker that changes from `+` to `−` when open.
+
 ## Development Notes
 
 `content/notes.json` is an array of published notes. The renderer produces `/notes/` and `/notes/<slug>/`, sorted by publication date (newest first), and adds the latest three to the homepage between Selected Work and About. An empty array shows an empty state; one note is sufficient. Existing project case studies remain the primary portfolio content.
