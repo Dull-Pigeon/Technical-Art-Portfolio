@@ -6,13 +6,6 @@
     "title": "Project Kinetica — From Impact Iteration to Final Technical Art Breakdown",
     "summary": "A brief retrospective on separating collision controls, refining material response, and presenting the frozen study through the Showcase and Breakdown.",
     "previewTitle": "Refining impact response",
-    "preview": {
-      "src": "/assets/kinetica/hero.webp",
-      "width": 1920,
-      "height": 1080,
-      "alt": "Blue Slime deformation and droplets beneath a hammer in the final Kinetica Showcase.",
-      "cropTop": 260
-    },
     "tags": ["Unity", "Shader Graph", "Technical Art"],
     "media": [],
     "body": [
@@ -41,12 +34,6 @@
     "title": "Project Confluence — From Technical Experiments to District Blockout",
     "summary": "The first development phase of Project Confluence connects climate-adaptive urban design with practical UE5 experiments in parameter-driven construction, environmental materials, rendering, and district blockout.",
     "previewTitle": "First coastal blockout",
-    "preview": {
-      "src": "/assets/notes/confluence-from-prototypes-to-district-blockout/coastal-district-blockout.webp",
-      "width": 2400,
-      "height": 1350,
-      "alt": "Terraced coastal district blockout with white building masses above the ocean."
-    },
     "tags": [
       "Unreal Engine 5",
       "Technical Art",

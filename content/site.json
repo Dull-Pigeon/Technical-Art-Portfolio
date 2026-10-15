@@ -19,8 +19,7 @@
         "src": "/assets/kinetica/hero.webp",
         "width": 1920,
         "height": 1080,
-        "alt": "Hammer impact deforming the blue Slime target, with droplets above its surface.",
-        "cropTop": 260
+        "alt": "Hammer impact deforming the blue Slime target, with droplets above its surface."
       }
     },
     {
@@ -34,10 +33,10 @@
       "previewLabel": "Early blockout",
       "noteUrl": "/notes/confluence-from-prototypes-to-district-blockout/",
       "preview": {
-        "src": "/assets/notes/confluence-from-prototypes-to-district-blockout/coastal-district-blockout.webp",
-        "width": 2400,
-        "height": 1350,
-        "alt": "Early coastal district graybox with terraced terrain, white building masses and a provisional rail corridor beside the ocean."
+        "src": "/assets/confluence/homepage-blockout.webp",
+        "width": 1920,
+        "height": 1080,
+        "alt": "Early coastal district blockout with stepped white building masses, hillside walking routes and an elevated rail corridor curving beside the ocean."
       }
     }
   ]

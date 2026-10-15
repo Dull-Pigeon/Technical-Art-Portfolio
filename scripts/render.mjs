@@ -50,13 +50,13 @@ const noteImageContent = (image,eager=false) => {
  return `<img src="${e(image.src)}" alt="${e(image.alt)}" width="${image.width}" height="${image.height}" loading="${eager?'eager':'lazy'}">`;
 };
 const noteImage = (image,eager=false) => `<figure class="media note-media${image.layout?' note-media-'+image.layout:''}">${noteImageContent(image,eager)}${image.caption?`<figcaption>${e(image.caption)}</figcaption>`:''}</figure>`;
-// Homepage previews reuse supplied images; cropTop removes only a reviewed top band.
+// Homepage project covers show complete 16:9 images; article media keeps its own ratio.
 const previewImage = (image,eager=false) => {
  if (!image || typeof image !== 'object' || Array.isArray(image)) throw new Error('Preview images require an image record');
- if (image.layout !== undefined || image.images !== undefined || image.caption !== undefined || image.disclosure !== undefined) throw new Error('Preview images must be plain image records');
+ if (image.layout !== undefined || image.images !== undefined || image.caption !== undefined || image.disclosure !== undefined || image.cropTop !== undefined) throw new Error('Project previews must be plain image records without crops');
  const body = noteImageContent(image,eager);
- if (image.cropTop !== undefined && (!Number.isInteger(image.cropTop) || image.cropTop < 0 || image.cropTop >= image.height)) throw new Error('Invalid preview top crop');
- return `<figure class="media preview-media${image.cropTop?' preview-cropped':''}"${image.cropTop?` style="--preview-ratio:${image.width}/${image.height-image.cropTop}"`:''}>${body}</figure>`;
+ if (image.width * 9 !== image.height * 16) throw new Error('Homepage project covers require 16:9 dimensions');
+ return `<figure class="media preview-media">${body}</figure>`;
 };
 const noteSectionMedia = item => {
  if (item.disclosure !== undefined) {
@@ -82,7 +82,6 @@ for (const note of notes) {
  if (!/^\d{4}-\d{2}-\d{2}$/.test(note.date) || !Number.isFinite(Date.parse(note.date)) || new Date(note.date).toISOString().slice(0,10) !== note.date) throw new Error('Invalid note publication date');
  if (!Array.isArray(note.body) || !note.body.length || !Array.isArray(note.media)) throw new Error('Note body and media must be arrays');
  if (note.tags !== undefined && (!Array.isArray(note.tags) || note.tags.some(tag => typeof tag !== 'string' || !tag.trim()))) throw new Error('Invalid note tags');
- if (note.preview !== undefined) previewImage(note.preview);
  if (note.previewTitle !== undefined) requiredText(note.previewTitle, 'preview title');
  if (note.hero) noteImage(note.hero);
  note.media.forEach(image => noteImage(image));
@@ -119,7 +118,7 @@ for (const item of site.projects) {
   if (!notes.some(note=>item.noteUrl === '/notes/'+note.slug+'/')) throw new Error('Project preview must link to an existing note');
  }
 }
-const noteList = (items,{homepage=false}={}) => items.length ? `<div class="note-list">${items.map(note => `<article class="note-preview${homepage&&note.preview?' note-preview-with-image':''}">${homepage&&note.preview?`<div class="note-thumbnail">${previewImage(note.preview)}</div>`:''}<div class="note-preview-copy">${noteMeta(note)}<h3>${action('/notes/'+note.slug+'/',homepage&&note.previewTitle?note.previewTitle:note.title,'heading-link')}</h3><p>${e(note.summary)}</p></div></article>`).join('')}</div>` : '<p>No development notes published yet.</p>';
+const noteList = (items,{homepage=false}={}) => items.length ? `<div class="note-list">${items.map(note => `<article class="note-preview"><div class="note-preview-copy">${noteMeta(note)}<h3>${action('/notes/'+note.slug+'/',homepage&&note.previewTitle?note.previewTitle:note.title,'heading-link')}</h3><p>${e(note.summary)}</p></div></article>`).join('')}</div>` : '<p>No development notes published yet.</p>';
 const homeNotes = `<section id="notes" class="home-notes" aria-labelledby="notes-heading"><div class="section-heading"><h2 id="notes-heading">${action('/notes/','Development Notes','heading-link')}</h2></div>${noteList(notes.slice(0,3),{homepage:true})}</section>`;
 const featuredProject = site.projects.find(item=>item.slug === 'kinetica' && item.published);
 if (!featuredProject) throw new Error('The completed Kinetica study must remain featured');
