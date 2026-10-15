@@ -22,8 +22,9 @@ qa/
 .vscode/
 .idea/
 
-# Video is hosted on YouTube, never in Git.
+# Full videos stay on YouTube; only the reviewed homepage preview is allowed.
 *.mp4
+!/dist/assets/kinetica/homepage-hammer-slime.mp4
 *.mov
 *.webm
 *.avi

@@ -15,7 +15,7 @@ class Page(HTMLParser):
         if 'id' in a:
             assert a['id'] not in self.ids, f'Duplicate ID {self.path}: {a["id"]}'
             self.ids.add(a['id'])
-        for key in ('href', 'src', 'poster'):
+        for key in ('href', 'src', 'poster', 'data-src'):
             if a.get(key): self.links.append(a[key])
 
 pages = {p: Page(p) for p in root.rglob('*.html')}

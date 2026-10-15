@@ -25,7 +25,8 @@ figcaption{padding:12px 16px;background:var(--paper);font-size:.8125rem;line-hei
 
 /* Section evidence stays near its text; technical figures retain their proportions. */
 .note-section-media{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;margin:24px 0;align-items:start}
-.note-section-media>.note-media{grid-column:1/-1;margin:0;border:0;background:var(--paper)}
+.note-section-media>.note-media{grid-column:1/-1;margin:0;background:var(--paper)}
+.note-media>figcaption{border-top:1px solid var(--line)}
 .note-section-media>.note-media-paired{grid-column:auto}
 .note-section-media>.note-media-portrait{max-width:640px;width:100%;justify-self:center}
 .note-comparison-panels{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;align-items:start}
@@ -33,7 +34,7 @@ figcaption{padding:12px 16px;background:var(--paper);font-size:.8125rem;line-hei
 
 /* Note evidence uses the same native disclosure as the case study. */
 .note-section-media>.note-evidence{grid-column:1/-1;min-width:0;margin:0}
-.note-evidence>.note-media{margin:0;border:0;background:var(--paper)}
+.note-evidence>.note-media{margin:0;background:var(--paper)}
 
 /* Native disclosures expose their open state without adding another action. */
 .disclosure-marker{flex:none;width:1em;text-align:center}
@@ -45,6 +46,13 @@ details[open]>summary>.disclosure-marker::before{content:"−"}
 /* Homepage previews keep completed work dominant and Notes editorial. */
 .home-intro{padding:36px 0 32px}.home-intro h1{margin:18px 0 22px}
 .preview-media{aspect-ratio:16/9;border:0;outline:1px solid var(--line);outline-offset:-1px}.preview-media img{aspect-ratio:16/9;object-fit:contain}
+.project-preview{position:relative}.project-preview .preview-media{position:relative}
+.project-preview .preview-video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;pointer-events:none;opacity:0}
+.project-preview[data-ready="true"] .preview-video{opacity:1}
+.preview-toggle{position:absolute;right:16px;bottom:16px;display:grid;place-items:center;width:44px;height:44px;padding:11px;border:1px solid rgba(255,255,255,.4);border-radius:4px;background:rgba(17,21,27,.76);color:white;cursor:pointer}
+.preview-toggle[hidden]{display:none}.preview-toggle:hover{background:rgba(17,21,27,.92)}.preview-toggle:focus-visible{outline:3px solid var(--paper);outline-offset:3px}
+.preview-toggle svg{width:20px;height:20px;fill:currentColor}.preview-toggle .preview-pause{display:none}
+.project-preview[data-playing="true"] .preview-play{display:none}.project-preview[data-playing="true"] .preview-pause{display:block}
 .project-image:hover .preview-media,.project-image:focus-visible .preview-media{outline-color:var(--accent)}
 .heading-link:hover,.heading-link:focus-visible{color:var(--accent)}
 .future-preview{grid-template-columns:minmax(0,2fr) minmax(0,3fr);gap:36px;align-items:center}

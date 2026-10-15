@@ -4,6 +4,7 @@ import re
 import subprocess
 import sys
 import zipfile
+import hashlib
 
 ROOT = Path(__file__).resolve().parents[1]
 PATTERNS = {
@@ -17,6 +18,10 @@ PATTERNS = {
 }
 FORBIDDEN_PARTS = {'node_modules', '__pycache__', '.venv', '.sites-runtime', 'Library', 'Temp', 'Logs', 'Obj', 'Packages', 'ProjectSettings'}
 FORBIDDEN_SUFFIXES = {'.pem', '.key', '.p12', '.pfx', '.unity', '.prefab', '.fbx', '.blend', '.psd', '.unitypackage', '.cs', '.mp4', '.mov', '.webm', '.avi', '.mkv', '.b64', '.base64'}
+# One reviewed, compressed homepage preview; all other video files remain excluded.
+APPROVED_VIDEO = {
+    'dist/assets/kinetica/homepage-hammer-slime.mp4': 'f0f645cff8febe8f097b0697c714dce8389ad053fec26485cdb218cb38333010',
+}
 TEXT_SUFFIXES = {'.md', '.json', '.html', '.css', '.mjs', '.js', '.py', '.yml', '.yaml', '.txt'}
 
 def scan(label, text):
@@ -34,13 +39,15 @@ for name in filter(None, names):
     if p.is_symlink():
         failures.append(f'{name}: symbolic link requires review')
         continue
-    if any(part in FORBIDDEN_PARTS for part in p.relative_to(ROOT).parts) or p.suffix.lower() in FORBIDDEN_SUFFIXES or p.name.startswith('.env'):
+    if any(part in FORBIDDEN_PARTS for part in p.relative_to(ROOT).parts) or (p.suffix.lower() in FORBIDDEN_SUFFIXES and name not in APPROVED_VIDEO) or p.name.startswith('.env'):
         failures.append(f'{name}: excluded file type or directory')
     if not p.is_file():
         failures.append(f'{name}: tracked file is missing')
         continue
     if p.stat().st_size > 20_000_000:
         failures.append(f'{name}: file exceeds 20 MB; review web export')
+    if name in APPROVED_VIDEO and (p.stat().st_size > 6_000_000 or hashlib.sha256(p.read_bytes()).hexdigest() != APPROVED_VIDEO[name]):
+        failures.append(f'{name}: homepage preview differs from the reviewed web export')
     if p.suffix in TEXT_SUFFIXES or p.name == '.gitignore':
         scan(name, p.read_text())
     elif p.suffix == '.docx':

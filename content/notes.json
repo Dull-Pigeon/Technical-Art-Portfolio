@@ -5,7 +5,6 @@
     "project": "Project Kinetica",
     "title": "Project Kinetica — From Impact Iteration to Final Technical Art Breakdown",
     "summary": "A brief retrospective on separating collision controls, refining material response, and presenting the frozen study through the Showcase and Breakdown.",
-    "previewTitle": "Refining impact response",
     "tags": ["Unity", "Shader Graph", "Technical Art"],
     "media": [],
     "body": [
@@ -33,7 +32,6 @@
     "project": "Project Confluence",
     "title": "Project Confluence — From Technical Experiments to District Blockout",
     "summary": "The first development phase of Project Confluence connects climate-adaptive urban design with practical UE5 experiments in parameter-driven construction, environmental materials, rendering, and district blockout.",
-    "previewTitle": "First coastal blockout",
     "tags": [
       "Unreal Engine 5",
       "Technical Art",
