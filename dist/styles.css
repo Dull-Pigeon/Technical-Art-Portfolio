@@ -49,7 +49,7 @@ details[open]>summary>.disclosure-marker::before{content:"−"}
 .project-preview{position:relative}.project-preview .preview-media{position:relative}
 .project-preview .preview-video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;pointer-events:none;opacity:0}
 .project-preview[data-ready="true"] .preview-video{opacity:1}
-.preview-toggle{position:absolute;right:16px;bottom:16px;display:grid;place-items:center;width:44px;height:44px;padding:11px;border:1px solid rgba(255,255,255,.4);border-radius:4px;background:rgba(17,21,27,.76);color:white;cursor:pointer}
+.preview-toggle{position:absolute;right:16px;bottom:16px;display:grid;place-items:center;width:44px;height:44px;padding:11px;border:1px solid rgba(255,255,255,.4);border-radius:50%;background:rgba(17,21,27,.76);color:white;cursor:pointer}
 .preview-toggle[hidden]{display:none}.preview-toggle:hover{background:rgba(17,21,27,.92)}.preview-toggle:focus-visible{outline:3px solid var(--paper);outline-offset:3px}
 .preview-toggle svg{width:20px;height:20px;fill:currentColor}.preview-toggle .preview-pause{display:none}
 .project-preview[data-playing="true"] .preview-play{display:none}.project-preview[data-playing="true"] .preview-pause{display:block}

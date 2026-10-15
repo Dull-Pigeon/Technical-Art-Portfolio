@@ -20,7 +20,7 @@ FORBIDDEN_PARTS = {'node_modules', '__pycache__', '.venv', '.sites-runtime', 'Li
 FORBIDDEN_SUFFIXES = {'.pem', '.key', '.p12', '.pfx', '.unity', '.prefab', '.fbx', '.blend', '.psd', '.unitypackage', '.cs', '.mp4', '.mov', '.webm', '.avi', '.mkv', '.b64', '.base64'}
 # One reviewed, compressed homepage preview; all other video files remain excluded.
 APPROVED_VIDEO = {
-    'dist/assets/kinetica/homepage-hammer-slime.mp4': 'f0f645cff8febe8f097b0697c714dce8389ad053fec26485cdb218cb38333010',
+    'dist/assets/kinetica/homepage-hammer-slime.mp4': '14851283d88b38cad2d4e343b1ea0c17db3923c213d7f6ffb9b5814430d8a78b',
 }
 TEXT_SUFFIXES = {'.md', '.json', '.html', '.css', '.mjs', '.js', '.py', '.yml', '.yaml', '.txt'}
 
