@@ -4,7 +4,7 @@
   "email": null,
   "resume": null,
   "focusAreas": ["Shaders", "VFX", "Systems", "Environments"],
-  "intro": "Shaders, VFX and real-time systems that turn motion and material data into clear visual feedback.",
+  "intro": "Technical Art studies across Unity and Unreal Engine 5, from material response to early environment workflows.",
   "about": "Computer Science undergraduate focused on Technical Art across Unity and Unreal Engine 5, with an emphasis on how authored data, runtime logic and rendering produce readable visual behavior. Project Kinetica is a completed Unity material-response study; current development centers on Project Confluence, an early UE5 coastal district environment. The work combines district blockout with separate sandbox experiments in parameter-driven Blueprint construction, height-based material wetness and real-time rendering.",
   "projects": [
     {
@@ -14,7 +14,14 @@
       "engine": "Unity 6 · URP",
       "status": "Completed study",
       "summary": "A focused Technical Art study connecting weapon motion, impact evaluation, vertex deformation and material-specific particles.",
-      "published": true
+      "published": true,
+      "preview": {
+        "src": "/assets/kinetica/hero.webp",
+        "width": 1920,
+        "height": 1080,
+        "alt": "Hammer impact deforming the blue Slime target, with droplets above its surface.",
+        "cropTop": 260
+      }
     },
     {
       "slug": "confluence",
@@ -23,7 +30,15 @@
       "engine": "Unreal Engine 5",
       "status": "In development",
       "summary": "An early climate-adaptive coastal district study in UE5, with graybox blockout and separate Blueprint, material and rendering experiments.",
-      "published": false
+      "published": false,
+      "previewLabel": "Early blockout",
+      "noteUrl": "/notes/confluence-from-prototypes-to-district-blockout/",
+      "preview": {
+        "src": "/assets/notes/confluence-from-prototypes-to-district-blockout/coastal-district-blockout.webp",
+        "width": 2400,
+        "height": 1350,
+        "alt": "Early coastal district graybox with terraced terrain, white building masses and a provisional rail corridor beside the ocean."
+      }
     }
   ]
 }

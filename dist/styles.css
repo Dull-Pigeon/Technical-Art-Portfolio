@@ -41,3 +41,17 @@ figcaption{padding:12px 16px;background:var(--paper);font-size:.8125rem;line-hei
 details[open]>summary>.disclosure-marker::before{content:"−"}
 
 .hero-focus-row{white-space:nowrap}
+
+/* Homepage previews keep completed work dominant and Notes editorial. */
+.home-intro{padding:36px 0 32px}.home-intro h1{margin:18px 0 22px}
+.preview-media img{aspect-ratio:auto}
+.project-image .preview-media.preview-cropped img,.note-thumbnail .preview-media.preview-cropped img{aspect-ratio:var(--preview-ratio);object-fit:cover;object-position:center bottom}
+.project-image:hover .preview-media,.project-image:focus-visible .preview-media{border-color:var(--accent)}
+.heading-link:hover,.heading-link:focus-visible{color:var(--accent)}
+.future-preview{grid-template-columns:minmax(0,2fr) minmax(0,3fr);gap:36px;align-items:center}
+.future-preview .preview-media{margin:0}.secondary-project-info h3{font-size:28px;margin:10px 0 14px}
+.future-preview .secondary-project-info p{max-width:540px;font-size:15px}.project-progress{display:block;color:var(--muted);margin-top:18px}
+.home-notes .note-preview-with-image{display:grid;grid-template-columns:200px minmax(0,1fr);gap:28px;align-items:start}
+.home-notes .note-thumbnail .preview-media{margin:0}.home-notes .note-preview-copy{min-width:0}
+.home-notes .note-preview h3{margin-top:8px}.home-notes .note-preview p{margin-bottom:0}
+@media(max-width:580px){.home-intro{padding:30px 0 28px}.home-intro h1{margin:18px 0 22px}.future-preview{grid-template-columns:minmax(0,1fr);gap:22px}.future-preview .secondary-project-image{width:80%;max-width:320px}.secondary-project-info h3{font-size:26px}.home-notes .note-preview-with-image{grid-template-columns:minmax(0,1fr);gap:18px}.home-notes .note-thumbnail{max-width:180px}}

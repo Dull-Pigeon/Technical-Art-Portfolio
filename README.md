@@ -27,6 +27,16 @@ Open http://localhost:8000. Stop with Ctrl+C. Edit CSS and refresh; after changi
 
 `content/site.json` also defines the ordered `focusAreas` array of nonempty labels shared by the homepage intro and every page footer. Update this list once when the portfolio's scope changes; keep the mobile footer scope and back-to-top arrow visible. Native evidence disclosures use a shared marker that changes from `+` to `−` when open.
 
+## Homepage previews
+
+Project records may include a `preview` image (`src`, meaningful `alt`, real positive integer `width` and `height`). Unpublished project image previews also require a site-relative `noteUrl` matching an existing note; optional `previewLabel` describes the supplied stage, such as `Early blockout`. Keep Confluence `published: false`: its secondary image/title open the existing development note, without creating a case-study route or a new primary button. Projects without preview data retain the text presentation. Kinetica remains the dominant completed case study, selected by slug rather than array position.
+
+Preview images may specify an integer `cropTop` from zero to less than the source height. This is a homepage-only CSS presentation crop, bottom aligned and proportionally scaled across the full source width. The current Kinetica preview removes 260 pixels of the supplied 1920 × 1080 frame's largely empty top band; the weapon, contact feedback and original bottom edge remain. Its visible ratio is 1920:820. Never overwrite `hero.webp`, apply this framing to case-study media/YouTube posters, or crop key evidence. Confluence reuses the supplied 2400 × 1350 note hero without cropping. Verify actual image dimensions when changing records.
+
+Notes may include optional `preview` image records with the same fields and an optional nonempty `previewTitle`. Only `noteList(items, {homepage: true})` uses thumbnails and short titles; `/notes/` retains full titles and a text list, and article heroes/bodies/dates/slugs remain unchanged. Missing fields fall back to full titles/text rows. The homepage still takes the latest three sorted notes, including empty and single-note states. Keep thumbnails small, use thin list dividers, stack image/text on narrow screens and avoid extra buttons. Removing a referenced note also requires updating the project's optional preview/link.
+
+Keep homepage intro spacing and preview styles scoped to homepage classes. The Hero names the work, its supporting line gives engine/study context, and About describes the approach; avoid repeating the same tagline in all three places. Retain student identity, shared focus areas, existing typography and the original palette.
+
 ## Development Notes
 
 `content/notes.json` is an array of published notes. The renderer produces `/notes/` and `/notes/<slug>/`, sorted by publication date (newest first), and adds the latest three to the homepage between Selected Work and About. An empty array shows an empty state; one note is sufficient. Existing project case studies remain the primary portfolio content.
@@ -47,11 +57,11 @@ Preserve the visual design. Notes describe ongoing work or supplied retrospectiv
 
 ## Visual interaction grammar
 
-Interaction styling uses the renderer's shared `action` helper. Text links are the default; opt into the existing filled button only for primary actions, such as Explore case study or the Kinetica Technical Breakdown download. Public selected source, returns, footer links and Development Note navigation stay as text. A note may present its primary PDF download as one button, placed before the related case-study text link. Linked headings provide a single entry without duplicate CTAs. Main navigation stays plain, without arrows or underlines; keyboard focus remains visible. Preserve the existing type, spacing and color system.
+Interaction styling uses the renderer's shared `action` helper. Text links are the default; opt into the existing filled button only for primary actions, such as Explore case study or the Kinetica Technical Breakdown download. Public selected source, returns, footer links and Development Note navigation stay as text. A note may present its primary PDF download as one button, placed before the related case-study text link. Linked project/note headings and the homepage Development Notes heading omit the internal forward arrow, with restrained color hover and visible keyboard focus. Internal filled buttons such as Explore case study also omit the forward arrow; PDF buttons retain their download arrow and attribute. The helper makes this decision only for `heading-link`/`button` roles with an internal forward destination, leaving other arrow semantics intact. Main navigation stays plain, without arrows or underlines. Preserve the existing type, spacing and color system.
 
 | Indicator | Meaning |
 | --- | --- |
-| → | Internal forward navigation: project, note or index |
+| → | Ordinary internal text actions; omitted on linked headings and internal filled buttons |
 | ← | Return to a parent/index page |
 | ↗ | External destination outside the portfolio |
 | ↓ | Download a file (with a download attribute) |
@@ -60,7 +70,7 @@ Interaction styling uses the renderer's shared `action` helper. Text links are t
 
 External arrows use the Unicode text-presentation selector U+FE0E in the shared helper so mobile browsers retain the text glyph. Preserve the inherited font, color and arrow gap.
 
-The helper chooses internal/external arrows from the URL. The shared `back` helper renders `←` plus the parent page/section name only: `Portfolio`, `Selected Work` or `Development Notes`. Do not add ‘Back to’, ‘Return to’ or ‘All’ prefixes. Use title case for `Selected Work` everywhere. All arrows retain the same `.75rem` gap from the text. Site-relative links and absolute links within the portfolio URL are internal. PDF links are downloads; opening an image uses forward navigation. The homepage Development Notes heading opens the index, and the Notes navigation item targets the homepage section. Note pages align with the main content container. Keep completed work dominant and Notes editorial; do not turn whole rows into competing boxed CTAs. The homepage Notes heading/content boundary and Notes/About boundary use the existing thin divider color. Redistribute spacing around the bottom divider without widening the overall gap. Preserve this grammar when extending templates or content.
+The helper chooses internal/external arrows from the URL. The shared `back` helper renders `←` plus the parent page/section name only: `Portfolio`, `Selected Work` or `Development Notes`. Do not add ‘Back to’, ‘Return to’ or ‘All’ prefixes. Use title case for `Selected Work` everywhere. When present, arrows retain the same `.75rem` gap from the text. Site-relative links and absolute links within the portfolio URL are internal. PDF links are downloads; ordinary image-opening text links use forward navigation. The arrowless homepage Development Notes heading opens `/notes/`, while the Notes navigation item targets `/#notes`; do not add a duplicate View all notes button. Note pages align with the main content container. Keep completed work dominant and Notes editorial; do not turn whole rows into competing boxed CTAs. The homepage Notes heading/content boundary and Notes/About boundary use the existing thin divider color. Redistribute spacing around the bottom divider without widening the overall gap. Preserve this grammar when extending templates or content.
 
 ## YouTube Showcase
 
