@@ -79,8 +79,9 @@
       "src": "/assets/kinetica/architecture.svg",
       "alt": "System architecture showing authored data, runtime evaluation, direct deformation calls and independent event subscribers.",
       "caption": "Frozen runtime architecture · solid lines show direct calls and data flow; dashed lines show event broadcast.",
-      "width": 3000,
-      "height": 1275
+      "width": 1600,
+      "height": 680,
+      "readableWidth": 1200
     },
     "shaderSpatial": {
       "label": "Shader Graph / Spatial falloff",
@@ -88,7 +89,8 @@
       "alt": "Unity Shader Graph crop for localized spatial deformation falloff.",
       "caption": "Spatial falloff · the supplied Shader Graph capture localizes deformation around the impact point.",
       "width": 2048,
-      "height": 336
+      "height": 336,
+      "readableWidth": 1600
     },
     "shaderTemporal": {
       "label": "Shader Graph / Temporal response",

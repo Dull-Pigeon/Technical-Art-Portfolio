@@ -25,11 +25,19 @@ const action = (url,label,cls='text-link',direction='') => {
  return a(url,arrow === '←' ? marker+text : text+marker,cls+' action-link',arrow === '↓');
 };
 const back = (url,parent) => action(url,parent,'text-link','←');
+// Opt in per technical figure; ordinary photos and video posters still fit the page.
+const readableImage = (image,markup,label) => {
+ if (image.readableWidth === undefined) return markup;
+ if (!Number.isInteger(image.readableWidth) || image.readableWidth <= 0 || !Number.isInteger(image.width) || image.readableWidth > image.width || typeof label !== 'string' || !label.trim()) throw new Error('Readable images require a label and a positive minimum width within the source width');
+ return `<div class="evidence-pan" tabindex="0" role="region" aria-label="${e(label)}. Scroll horizontally to inspect the image." style="--evidence-width:${image.readableWidth}px">${markup}</div>`;
+};
+const evidenceHint = image => image.readableWidth === undefined ? '' : '<p class="caption evidence-hint">Scroll horizontally to inspect the image.</p>';
 const media = (key,compact=false) => {
  const m=project.media[key];
  const width=m.width||1920, height=m.height||1080;
  let body=m.type==='external-video' ? `<div class="external-video" data-external-video data-start="${m.start||0}" data-end="${m.end||0}" data-play-label="${e(m.playLabel||`Play ${m.label}`)}"${m.playCaption?` data-play-caption="${e(m.playCaption)}"`:''}><img src="${e(m.poster)}" alt="${e(m.alt)}" width="${width}" height="${height}" loading="lazy"><span class="video-play-icon" aria-hidden="true"></span></div>` : m.src ? (m.type==='video' ? `<video controls playsinline preload="none" ${m.poster?`poster="${e(m.poster)}"`:''} aria-label="${e(m.label)}"><source src="${e(m.src)}" type="video/mp4">${action(m.src,'Download video','text-link','↓')}</video>` : `<img src="${e(m.src)}" alt="${e(m.alt)}" loading="${key==='hero'?'eager':'lazy'}" width="${width}" height="${height}">`) : `<div class="media-placeholder"><span class="frame-corner" aria-hidden="true"></span><div><span class="micro">IMAGE</span><p>${e(m.label)}</p></div><span class="aspect micro">16:9</span></div>`;
- return `<figure class="media media-${e(key)} ${compact?'compact':''}">${body}${m.caption?`<figcaption>${e(m.caption)}</figcaption>`:''}</figure>`;
+ if (m.readableWidth !== undefined && (!m.src || m.type === 'video' || m.type === 'external-video')) throw new Error('Readable width is limited to technical images');
+ return `${evidenceHint(m)}<figure class="media media-${e(key)} ${compact?'compact':''}">${readableImage(m,body,m.label)}${m.caption?`<figcaption>${e(m.caption)}</figcaption>`:''}</figure>`;
 };
 
 // Validate structured notes before writing any generated pages.
@@ -47,12 +55,12 @@ const noteImageContent = (image,eager=false) => {
  requiredText(image.alt, 'image alt text');
  if (!Number.isInteger(image.width) || image.width <= 0 || !Number.isInteger(image.height) || image.height <= 0) throw new Error('Note images require positive integer dimensions');
  if (image.layout !== undefined && !['paired','portrait'].includes(image.layout)) throw new Error('Invalid note image layout');
- if (image.readableWidth !== undefined && (!Number.isInteger(image.readableWidth) || image.readableWidth <= 0 || image.readableWidth > image.width || typeof image.disclosure !== 'string' || !image.disclosure.trim() || image.layout !== undefined)) throw new Error('Readable width requires a disclosed image and cannot exceed its source width');
+ if (image.readableWidth !== undefined && (typeof image.disclosure !== 'string' || !image.disclosure.trim() || image.layout !== undefined)) throw new Error('Readable width requires a single disclosed note image');
  return `<img src="${e(image.src)}" alt="${e(image.alt)}" width="${image.width}" height="${image.height}" loading="${eager?'eager':'lazy'}">`;
 };
 const noteImage = (image,eager=false) => {
  const img = noteImageContent(image,eager);
- const body = image.readableWidth ? `<div class="note-evidence-pan" tabindex="0" role="region" aria-label="${e(image.disclosure)}. Scroll horizontally to inspect the image." style="--evidence-width:${image.readableWidth}px">${img}</div>` : img;
+ const body = readableImage(image,img,image.disclosure);
  return `<figure class="media note-media${image.layout?' note-media-'+image.layout:''}">${body}${image.caption?`<figcaption>${e(image.caption)}</figcaption>`:''}</figure>`;
 };
 // Homepage project covers show complete 16:9 images; article media keeps its own ratio.
@@ -69,7 +77,7 @@ const noteSectionMedia = item => {
  if (item.disclosure !== undefined) {
   requiredText(item.disclosure, 'media disclosure label');
   if (item.layout !== undefined || item.images !== undefined) throw new Error('Note disclosures require a single full-width image');
-  return `<details class="note-evidence"><summary>${e(item.disclosure)} <span class="disclosure-marker" aria-hidden="true"></span></summary>${item.readableWidth?'<p class="caption evidence-hint">Scroll horizontally to inspect the Blueprint.</p>':''}${noteImage(item)}</details>`;
+  return `<details class="note-evidence"><summary>${e(item.disclosure)} <span class="disclosure-marker" aria-hidden="true"></span></summary>${evidenceHint(item)}${noteImage(item)}</details>`;
  }
  if (item.images === undefined) return noteImage(item);
  if (item.layout !== 'paired' || !Array.isArray(item.images) || item.images.length !== 2) throw new Error('Note comparisons require two images and paired layout');

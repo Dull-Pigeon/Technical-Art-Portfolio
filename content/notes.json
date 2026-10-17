@@ -83,6 +83,7 @@
             "width": 2661,
             "height": 707,
             "disclosure": "Supporting evidence / Construction Script logic",
+            "readableWidth": 2000,
             "alt": "Blueprint graph looping from zero to module count minus one, adding Static Mesh Components, setting their mesh and placing them along Z using index multiplied by spacing.",
             "caption": "Construction Script logic · Module iteration, Static Mesh Component creation and relative positioning."
           }
