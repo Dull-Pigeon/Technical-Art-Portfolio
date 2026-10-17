@@ -45,34 +45,30 @@
     "materials": {
       "label": "Hammer → Metal / Slime / Stone",
       "note": "Final captured result",
-      "src": null,
-      "type": "external-video",
+      "src": "/assets/kinetica/material-comparison.mp4",
+      "type": "local-video",
       "alt": "Metal, Slime and Stone material-response comparison still.",
       "poster": "/assets/kinetica/materials-video-frame.webp?v=20260919",
-      "caption": "Authored material comparison · Metal / Slime / Stone · Frame from the final Showcase.",
-      "fallbackLabel": "Comparison still",
-      "playLabel": "Play Project Kinetica material comparison",
-      "playCaption": "Authored material comparison · Metal / Slime / Stone · Excerpt from the final Showcase.",
+      "caption": "Authored material comparison · Metal / Slime / Stone · 4.3-second excerpt from the final Showcase.",
+      "previewLabel": "material comparison",
       "width": 1920,
       "height": 1080,
-      "start": 15,
-      "end": 20
+      "start": 16,
+      "end": 20.3
     },
     "weapons": {
       "label": "Spear / Hammer / Sword → Slime",
       "note": "Final captured result",
-      "src": null,
-      "type": "external-video",
+      "src": "/assets/kinetica/weapon-comparison.mp4",
+      "type": "local-video",
       "alt": "Spear, Hammer and Sword weapon-response comparison still.",
       "poster": "/assets/kinetica/weapons-video-frame.webp?v=20260919",
-      "caption": "Authored weapon comparison · Spear / Hammer / Sword · Frame from the final Showcase.",
-      "fallbackLabel": "Comparison still",
-      "playLabel": "Play Project Kinetica weapon comparison",
-      "playCaption": "Authored weapon comparison · Spear / Hammer / Sword · Excerpt from the final Showcase.",
+      "caption": "Authored weapon comparison · Spear / Hammer / Sword · 4.3-second excerpt from the final Showcase.",
+      "previewLabel": "weapon comparison",
       "width": 1920,
       "height": 1080,
-      "start": 31,
-      "end": 38
+      "start": 33,
+      "end": 37.3
     },
     "architecture": {
       "label": "Frozen runtime architecture",
@@ -80,8 +76,7 @@
       "alt": "System architecture showing authored data, runtime evaluation, direct deformation calls and independent event subscribers.",
       "caption": "Frozen runtime architecture · solid lines show direct calls and data flow; dashed lines show event broadcast.",
       "width": 1600,
-      "height": 680,
-      "readableWidth": 1200
+      "height": 680
     },
     "shaderSpatial": {
       "label": "Shader Graph / Spatial falloff",

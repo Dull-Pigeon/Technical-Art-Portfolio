@@ -2,7 +2,7 @@
 
 Existing static portfolio: Node.js renders HTML from JSON. No framework, package installation or backend. YouTube is loaded only after a visitor clicks Play.
 
-The homepage has one separately approved muted local Kinetica preview; the complete Showcase and case-study excerpts remain on YouTube.
+Kinetica has three approved muted local clips: the homepage preview and the two short case-study comparisons. The complete Showcase remains on YouTube.
 
 ## Local development and build
 
@@ -39,11 +39,15 @@ Homepage Development Notes is a text-only editorial list: date, project classifi
 
 Keep homepage intro spacing and preview styles scoped to homepage classes. The Hero names the work, its supporting line gives engine/study context, and About describes the approach; avoid repeating the same tagline in all three places. Retain student identity, shared focus areas, existing typography and the original palette.
 
-### Local Kinetica preview exception
+### Local Kinetica clip exceptions
 
-Only `dist/assets/kinetica/homepage-hammer-slime.mp4` is approved for local video publication. It uses source seconds 0.40–2.40 of the supplied 4.53-second Hammer–Slime clip: a 2.00-second loop retaining a short lead-in, impact, particles, rebound and recovery while removing excess idle time. It is reduced from 3840 × 2160 at 60fps to 1920 × 1080 at 30fps, with no speed change, crop, reverse, padding or new imagery. The 343,328-byte export uses H.264 High / yuv420p, NVENC slow VBR CQ 19, no audio, and MP4 fast start. Keep source recordings and transcode intermediates outside the tracked publication files. The audit allows only this exact path and reviewed SHA-256, with a 6 MB ceiling; replacing it requires a new media review and updated hash, not a wider video allowlist.
+Only three exact Kinetica exports are approved for local video publication. `dist/assets/kinetica/homepage-hammer-slime.mp4` uses source seconds 0.40–2.40 of the supplied 4.53-second Hammer–Slime clip: a 2.00-second loop retaining a short lead-in, impact, particles, rebound and recovery while removing excess idle time. The 343,328-byte homepage export remains unchanged.
 
-`dist/home-preview.mjs` controls this one homepage preview. It assigns the video URL only when playback is requested, with `preload="none"`, muted inline looping and a 50% visibility threshold. Offscreen or background pages pause; manual pause persists across returns. Reduced motion starts with the poster and requires explicit play. A blocked automatic attempt stays on the poster without repeated automatic retries. Keep the always-visible circular 44 × 44 minimum control separate from the project link, using the same round geometry as case-study playback controls, with actual playback events driving its Play/Pause name and icon, visible keyboard focus and no volume/fullscreen/progress controls. Pausing a started preview retains its frame; media failures retain the poster. Keep the full-size poster fallback and reserved 16:9 space when JavaScript or playback is unavailable. The homepage controller must not change the existing YouTube module or excerpt timings.
+The case-study `materials` and `weapons` records in `content/kinetica.json` use `type: "local-video"`, their exact `src` paths `/assets/kinetica/material-comparison.mp4` and `/assets/kinetica/weapon-comparison.mp4`, the existing `poster`/`alt`, real `width: 1920` / `height: 1080`, and a nonempty `previewLabel` for the control. Their `start`/`end` fields retain source provenance: 16.00–20.30 and 33.00–37.30 seconds of the supplied complete Showcase, each a 4.30-second loop. The reviewed ranges retain the three-way comparisons, impact, particles and recovery while excluding neighboring solo shots and film transitions. They are baked into the exports, not applied again by the player. Keep captions accurate for video excerpts. The renderer accepts only these two key/path pairs for local comparisons; it must not allow arbitrary video records.
+
+All three clips are proportionally reduced from 3840 × 2160 at 60fps to 1920 × 1080 at 30fps, with no speed change, crop, reverse, padding or new imagery. They use H.264 High / yuv420p, NVENC slow VBR CQ 19, no audio and MP4 fast start. The material and weapon exports are 1,268,617 and 783,523 bytes, respectively. Keep source recordings and transcode intermediates outside tracked publication files. The audit pins each exact path and reviewed SHA-256, with a 6 MB ceiling per clip; replacements require media review and a hash update. Do not allow other local videos or relax the source/credential checks.
+
+`dist/home-preview.mjs` shares one lightweight controller across the homepage preview (`data-home-preview`) and two case-study frames (`data-local-preview`). It assigns each video URL only when playback is requested, with `preload="none"`, muted inline looping and a 50% visibility threshold measured on the media frame, excluding its caption. Offscreen or background pages pause; each manual pause persists across returns. Reduced motion starts with the poster and requires explicit play. A blocked automatic attempt stays on the poster without repeated automatic retries. Keep the always-visible circular 44 × 44 minimum control separate from the homepage project link, with actual playback events driving its distinct Play/Pause name and icon, visible keyboard focus and no volume/fullscreen/progress controls. Case-study frames have no enclosing link; only their real button controls playback. Pausing a started preview retains its frame; media failures retain the poster. Keep the full-size poster fallback and reserved 16:9 space when JavaScript or playback is unavailable. Preserve the complete Showcase's existing YouTube module, privacy-enhanced domain and click-to-load behavior.
 
 ## Development Notes
 
@@ -59,7 +63,7 @@ For a comparison with one shared caption, use a section media group: `{ "layout"
 
 A full-width section image may include `disclosure: "Supporting evidence / Construction Script logic"` to use the same native, initially closed details/summary treatment as the case study. Preserve its alt text, dimensions and caption; disclosure labels must be nonempty text and cannot be combined with image groups or layout variants. The summary remains keyboard operable with visible focus.
 
-For a wide technical figure that becomes unreadable when fitted to the page, a single disclosed note image or a case-study image record may opt into `readableWidth`, a positive integer minimum display width no larger than its actual source width. Both use the shared image-reading helper: only that figure gains horizontal scrolling, a visible reading hint and a named, keyboard-focusable region. Preserve the full image's aspect ratio, original nodes and connections, caption frame and supplied caption. Use this for wide Blueprint, architecture and Shader Graph evidence, not homepage covers, ordinary screenshots or video posters. Stacked portrait captures retain their fitted layout. Existing figures without this field retain their rendering; never apply a minimum width globally to technical media.
+For a wide technical figure that becomes unreadable when fitted to the page, a single disclosed note image or a case-study image record may opt into `readableWidth`, a positive integer minimum display width no larger than its actual source width. Both use the shared image-reading helper: only that figure gains horizontal scrolling, a visible reading hint and a named, keyboard-focusable region. Preserve the full image's aspect ratio, original nodes and connections, caption frame and supplied caption. Use this for wide Blueprint and Shader Graph evidence, not homepage covers, ordinary screenshots or video posters. Kinetica's runtime architecture and stacked portrait captures retain their fitted layout without horizontal scrolling. Existing figures without this field retain their rendering; never apply a minimum width globally to technical media.
 
 The Spline infrastructure note's hero uses a faithful crop of the supplied editor screenshot to remove surrounding editor chrome and unused viewport space while retaining the complete generated path, repeated modules and direction arrow. Its export remains 2400 × 1350 (16:9). This note-specific crop does not change the complete technical evidence images or any homepage cover.
 
@@ -78,7 +82,7 @@ Interaction styling uses the renderer's shared `action` helper. Text links are t
 | ↗ | External destination outside the portfolio |
 | ↓ | Download a file (with a download attribute) |
 | ↑ | Back to top |
-| ▶ | Video playback: centered on YouTube posters; the local homepage preview uses a separate bottom-right play/pause control |
+| ▶ | Video playback: centered on YouTube posters; the three local clips use a separate bottom-right play/pause control |
 
 External arrows use the Unicode text-presentation selector U+FE0E in the shared helper so mobile browsers retain the text glyph. Preserve the inherited font, color and arrow gap.
 
@@ -86,9 +90,9 @@ The helper chooses internal/external arrows from the URL. The shared `back` help
 
 ## YouTube Showcase
 
-The final Project Kinetica Showcase is published on YouTube: [Watch the Showcase](https://youtu.be/U2FNPUOYYns?si=NcpO51QfnYB17_hm). `dist/video-config.json` is the canonical runtime configuration for that URL. The two comparison sections use the same film with their existing segment timing from `content/kinetica.json`, and playback uses YouTube's privacy-enhanced embed domain. The single homepage preview exception is separate from this complete Showcase.
+The final Project Kinetica Showcase is published on YouTube: [Watch the Showcase](https://youtu.be/U2FNPUOYYns?si=NcpO51QfnYB17_hm). `dist/video-config.json` is the canonical runtime configuration for that URL. Its player uses YouTube's privacy-enhanced embed domain and loads only after a visitor clicks Play. The two short comparison sections use the reviewed local excerpts described above; the complete Showcase is not published as a local video.
 
-Apart from the exact reviewed homepage preview above, never add MP4s or other local video, raw recordings, Base64 video, Unity files or third-party source assets. Existing optimized stills and technical captures are retained.
+Apart from the three exact reviewed Kinetica clips above, never add MP4s or other local video, raw recordings, Base64 video, Unity files or third-party source assets. Existing optimized stills and technical captures are retained.
 
 ## Deployment
 

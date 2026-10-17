@@ -18,9 +18,11 @@ PATTERNS = {
 }
 FORBIDDEN_PARTS = {'node_modules', '__pycache__', '.venv', '.sites-runtime', 'Library', 'Temp', 'Logs', 'Obj', 'Packages', 'ProjectSettings'}
 FORBIDDEN_SUFFIXES = {'.pem', '.key', '.p12', '.pfx', '.unity', '.prefab', '.fbx', '.blend', '.psd', '.unitypackage', '.cs', '.mp4', '.mov', '.webm', '.avi', '.mkv', '.b64', '.base64'}
-# One reviewed, compressed homepage preview; all other video files remain excluded.
+# Three reviewed, compressed Kinetica clips; all other video files remain excluded.
 APPROVED_VIDEO = {
     'dist/assets/kinetica/homepage-hammer-slime.mp4': '14851283d88b38cad2d4e343b1ea0c17db3923c213d7f6ffb9b5814430d8a78b',
+    'dist/assets/kinetica/material-comparison.mp4': '0a11da5133c9034784d16ec15a26d4578db90dd2f3b6436dd9e4dc7ad6bb7847',
+    'dist/assets/kinetica/weapon-comparison.mp4': '61af666f485f6e794ceb4f3644ae45707ffdee33daeab5c0d0d6fb74f042a300',
 }
 TEXT_SUFFIXES = {'.md', '.json', '.html', '.css', '.mjs', '.js', '.py', '.yml', '.yaml', '.txt'}
 
@@ -47,7 +49,7 @@ for name in filter(None, names):
     if p.stat().st_size > 20_000_000:
         failures.append(f'{name}: file exceeds 20 MB; review web export')
     if name in APPROVED_VIDEO and (p.stat().st_size > 6_000_000 or hashlib.sha256(p.read_bytes()).hexdigest() != APPROVED_VIDEO[name]):
-        failures.append(f'{name}: homepage preview differs from the reviewed web export')
+        failures.append(f'{name}: Kinetica clip differs from the reviewed web export')
     if p.suffix in TEXT_SUFFIXES or p.name == '.gitignore':
         scan(name, p.read_text())
     elif p.suffix == '.docx':

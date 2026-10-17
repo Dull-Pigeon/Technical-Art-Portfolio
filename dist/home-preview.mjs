@@ -1,9 +1,10 @@
-export function initializeHomePreview(root) {
+export function initializeLocalPreview(root) {
   const video = root.querySelector('video[data-src]');
   const button = root.querySelector('.preview-toggle');
   if (!video || !button || !video.dataset.src || typeof video.play !== 'function') return;
 
   const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const label = root.dataset.previewLabel || 'preview';
   let observer;
   let inView = false;
   let manuallyPaused = false;
@@ -19,7 +20,7 @@ export function initializeHomePreview(root) {
 
   function showPlaying(playing) {
     root.dataset.playing = String(playing);
-    button.setAttribute('aria-label', playing ? 'Pause preview' : 'Play preview');
+    button.setAttribute('aria-label', `${playing ? 'Pause' : 'Play'} ${label}`);
   }
 
   function canPlay() {
@@ -135,5 +136,5 @@ export function initializeHomePreview(root) {
 }
 
 if (typeof document !== 'undefined') {
-  document.querySelectorAll('[data-home-preview]').forEach(initializeHomePreview);
+  document.querySelectorAll('[data-home-preview], [data-local-preview]').forEach(initializeLocalPreview);
 }

@@ -22,9 +22,11 @@ qa/
 .vscode/
 .idea/
 
-# Full videos stay on YouTube; only the reviewed homepage preview is allowed.
+# Full Showcase stays on YouTube; only these three reviewed clips are allowed.
 *.mp4
 !/dist/assets/kinetica/homepage-hammer-slime.mp4
+!/dist/assets/kinetica/material-comparison.mp4
+!/dist/assets/kinetica/weapon-comparison.mp4
 *.mov
 *.webm
 *.avi
