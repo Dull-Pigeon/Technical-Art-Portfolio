@@ -47,9 +47,14 @@ const noteImageContent = (image,eager=false) => {
  requiredText(image.alt, 'image alt text');
  if (!Number.isInteger(image.width) || image.width <= 0 || !Number.isInteger(image.height) || image.height <= 0) throw new Error('Note images require positive integer dimensions');
  if (image.layout !== undefined && !['paired','portrait'].includes(image.layout)) throw new Error('Invalid note image layout');
+ if (image.readableWidth !== undefined && (!Number.isInteger(image.readableWidth) || image.readableWidth <= 0 || image.readableWidth > image.width || typeof image.disclosure !== 'string' || !image.disclosure.trim() || image.layout !== undefined)) throw new Error('Readable width requires a disclosed image and cannot exceed its source width');
  return `<img src="${e(image.src)}" alt="${e(image.alt)}" width="${image.width}" height="${image.height}" loading="${eager?'eager':'lazy'}">`;
 };
-const noteImage = (image,eager=false) => `<figure class="media note-media${image.layout?' note-media-'+image.layout:''}">${noteImageContent(image,eager)}${image.caption?`<figcaption>${e(image.caption)}</figcaption>`:''}</figure>`;
+const noteImage = (image,eager=false) => {
+ const img = noteImageContent(image,eager);
+ const body = image.readableWidth ? `<div class="note-evidence-pan" tabindex="0" role="region" aria-label="${e(image.disclosure)}. Scroll horizontally to inspect the image." style="--evidence-width:${image.readableWidth}px">${img}</div>` : img;
+ return `<figure class="media note-media${image.layout?' note-media-'+image.layout:''}">${body}${image.caption?`<figcaption>${e(image.caption)}</figcaption>`:''}</figure>`;
+};
 // Homepage project covers show complete 16:9 images; article media keeps its own ratio.
 const previewImage = (image,eager=false) => {
  if (!image || typeof image !== 'object' || Array.isArray(image)) throw new Error('Preview images require an image record');
@@ -64,7 +69,7 @@ const noteSectionMedia = item => {
  if (item.disclosure !== undefined) {
   requiredText(item.disclosure, 'media disclosure label');
   if (item.layout !== undefined || item.images !== undefined) throw new Error('Note disclosures require a single full-width image');
-  return `<details class="note-evidence"><summary>${e(item.disclosure)} <span class="disclosure-marker" aria-hidden="true"></span></summary>${noteImage(item)}</details>`;
+  return `<details class="note-evidence"><summary>${e(item.disclosure)} <span class="disclosure-marker" aria-hidden="true"></span></summary>${item.readableWidth?'<p class="caption evidence-hint">Scroll horizontally to inspect the Blueprint.</p>':''}${noteImage(item)}</details>`;
  }
  if (item.images === undefined) return noteImage(item);
  if (item.layout !== 'paired' || !Array.isArray(item.images) || item.images.length !== 2) throw new Error('Note comparisons require two images and paired layout');
