@@ -245,5 +245,104 @@
         ]
       }
     ]
+  },
+  {
+    "slug": "confluence-first-modular-facade-assets",
+    "date": "2026-10-24",
+    "project": "Project Confluence",
+    "title": "Project Confluence — Developing the First Modular Facade Assets",
+    "summary": "Developing the first facade modules in Blender, testing them in Unreal Engine 5, and using architectural context to guide a second set of window and full-height opening variations.",
+    "tags": [
+      "Blender",
+      "Unreal Engine 5",
+      "Modular Environment"
+    ],
+    "hero": {
+      "src": "/assets/notes/confluence-first-modular-facade-assets/balcony-facade.webp",
+      "width": 1920,
+      "height": 1080,
+      "alt": "Unreal Engine 5 balcony facade with a framed window and full-height opening in adjacent wall units, showing the balcony floor, edge and surrounding blockout geometry.",
+      "caption": "Modular facade development in Unreal Engine 5 · Wall units and openings evaluated in their architectural context."
+    },
+    "media": [],
+    "body": [
+      {
+        "heading": "Move from blockout to individual assets",
+        "paragraphs": [
+          "After the spline infrastructure prototype, I shifted toward modular architecture. The aim was to begin producing architectural elements that could be evaluated in Confluence’s environment, bringing asset creation into the development process early.",
+          "The first set consisted of a plain wall, a wall with a window opening, and a separate window frame. Working with a limited set kept the focus on modeling, UV preparation, and the transfer from Blender to Unreal before expanding the range of components."
+        ]
+      },
+      {
+        "heading": "Establish the first Blender-to-Unreal pass",
+        "paragraphs": [
+          "Preparing the initial assets involved working through wall openings, frame geometry, UVs, modifiers, and object origins. The first set was then exported from Blender and imported into Unreal Engine 5.",
+          "In the initial engine test, the opening passed through the wall correctly, while the applied PBR material and texture scale appeared reasonable. This provided a working starting point for evaluating the assets inside the environment.",
+          "The important step was moving beyond an isolated model. Once the components were placed in an architectural arrangement, their proportions could be judged against the surrounding facade and balcony."
+        ]
+      },
+      {
+        "heading": "Separate module size from opening size",
+        "paragraphs": [
+          "The test supported keeping a 2-meter wall module as the base unit. A 4-meter balcony frontage could accommodate two units, providing space for a window and a full-height opening alongside each other.",
+          "The initial 1.2 × 1.4-meter window appeared suitable for a side facade, but felt small on the balcony-facing elevation. This was less apparent at a medium viewing distance and more noticeable close up.",
+          "Rather than changing the entire wall module, I kept its width and developed alternative openings. The module establishes the assembly rhythm; the opening proportions respond to the particular facade condition."
+        ],
+        "media": [
+          {
+            "layout": "paired",
+            "images": [
+              {
+                "src": "/assets/notes/confluence-first-modular-facade-assets/balcony-small-window.webp",
+                "width": 1200,
+                "height": 900,
+                "alt": "Smaller framed window on the left of a full-height opening in the balcony facade, with the floor and adjacent walls providing a shared proportion reference."
+              },
+              {
+                "src": "/assets/notes/confluence-first-modular-facade-assets/balcony-large-window.webp",
+                "width": 1200,
+                "height": 900,
+                "alt": "Larger framed window on the left of the same full-height opening, shown at the same scale and in substantially the same balcony view as the smaller variation."
+              }
+            ],
+            "caption": "Window proportion iteration · The smaller opening (left) and the larger variation (right), compared within the same balcony facade."
+          }
+        ]
+      },
+      {
+        "heading": "Build the next opening variations",
+        "paragraphs": [
+          "The next modeling pass added two opening sizes: 1.6 × 1.5 meters and 1.6 × 2.3 meters. Each variation included a matching wall, separate frame, and glass geometry, with UV preparation completed in Blender.",
+          "The new frames also received a 45-degree angle-based smoothing treatment. This made shading preparation part of the asset workflow alongside geometry and UVs.",
+          "The larger window and full-height opening were then imported into Unreal and assembled into the balcony facade. Comparing the smaller and larger window in substantially the same view made the change in facade proportions easier to assess. They remain simple architectural components at this stage, without detailed opening mechanisms or hardware.",
+          "To keep the growing set easy to navigate, I retained “Window” in the asset naming and used dimensions to distinguish the variations."
+        ],
+        "media": [
+          {
+            "src": "/assets/notes/confluence-first-modular-facade-assets/opening-variations.webp",
+            "width": 1600,
+            "height": 1200,
+            "alt": "Blender viewport showing two complete wall modules side by side, with a wider window opening on the left and a full-height opening on the right, retaining both frame outlines and the bottom wall boundaries.",
+            "caption": "Opening variations in Blender · The larger window and full-height opening developed within matching wall modules."
+          },
+          {
+            "src": "/assets/notes/confluence-first-modular-facade-assets/window-frame-uv.webp",
+            "width": 2520,
+            "height": 1140,
+            "alt": "Blender showing the complete selected window-frame UV layout on the left and the complete rectangular frame mesh on the right.",
+            "caption": "Window-frame UV preparation · The frame geometry and its UV layout inspected in Blender.",
+            "disclosure": "Supporting evidence / Window-frame UVs"
+          }
+        ]
+      },
+      {
+        "heading": "What this stage establishes",
+        "paragraphs": [
+          "This session produced an initial facade asset set, a first Blender-to-Unreal import test, and a second modeling and in-engine assembly pass informed by the proportions observed in the environment.",
+          "It is still an early building kit. The work does not yet establish a complete residential building, a finished retrofit system, or a kit validated across the entire district. Glass geometry is part of the set, while its final in-engine appearance remains a separate material task.",
+          "The most useful lesson was to evaluate assets in context before expanding them. The first import made the components available in Unreal; the facade test gave the next modeling pass a concrete direction."
+        ]
+      }
+    ]
   }
 ]
