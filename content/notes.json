@@ -178,8 +178,7 @@
       {
         "heading": "Read spatial data from a spline",
         "paragraphs": [
-          "The first experiment focused on spline control points, interpolation, and tangents. A Spline Component defines a continuous path but does not automatically deform attached geometry.",
-          "An Arrow Component was used to visualize Location and Rotation sampled at a specified distance along the spline. These values were applied through the Construction Script, allowing the Arrow to follow the path's position and orientation.",
+          "The first experiment focused on spline control points, interpolation, and tangents. A Spline Component defines a continuous path but does not automatically deform attached geometry. An Arrow Component was used to visualize Location and Rotation sampled at a specified distance along the spline. These values were applied through the Construction Script, allowing the Arrow to follow the path's position and orientation.",
           "This also introduced the importance of coordinate spaces. The Arrow experiment used world-space transforms, while the later mesh deformation workflow used local-space spline data."
         ]
       },
@@ -187,10 +186,8 @@
         "heading": "Generate continuous geometry",
         "paragraphs": [
           "The next stage used Spline Mesh Components to deform geometry between adjacent spline points. Each segment receives start and end positions together with their corresponding tangents.",
-          "The initial test with Unreal Engine's default Cube produced substantial distortion around bends. Its limited subdivision density was insufficient to represent the curved deformation effectively.",
-          "A replacement test mesh was created in Modeling Mode with additional longitudinal subdivisions. Its Forward Axis was then matched to the actual length direction of the asset, improving the deformation result.",
-          "After validating one segment, the Construction Script was extended with a For Loop. For an open spline containing N control points, the script generates N − 1 segments. Each iteration creates a new Spline Mesh Component and retrieves Location and Tangent from points i and i + 1.",
-          "This allows the system to generate an entire continuous path without manually configuring individual segments. The resulting geometry was tested in the Level Editor and updated correctly when spline control points were modified."
+          "The initial test with Unreal Engine's default Cube produced substantial distortion around bends. Its limited subdivision density was insufficient to represent the curved deformation effectively. A replacement test mesh was created in Modeling Mode with additional longitudinal subdivisions. Its Forward Axis was then matched to the actual length direction of the asset, improving the deformation result.",
+          "After validating one segment, the Construction Script was extended with a For Loop. For an open spline containing N control points, the script generates N − 1 segments. Each iteration creates a new Spline Mesh Component and retrieves Location and Tangent from points i and i + 1. This allows the system to generate an entire continuous path without manually configuring individual segments. The resulting geometry was tested in the Level Editor and updated correctly when spline control points were modified."
         ],
         "media": [
           {
@@ -207,10 +204,8 @@
       {
         "heading": "Distribute fixed-size objects",
         "paragraphs": [
-          "Spline Mesh deformation works well for continuous surfaces, but embedded geometric details can stretch when segment lengths change. Repeated objects such as railway sleepers require a different approach.",
-          "An Instanced Static Mesh Component was introduced to investigate fixed-interval placement.",
-          "The script derives the loop's final index by taking Floor of the spline length divided by an exposed Spacing parameter. Starting at index zero, each iteration samples Location and Rotation at a distance determined by the current index multiplied by Spacing.",
-          "These values are combined into a Transform and passed to Add Instance. Previous instances are cleared before reconstruction to prevent duplication.",
+          "Spline Mesh deformation works well for continuous surfaces, but embedded geometric details can stretch when segment lengths change. Repeated objects such as railway sleepers require a different approach. An Instanced Static Mesh Component was introduced to investigate fixed-interval placement.",
+          "The script derives the loop's final index by taking Floor of the spline length divided by an exposed Spacing parameter. Starting at index zero, each iteration samples Location and Rotation at a distance determined by the current index multiplied by Spacing. These values are combined into a Transform and passed to Add Instance. Previous instances are cleared before reconstruction to prevent duplication.",
           "The Blueprint compiled successfully, and the resulting instances followed the test path. However, the placeholder geometry still showed orientation and presentation issues. This remains an instancing experiment rather than a finished railway asset."
         ],
         "media": [
@@ -228,18 +223,14 @@
       {
         "heading": "Geometry and coordinate considerations",
         "paragraphs": [
-          "Several implementation issues highlighted the importance of preparing geometry for procedural deformation.",
-          "Insufficient mesh subdivision produced poor results around curved segments. Increasing longitudinal subdivision density improved the approximation of the spline.",
-          "The mesh's Forward Axis also needed to match its actual length direction. The custom test mesh used Y as its deformation axis, while the instanced Cube followed its own local transform conventions.",
-          "Pivot placement and model orientation affected how geometry was positioned relative to the spline and how its dimensions appeared in the viewport. These observations reinforced the need for consistent asset conventions.",
-          "Finally, the checker pattern on the deformed surface visibly stretched as spline segments changed length. This demonstrated why continuous geometry and repeated fixed-size components should not necessarily use the same generation method."
+          "Several implementation issues highlighted the importance of preparing geometry for procedural deformation. Insufficient mesh subdivision produced poor results around curved segments. Increasing longitudinal subdivision density improved the approximation of the spline. The mesh's Forward Axis also needed to match its actual length direction. The custom test mesh used Y as its deformation axis, while the instanced Cube followed its own local transform conventions.",
+          "Pivot placement and model orientation affected how geometry was positioned relative to the spline and how its dimensions appeared in the viewport. These observations reinforced the need for consistent asset conventions. Finally, the checker pattern on the deformed surface visibly stretched as spline segments changed length. This demonstrated why continuous geometry and repeated fixed-size components should not necessarily use the same generation method."
         ]
       },
       {
         "heading": "Results and next steps",
         "paragraphs": [
-          "The experiment established a functional Blueprint prototype for editable spline-based geometry generation, combining continuous Spline Mesh segments with fixed-spacing Instanced Static Mesh placement.",
-          "The continuous mesh workflow was validated through Level Editor modifications. The instancing workflow was implemented, but its visual presentation remains provisional.",
+          "The experiment established a functional Blueprint prototype for editable spline-based geometry generation, combining continuous Spline Mesh segments with fixed-spacing Instanced Static Mesh placement. The continuous mesh workflow was validated through Level Editor modifications. The instancing workflow was implemented, but its visual presentation remains provisional.",
           "The prototype is not a completed tram system. Production-ready track geometry, asset alignment, broader reuse testing, and integration into the coastal district remain future work. Vehicle movement, switches, and transport simulation were outside the scope of this experiment.",
           "The primary outcome was a better understanding of spline data, procedural component creation, and instancing as practical tools for environment production. Future development will depend on Confluence's visual and production requirements rather than expanding the system unnecessarily."
         ]
@@ -269,23 +260,20 @@
       {
         "heading": "Move from blockout to individual assets",
         "paragraphs": [
-          "After the spline infrastructure prototype, I shifted toward modular architecture. The aim was to begin producing architectural elements that could be evaluated in Confluence’s environment, bringing asset creation into the development process early.",
-          "The first set consisted of a plain wall, a wall with a window opening, and a separate window frame. Working with a limited set kept the focus on modeling, UV preparation, and the transfer from Blender to Unreal before expanding the range of components."
+          "After the spline infrastructure prototype, I shifted toward modular architecture. The aim was to begin producing architectural elements that could be evaluated in Confluence’s environment, bringing asset creation into the development process early. The first set consisted of a plain wall, a wall with a window opening, and a separate window frame. Working with a limited set kept the focus on modeling, UV preparation, and the transfer from Blender to Unreal before expanding the range of components."
         ]
       },
       {
         "heading": "Establish the first Blender-to-Unreal pass",
         "paragraphs": [
-          "Preparing the initial assets involved working through wall openings, frame geometry, UVs, modifiers, and object origins. The first set was then exported from Blender and imported into Unreal Engine 5.",
-          "In the initial engine test, the opening passed through the wall correctly, while the applied PBR material and texture scale appeared reasonable. This provided a working starting point for evaluating the assets inside the environment.",
+          "Preparing the initial assets involved working through wall openings, frame geometry, UVs, modifiers, and object origins. The first set was then exported from Blender and imported into Unreal Engine 5. In the initial engine test, the opening passed through the wall correctly, while the applied PBR material and texture scale appeared reasonable. This provided a working starting point for evaluating the assets inside the environment.",
           "The important step was moving beyond an isolated model. Once the components were placed in an architectural arrangement, their proportions could be judged against the surrounding facade and balcony."
         ]
       },
       {
         "heading": "Separate module size from opening size",
         "paragraphs": [
-          "The test supported keeping a 2-meter wall module as the base unit. A 4-meter balcony frontage could accommodate two units, providing space for a window and a full-height opening alongside each other.",
-          "The initial 1.2 × 1.4-meter window appeared suitable for a side facade, but felt small on the balcony-facing elevation. This was less apparent at a medium viewing distance and more noticeable close up.",
+          "The test supported keeping a 2-meter wall module as the base unit. A 4-meter balcony frontage could accommodate two units, providing space for a window and a full-height opening alongside each other. The initial 1.2 × 1.4-meter window appeared suitable for a side facade, but felt small on the balcony-facing elevation. This was less apparent at a medium viewing distance and more noticeable close up.",
           "Rather than changing the entire wall module, I kept its width and developed alternative openings. The module establishes the assembly rhythm; the opening proportions respond to the particular facade condition."
         ],
         "media": [
@@ -293,16 +281,16 @@
             "layout": "paired",
             "images": [
               {
-                "src": "/assets/notes/confluence-first-modular-facade-assets/balcony-small-window.webp",
+                "src": "/assets/notes/confluence-first-modular-facade-assets/balcony-small-window.webp?v=20261025",
                 "width": 1200,
                 "height": 900,
-                "alt": "Smaller framed window on the left of a full-height opening in the balcony facade, with the floor and adjacent walls providing a shared proportion reference."
+                "alt": "Front orthographic Unreal Engine view of the smaller framed window beside a full-height opening, with the wall seams and opening base providing a shared proportion reference."
               },
               {
-                "src": "/assets/notes/confluence-first-modular-facade-assets/balcony-large-window.webp",
+                "src": "/assets/notes/confluence-first-modular-facade-assets/balcony-large-window.webp?v=20261025",
                 "width": 1200,
                 "height": 900,
-                "alt": "Larger framed window on the left of the same full-height opening, shown at the same scale and in substantially the same balcony view as the smaller variation."
+                "alt": "Matching front orthographic view of the larger framed window beside the unchanged full-height opening, shown at the same scale as the smaller variation."
               }
             ],
             "caption": "Window proportion iteration · The smaller opening (left) and the larger variation (right), compared within the same balcony facade."
@@ -312,24 +300,15 @@
       {
         "heading": "Build the next opening variations",
         "paragraphs": [
-          "The next modeling pass added two opening sizes: 1.6 × 1.5 meters and 1.6 × 2.3 meters. Each variation included a matching wall, separate frame, and glass geometry, with UV preparation completed in Blender.",
-          "The new frames also received a 45-degree angle-based smoothing treatment. This made shading preparation part of the asset workflow alongside geometry and UVs.",
-          "The larger window and full-height opening were then imported into Unreal and assembled into the balcony facade. Comparing the smaller and larger window in substantially the same view made the change in facade proportions easier to assess. They remain simple architectural components at this stage, without detailed opening mechanisms or hardware.",
-          "To keep the growing set easy to navigate, I retained “Window” in the asset naming and used dimensions to distinguish the variations."
+          "The next modeling pass added two opening sizes: 1.6 × 1.5 meters and 1.6 × 2.3 meters. Each variation included a matching wall, separate frame, and glass geometry, with UV preparation completed in Blender. The new frames also received a 45-degree angle-based smoothing treatment. This made shading preparation part of the asset workflow alongside geometry and UVs.",
+          "The larger window and full-height opening were then imported into Unreal and assembled into the balcony facade. Comparing the smaller and larger window in substantially the same view made the change in facade proportions easier to assess. They remain simple architectural components at this stage, without detailed opening mechanisms or hardware. To keep the growing set easy to navigate, I retained “Window” in the asset naming and used dimensions to distinguish the variations."
         ],
         "media": [
           {
-            "src": "/assets/notes/confluence-first-modular-facade-assets/opening-variations.webp",
-            "width": 1600,
+            "src": "/assets/notes/confluence-first-modular-facade-assets/window-frame-uv.webp?v=20261025",
+            "width": 2020,
             "height": 1200,
-            "alt": "Blender viewport showing two complete wall modules side by side, with a wider window opening on the left and a full-height opening on the right, retaining both frame outlines and the bottom wall boundaries.",
-            "caption": "Opening variations in Blender · The larger window and full-height opening developed within matching wall modules."
-          },
-          {
-            "src": "/assets/notes/confluence-first-modular-facade-assets/window-frame-uv.webp",
-            "width": 2520,
-            "height": 1140,
-            "alt": "Blender showing the complete selected window-frame UV layout on the left and the complete rectangular frame mesh on the right.",
+            "alt": "Complete selected window-frame UV islands on the left and the complete orthographic frame mesh on the right, shown together in Blender.",
             "caption": "Window-frame UV preparation · The frame geometry and its UV layout inspected in Blender.",
             "disclosure": "Supporting evidence / Window-frame UVs"
           }
@@ -338,8 +317,7 @@
       {
         "heading": "What this stage establishes",
         "paragraphs": [
-          "This session produced an initial facade asset set, a first Blender-to-Unreal import test, and a second modeling and in-engine assembly pass informed by the proportions observed in the environment.",
-          "It is still an early building kit. The work does not yet establish a complete residential building, a finished retrofit system, or a kit validated across the entire district. Glass geometry is part of the set, while its final in-engine appearance remains a separate material task.",
+          "This session produced an initial facade asset set, a first Blender-to-Unreal import test, and a second modeling and in-engine assembly pass informed by the proportions observed in the environment. It is still an early building kit. The work does not yet establish a complete residential building, a finished retrofit system, or a kit validated across the entire district. Glass geometry is part of the set, while its final in-engine appearance remains a separate material task.",
           "The most useful lesson was to evaluate assets in context before expanding them. The first import made the components available in Unreal; the facade test gave the next modeling pass a concrete direction."
         ]
       }
