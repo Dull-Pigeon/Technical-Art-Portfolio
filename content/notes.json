@@ -327,7 +327,7 @@
     "slug": "confluence-window-kit-facade-assembly",
     "date": "2026-10-31",
     "project": "Project Confluence",
-    "title": "Project Confluence — From Window Kit to Parameterized Facade Assembly",
+    "title": "Project Confluence — Window Kit and Facade Assembly",
     "summary": "Developing a parameterized Blender tool for window-module preparation, checking the generated assets in Unreal Engine 5, and extending the workflow with adjustable Blueprint facade assembly.",
     "tags": [
       "Blender",
@@ -387,15 +387,15 @@
             "layout": "paired",
             "images": [
               {
-                "src": "/assets/notes/confluence-window-kit-facade-assembly/facade-five-columns-two-floors.webp",
-                "width": 800,
-                "height": 878,
+                "src": "/assets/notes/confluence-window-kit-facade-assembly/facade-five-columns-two-floors.webp?v=20261031-2",
+                "width": 576,
+                "height": 648,
                 "alt": "Complete five-column, two-floor facade array with the original Columns 5 and Floors 2 settings below, alongside module width 200.0 and height 320.0."
               },
               {
-                "src": "/assets/notes/confluence-window-kit-facade-assembly/facade-eight-columns-three-floors.webp",
-                "width": 800,
-                "height": 878,
+                "src": "/assets/notes/confluence-window-kit-facade-assembly/facade-eight-columns-three-floors.webp?v=20261031-2",
+                "width": 576,
+                "height": 648,
                 "alt": "Complete eight-column, three-floor facade array at a different viewport scale, with Columns 8, Floors 3, module width 200.0 and height 320.0 settings below."
               }
             ],
