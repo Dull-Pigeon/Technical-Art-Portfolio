@@ -322,5 +322,94 @@
         ]
       }
     ]
+  },
+  {
+    "slug": "confluence-window-kit-facade-assembly",
+    "date": "2026-10-31",
+    "project": "Project Confluence",
+    "title": "Project Confluence — From Window Kit to Parameterized Facade Assembly",
+    "summary": "Developing a parameterized Blender tool for window-module preparation, checking the generated assets in Unreal Engine 5, and extending the workflow with adjustable Blueprint facade assembly.",
+    "tags": [
+      "Blender",
+      "Unreal Engine 5",
+      "Tool Development",
+      "Modular Environment"
+    ],
+    "hero": {
+      "src": "/assets/notes/confluence-window-kit-facade-assembly/facade-assembly-context.webp",
+      "width": 1920,
+      "height": 1101,
+      "alt": "Unreal Engine 5 perspective view of the existing balcony facade beside a repeated three-column, two-floor window assembly, with wall depth and provisional materials visible.",
+      "caption": "Facade assembly test in Unreal Engine 5 · Repeated window modules placed alongside the existing balcony facade."
+    },
+    "media": [],
+    "body": [
+      {
+        "heading": "Identify the repeated preparation work",
+        "paragraphs": [
+          "Following the first modular facade asset pass, the next step was to examine which parts of the workflow could be reused across opening variations. The wall, frame, and glass had related dimensions, while each variation also required UV preparation, consistent object origins, and export work. These repeated tasks provided a practical starting point for a small Blender tool, with the existing manually prepared assets serving as a reference for evaluating its output.",
+          "The aim was to make component preparation easier to adjust as the building developed. Opening proportions would still be judged in the environment, but producing another variation would no longer require working through every preparation step separately."
+        ]
+      },
+      {
+        "heading": "Develop a parameterized Window Kit",
+        "paragraphs": [
+          "With AI and Codex assistance, the repeated preparation workflow developed into Window Kit, a Blender add-on with a parameter panel and generation-and-export controls. I defined the module requirements, tested the panel, and used the generated results to check whether the tool preserved the intended asset conventions. The interface also brought the opening preset, module specifications, output mode, and run summary into one place, making the current configuration easier to review.",
+          "The tool connects geometry generation with asset preparation and export, while keeping the resulting assets available for inspection. This matters because a successful tool run is only one part of the workflow: the geometry, UVs, and placement conventions still need to behave as expected when the components are used in the environment."
+        ],
+        "media": [
+          {
+            "src": "/assets/notes/confluence-window-kit-facade-assembly/window-kit-interface.webp",
+            "width": 1584,
+            "height": 1188,
+            "alt": "Blender view showing a complete wall, dark window frame and blue viewport glass beside the Window Kit parameter, Production export and run-summary interface.",
+            "caption": "Window Kit in Blender · A wall, frame, and glass module shown alongside the tool’s parameter and export interface.",
+            "disclosure": "Supporting evidence / Window Kit interface",
+            "readableWidth": 900
+          }
+        ]
+      },
+      {
+        "heading": "Check the generated assets in Unreal",
+        "paragraphs": [
+          "The October 31 inspection compared the generated components with the earlier manual workflow. For the checked 1.6 × 1.5-meter window variation, the generated wall had the expected pivot placement, the UVs reviewed in Blender appeared consistent with the manual baseline, and the glass geometry had also been unwrapped. The generated assets were then tested in Unreal Engine 5, with no obvious issues found in the inspected use.",
+          "This established a working path from the Blender tool to an in-engine module that could be used for further assembly. The facade remained in a structural testing stage, with provisional material appearances; the check concerned the generated components and their use in the scene rather than a finished surface treatment or validation of every possible tool configuration."
+        ]
+      },
+      {
+        "heading": "Extend the workflow with facade assembly",
+        "paragraphs": [
+          "Once the generated components were available in Unreal, the next task was to repeat them without positioning every wall, frame, and glass element individually. BP_ModularFacade was developed as a two-dimensional assembly prototype, using separate Instanced Static Mesh components for the three mesh groups. Corresponding instances share the same grid positions, allowing the components to form repeated window modules across columns and floors.",
+          "All three component groups were tested successfully, and changes to the Columns and Floors parameters updated the arrangement as expected. The recorded configurations include five columns across two floors and eight columns across three floors, demonstrating how the current module can form different facade extents through the same assembly logic. At this stage, the Blueprint repeats one complete window-module set; selecting and combining different module types remains the next development step."
+        ],
+        "media": [
+          {
+            "layout": "paired",
+            "images": [
+              {
+                "src": "/assets/notes/confluence-window-kit-facade-assembly/facade-five-columns-two-floors.webp",
+                "width": 800,
+                "height": 878,
+                "alt": "Complete five-column, two-floor facade array with the original Columns 5 and Floors 2 settings below, alongside module width 200.0 and height 320.0."
+              },
+              {
+                "src": "/assets/notes/confluence-window-kit-facade-assembly/facade-eight-columns-three-floors.webp",
+                "width": 800,
+                "height": 878,
+                "alt": "Complete eight-column, three-floor facade array at a different viewport scale, with Columns 8, Floors 3, module width 200.0 and height 320.0 settings below."
+              }
+            ],
+            "caption": "Facade array configurations · Five columns across two floors, compared with eight columns across three floors."
+          }
+        ]
+      },
+      {
+        "heading": "Results and next steps",
+        "paragraphs": [
+          "This stage connects component preparation in Blender with repeated assembly in Unreal. Window Kit provides an adjustable way to generate the assets, while BP_ModularFacade controls their distribution across a facade. AI and Codex assisted with tool implementation; my work focused on defining the requirements, testing the output, working through the Blueprint assembly logic, and evaluating the results against Confluence’s architectural needs.",
+          "The current result is a tested generation-and-assembly workflow for the inspected window module, with working column and floor controls. Time savings and rendering performance have not been measured. The next step is to introduce module-type selection and evaluate the assembly within a more representative building arrangement, with material refinement following the structural work."
+        ]
+      }
+    ]
   }
 ]
