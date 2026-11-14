@@ -483,5 +483,77 @@
         ]
       }
     ]
+  },
+  {
+    "slug": "confluence-four-sided-building-shell",
+    "date": "2026-11-14",
+    "project": "Project Confluence",
+    "title": "Project Confluence — Assembling a Four-Sided Building Shell",
+    "summary": "Extending a two-facade corner into a four-sided building shell, testing how different facade layouts affect its footprint, and moving the placement logic into a reusable Blueprint function.",
+    "tags": [
+      "Unreal Engine 5",
+      "Blueprint",
+      "Modular Environment"
+    ],
+    "hero": {
+      "src": "/assets/notes/confluence-four-sided-building-shell/building-shell-in-level.webp",
+      "width": 1920,
+      "height": 1080,
+      "alt": "Elevated view of an open-topped building shell in a sunlit Unreal Engine level, showing all four wall tops, two exterior facades with window and full-height openings, and the front corner at ground level.",
+      "caption": "Four-sided building shell · Modular facades arranged around a rectangular footprint in Unreal Engine 5."
+    },
+    "media": [],
+    "body": [
+      {
+        "heading": "Check how the corner responds to a layout change",
+        "paragraphs": [
+          "The previous building prototype used two modular facades to test how a corner responds to changes in module spacing. This time, I changed the column count of the first facade. When the building’s Construction Script ran again, the second facade moved to the expected position. This confirmed that a change to the facade layout could drive the placement of an adjoining wall."
+        ]
+      },
+      {
+        "heading": "Place all four facades",
+        "paragraphs": [
+          "I extended BP_ModularBuilding to place four facade actors around a rectangular footprint. Facade A provides the reference, and the Blueprint uses the spans of the adjoining walls to position the other sides. At the corners, B and D are offset to leave the thickness of the A and C walls visible. I adjusted the rotations of C and D to 180° and 90°, respectively, so that their module layouts extended in the intended directions.",
+          "One editor comparison shows Facade B in two configurations, with two columns and three columns. Both use a module width of 200 cm and two floors. The opening arrangement also differs between the two views, which show how the four walls meet around footprints of different depths."
+        ],
+        "media": [
+          {
+            "layout": "paired",
+            "images": [
+              {
+                "src": "/assets/notes/confluence-four-sided-building-shell/facade-b-2-columns.webp",
+                "width": 600,
+                "height": 848,
+                "alt": "Four-sided shell with a shorter right facade and two upper windows on that side. The settings below show Columns 2, Module Width 200.0, Floors 2, and 4 Module Types array elements."
+              },
+              {
+                "src": "/assets/notes/confluence-four-sided-building-shell/facade-b-3-columns.webp",
+                "width": 600,
+                "height": 848,
+                "alt": "Four-sided shell with a longer right facade, three upper windows, and a full-height lower opening on that side. The settings below show Columns 3, Module Width 200.0, Floors 2, and 6 Module Types array elements."
+              }
+            ],
+            "caption": "Facade B layout test · Two- and three-column configurations at a fixed module width of 200 cm."
+          }
+        ]
+      },
+      {
+        "heading": "Extract the placement logic into a function",
+        "paragraphs": [
+          "Once the four walls were positioning as expected, I moved the placement logic into PositionFacades. The function calculates Facade A’s span from its column count and module width, then uses half the wall thickness when setting Facade B’s relative position. BuildFacade handles the arrangement of modules on each wall, and PositionFacades determines how the walls meet. The next step is to fit a roof to the assembled footprint before developing balcony, railing, and shading components for the residential prototype."
+        ],
+        "media": [
+          {
+            "src": "/assets/notes/confluence-four-sided-building-shell/position-facades-facade-b.webp",
+            "width": 3718,
+            "height": 588,
+            "alt": "Blueprint chain from PositionFacades to Set Relative Location for Facade B. It divides Thickness by 2 and multiplies Facade A's Columns by Module Width. The location uses A's span minus half thickness on X, negative half thickness on Y, and zero on Z.",
+            "caption": "PositionFacades excerpt · Facade A’s span and half the wall thickness determine Facade B’s relative position.",
+            "disclosure": "PositionFacades · Facade B placement",
+            "readableWidth": 3200
+          }
+        ]
+      }
+    ]
   }
 ]
