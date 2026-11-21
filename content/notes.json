@@ -555,5 +555,77 @@
         ]
       }
     ]
+  },
+  {
+    "slug": "confluence-corner-modules-and-building-dimensions",
+    "date": "2026-11-21",
+    "project": "Project Confluence",
+    "title": "Project Confluence — Corner Modules and Adjustable Building Dimensions",
+    "summary": "Adding instanced corner modules to the four-sided building shell and testing how they respond to changes in facade dimensions and floor count.",
+    "tags": [
+      "Unreal Engine 5",
+      "Blueprint",
+      "Modular Environment"
+    ],
+    "hero": {
+      "src": "/assets/notes/confluence-corner-modules-and-building-dimensions/building-shell-in-context.webp",
+      "width": 1920,
+      "height": 1080,
+      "alt": "Two-story building shell in a sunlit Unreal Engine level, with windows, ground-level openings, and a continuous corner piece running from the wall tops to the base.",
+      "caption": "Building shell in context · Modular facades and corner pieces assembled in the Unreal Engine 5 level."
+    },
+    "media": [],
+    "body": [
+      {
+        "heading": "Add corner modules to the building shell",
+        "paragraphs": [
+          "The previous building prototype positioned four modular facades around a rectangular footprint. I extended the shell with four corner modules using an Instanced Static Mesh component. These pieces sit at the junctions between the facades, giving each corner a consistent element that can be placed as part of the building assembly.",
+          "The current corner mesh is used to test the structural arrangement in the environment. Its final appearance can be developed alongside the rest of the residential building."
+        ],
+        "media": [
+          {
+            "src": "/assets/notes/confluence-corner-modules-and-building-dimensions/corner-placement.webp",
+            "width": 1180,
+            "height": 790,
+            "alt": "High-angle view into the open building shell, showing the tops of all four walls and the near corner piece joining two facades. The lower walls extend past the bottom of the view.",
+            "caption": "Corner placement · An instanced corner piece at the junction of the modular facades."
+          }
+        ]
+      },
+      {
+        "heading": "Test changes to the building dimensions",
+        "paragraphs": [
+          "I tested the shell by changing its width, depth, and floor count. The facades and corner instances updated as the dimensions changed, and the corner height scaled with the number of floors. This allowed the same assembly to accommodate different building proportions while keeping the corners aligned with the surrounding walls.",
+          "The comparison shows Facade B with two and three columns at a module width of 200 cm and a height of two floors. The facade extends further in the second configuration, while the corner remains positioned at the edge of the building."
+        ],
+        "media": [
+          {
+            "layout": "paired",
+            "images": [
+              {
+                "src": "/assets/notes/confluence-corner-modules-and-building-dimensions/facade-b-2-columns.webp",
+                "width": 600,
+                "height": 936,
+                "alt": "Building shell with a corner piece at each visible facade edge and two upper windows on the shorter right facade. The settings show Columns 2, Floors 2, Module Width 200.0, and Module Height 320.0."
+              },
+              {
+                "src": "/assets/notes/confluence-corner-modules-and-building-dimensions/facade-b-3-columns.webp",
+                "width": 600,
+                "height": 936,
+                "alt": "Building shell with three upper windows on the longer right facade and its far corner piece aligned at the outer edge. The settings show Columns 3, Floors 2, Module Width 200.0, and Module Height 320.0."
+              }
+            ],
+            "caption": "Facade dimension test · Two- and three-column configurations at a fixed module width of 200 cm."
+          }
+        ]
+      },
+      {
+        "heading": "Organize the building workflow",
+        "paragraphs": [
+          "After testing the corner placement, I organized the building logic under BuildBuildingShell. The workflow calculates the dimensions used by the shell, builds the corner instances, and positions the facades. Separating these steps makes the current assembly easier to inspect as the building system develops.",
+          "The next step is to add a simple roof slab that responds to the footprint. With the basic shell in place, I can then return to the architectural and visual development of the residential building."
+        ]
+      }
+    ]
   }
 ]
