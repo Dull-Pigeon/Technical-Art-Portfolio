@@ -4,8 +4,9 @@
   "email": null,
   "resume": null,
   "focusAreas": ["Shaders", "VFX", "Systems", "Environments"],
-  "intro": "Technical Art studies across Unity and Unreal Engine 5, from material response to early environment workflows.",
-  "about": "Computer Science undergraduate focused on Technical Art across Unity and Unreal Engine 5, with an emphasis on how authored data, runtime logic and rendering produce readable visual behavior. Project Kinetica is a completed Unity material-response study; current development centers on Project Confluence, an early UE5 coastal district environment. The work combines district blockout with separate sandbox experiments in parameter-driven Blueprint construction, height-based material wetness and real-time rendering.",
+  "headline": ["MAKING", "visual ideas real."],
+  "intro": "From shader-driven material response to modular environment construction, I build and refine the systems behind visual ideas.",
+  "about": "I’m a computer science undergraduate exploring technical art and environment art. Whether it’s the spring of a soft surface or the shape of a hillside street, the look I have in mind guides what I build. The breakdown and development notes share the tests and revisions behind the images.",
   "projects": [
     {
       "slug": "kinetica",
@@ -13,7 +14,8 @@
       "category": "Real-time material response",
       "engine": "Unity 6 · URP",
       "status": "Completed study",
-      "summary": "A focused Technical Art study connecting weapon motion, impact evaluation, vertex deformation and material-specific particles.",
+      "statement": "Impact takes different forms.",
+      "summary": "Kinetica samples weapon motion and evaluates each impact in Unity. The result drives localized vertex deformation and material-specific VFX, giving Slime a springy rebound, Stone a burst of debris and Metal a brief spray of sparks.",
       "published": true,
       "preview": {
         "src": "/assets/kinetica/hero.webp",
@@ -29,7 +31,8 @@
       "category": "Environment study",
       "engine": "Unreal Engine 5",
       "status": "In development",
-      "summary": "An early climate-adaptive coastal district study in UE5, with graybox blockout and separate Blueprint, material and rendering experiments.",
+      "statement": "Life along a changing coast.",
+      "summary": "An ongoing Unreal Engine 5 study of a dense coastal city adapting to a changing climate. A terraced blockout places housing alongside a rail corridor, while modular facade tests explore how its residential buildings fit together.",
       "published": false,
       "previewLabel": "Early blockout",
       "noteUrl": "/notes/confluence-corner-modules-and-building-dimensions/",

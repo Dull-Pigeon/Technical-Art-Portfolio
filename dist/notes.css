@@ -1,0 +1,62 @@
+.journal-opening h1 {
+  margin: clamp(16px, 2vw, 30px) 0 0;
+  font-size: clamp(2.5rem, 5vw, 4.75rem);
+}
+.archive-month {
+  display: grid;
+  grid-template-columns: minmax(9rem, .22fr) minmax(0,1fr);
+  column-gap: clamp(22px, 3vw, 48px);
+  border-top: 1px solid var(--line);
+}
+.archive-month h2 {
+  align-self: start;
+  padding-top: clamp(22px, 2.35vw, 35px);
+  color: var(--accent);
+  font-family: inherit;
+  font-size: .94rem;
+  font-weight: 600;
+  letter-spacing: .07em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+.archive-month .note-list { border: 0; }
+.archive-month .note-preview-copy { grid-template-columns: 7rem minmax(0,1fr); column-gap: clamp(16px, 2vw, 30px); }
+.article-dateline { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 20px; }
+.article-dateline .note-date { grid-row: auto; }
+.note-heading { margin-block: clamp(24px, 3.5vw, 54px) clamp(22px, 2.6vw, 38px); }
+.note-heading h1 { margin: 0 0 16px; font: 500 clamp(2rem, 3.55vw, 3.55rem)/1.1 var(--serif); letter-spacing: -.045em; }
+.note-summary { font-size: clamp(1.06rem, 1.4vw, 1.23rem); line-height: 1.55; }
+.note-page > .note-media { margin: 0; }
+.note-page .note-media { background: var(--panel); }
+.note-page figcaption { padding: 10px 14px; font-size: .875rem; line-height: 1.5; }
+.article-reading { display: grid; grid-template-columns: minmax(10rem,.27fr) minmax(0,1fr); gap: clamp(28px, 4.5vw, 70px); padding-block: clamp(32px, 4.5vw, 68px); }
+.article-reading .note-body { grid-column: 2; min-width: 0; }
+.article-reading aside nav { position: sticky; top: 22px; max-height: calc(100vh - 44px); overflow-y: auto; display: grid; gap: 0; padding: 4px 7px; }
+.article-reading aside nav span { border-top: 1px solid var(--line); padding-block: 10px 8px; font: italic 1.25rem var(--serif); }
+.article-reading aside nav a { padding: 7px 0; color: var(--muted); font-size: .94rem; font-weight: 400; line-height: 1.42; }
+.article-reading aside nav a:is(:hover,:focus-visible) { color: var(--accent); }
+.note-body section { margin-bottom: clamp(30px, 3.5vw, 55px); }
+.note-body section:last-child, .note-body .tags { margin-bottom: 0; }
+.note-body h2 { font: 500 clamp(1.55rem, 2.35vw, 2.2rem)/1.15 var(--serif); letter-spacing: -.035em; }
+.note-body section > p { color: var(--ink); font-size: 1.0625rem; line-height: 1.72; }
+.note-body summary { padding: 4px; font-size: 1rem; color: var(--accent); }
+.article-navigation { display: block; border-top: 1px solid var(--line); padding: 16px 0 clamp(26px, 3.5vw, 54px); }
+.neighbors { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px clamp(28px, 5vw, 78px); align-items: start; }
+.neighbor { min-width: 0; display: grid; justify-items: start; gap: 5px; padding-top: 12px; }
+.neighbor-next { grid-column: 2; justify-items: end; text-align: right; }
+.neighbor:only-child { grid-column: 1 / -1; }
+.neighbor > span { color: var(--muted); font-size: .94rem; font-weight: 400; line-height: 1.45; }
+.neighbor .heading-link { padding: 0; font: 500 clamp(1.2rem, 1.7vw, 1.65rem)/1.2 var(--serif); letter-spacing: -.025em; }
+@media (max-width: 850px) {
+  .archive-month { display: block; }
+  .archive-month h2 { padding-top: 18px; }
+  .article-reading { display: block; }
+  .article-reading aside { display: none; }
+}
+@media (max-width: 650px) {
+  .archive-month .note-preview-copy, .neighbors { grid-template-columns: minmax(0,1fr); }
+  .neighbor-next { grid-column: 1; justify-items: start; text-align: left; }
+  .article-dateline { display: grid; }
+  .note-heading { margin-top: 18px; }
+  .note-body section > p { font-size: 1rem; }
+}

@@ -1,37 +1,38 @@
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 const site = JSON.parse(readFileSync(new URL('../content/site.json', import.meta.url)));
 const project = JSON.parse(readFileSync(new URL('../content/kinetica.json', import.meta.url)));
 const notes = JSON.parse(readFileSync(new URL('../content/notes.json', import.meta.url)));
 const root = new URL('../dist/', import.meta.url);
+const stylesheet = name => {
+ const version = createHash('sha256').update(readFileSync(new URL(name, root))).digest('hex').slice(0, 12);
+ return `<link rel="stylesheet" href="/${name}?v=${version}">`;
+};
+const commonStyles = stylesheet('styles.css');
+const homeStyles = stylesheet('home.css');
+const caseStyles = stylesheet('kinetica.css');
+const notesStyles = stylesheet('notes.css');
 const basePath = (process.env.SITE_BASE_PATH || '').replace(/\/$/, '');
 if (basePath && !/^\/[A-Za-z0-9_/-]+$/.test(basePath)) throw new Error('Invalid SITE_BASE_PATH');
 const e = x => String(x).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 if (!Array.isArray(site.focusAreas) || !site.focusAreas.length || site.focusAreas.some(value => typeof value !== 'string' || !value.trim())) throw new Error('Site focus areas must contain nonempty text');
-const focusRows = Array.from({length:Math.ceil(site.focusAreas.length/2)},(_,i)=>site.focusAreas.slice(i*2,i*2+2));
+
 const a = (url,label,cls='',download=false) => `<a class="${cls}" href="${e(url)}"${download?' download':''}>${label}</a>`;
 // Text links are the default; only primary actions opt into button styling.
 const portfolioUrl = new URL('https://dull-pigeon.github.io/Technical-Art-Portfolio/');
-const action = (url,label,cls='text-link',direction='') => {
+const githubMark = readFileSync(new URL('assets/github-mark.svg',root),'utf8').trim();
+const action = (url,label,cls='text-link',icon='') => {
  const clean = label.replace(/^[←]\s*|\s*[→↗↓↑]$/g,'');
- const target = new URL(url,portfolioUrl);
- const relative = !/^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(url);
- const internal = relative || (target.origin === portfolioUrl.origin &&
-  (target.pathname === portfolioUrl.pathname.slice(0,-1) || target.pathname.startsWith(portfolioUrl.pathname)));
- const arrow = direction || (internal && target.hash === '#top' ? '↑' :
-  /\.pdf$/i.test(target.pathname) ? '↓' : internal ? '→' : '↗');
- const omitForwardArrow = arrow === '→' && cls.split(/\s+/).some(role => role === 'heading-link' || role === 'button');
- const text = `<span class="action-label">${e(clean)}</span>`;
- const marker = omitForwardArrow ? '' : `<span class="action-arrow" aria-hidden="true">${arrow === '↗' ? arrow+'\uFE0E' : arrow}</span>`;
- return a(url,arrow === '←' ? marker+text : text+marker,cls+' action-link',arrow === '↓');
+ const download = /\.pdf$/i.test(new URL(url,portfolioUrl).pathname);
+ return a(url,icon+`<span class="action-label">${e(clean)}</span>`,cls+' action-link',download);
 };
-const back = (url,parent) => action(url,parent,'text-link','←');
+const back = (url,parent) => action(url,'Back to '+parent);
 // Opt in per technical figure; ordinary photos and video posters still fit the page.
 const readableImage = (image,markup,label) => {
  if (image.readableWidth === undefined) return markup;
  if (!Number.isInteger(image.readableWidth) || image.readableWidth <= 0 || !Number.isInteger(image.width) || image.readableWidth > image.width || typeof label !== 'string' || !label.trim()) throw new Error('Readable images require a label and a positive minimum width within the source width');
- return `<div class="evidence-pan" tabindex="0" role="region" aria-label="${e(label)}. Scroll horizontally to inspect the image." style="--evidence-width:${image.readableWidth}px">${markup}</div>`;
+ return `<div class="evidence-pan" tabindex="0" role="region" aria-label="${e(label)}" style="--evidence-width:${image.readableWidth}px">${markup}</div>`;
 };
-const evidenceHint = image => image.readableWidth === undefined ? '' : '<p class="caption evidence-hint">Scroll horizontally to inspect the image.</p>';
 const previewToggle = (label='preview') => `<button class="preview-toggle" type="button" aria-label="Play ${e(label)}" hidden><svg class="preview-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg><svg class="preview-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg></button>`;
 const comparisonVideos = {materials:'/assets/kinetica/material-comparison.mp4',weapons:'/assets/kinetica/weapon-comparison.mp4'};
 const localComparison = (key,image) => {
@@ -44,7 +45,7 @@ const media = (key,compact=false) => {
  if (m.type !== undefined && !['external-video','local-video'].includes(m.type)) throw new Error('Unsupported project media type');
  let body=m.type==='local-video' ? localComparison(key,m) : m.type==='external-video' ? `<div class="external-video" data-external-video data-start="${m.start||0}" data-end="${m.end||0}" data-play-label="${e(m.playLabel||`Play ${m.label}`)}"${m.playCaption?` data-play-caption="${e(m.playCaption)}"`:''}><img src="${e(m.poster)}" alt="${e(m.alt)}" width="${width}" height="${height}" loading="lazy"><span class="video-play-icon" aria-hidden="true"></span></div>` : m.src ? `<img src="${e(m.src)}" alt="${e(m.alt)}" loading="${key==='hero'?'eager':'lazy'}" width="${width}" height="${height}">` : `<div class="media-placeholder"><span class="frame-corner" aria-hidden="true"></span><div><span class="micro">IMAGE</span><p>${e(m.label)}</p></div><span class="aspect micro">16:9</span></div>`;
  if (m.readableWidth !== undefined && (!m.src || m.type !== undefined)) throw new Error('Readable width is limited to technical images');
- return `${evidenceHint(m)}<figure class="media media-${e(key)} ${compact?'compact':''}">${readableImage(m,body,m.label)}${m.caption?`<figcaption>${e(m.caption)}</figcaption>`:''}</figure>`;
+ return `<figure class="media media-${e(key)} ${compact?'compact':''}">${readableImage(m,body,m.label)}${m.caption?`<figcaption>${e(m.caption)}</figcaption>`:''}</figure>`;
 };
 
 // Validate structured notes before writing any generated pages.
@@ -84,7 +85,7 @@ const noteSectionMedia = item => {
  if (item.disclosure !== undefined) {
   requiredText(item.disclosure, 'media disclosure label');
   if (item.layout !== undefined || item.images !== undefined) throw new Error('Note disclosures require a single full-width image');
-  return `<details class="note-evidence"><summary>${e(item.disclosure)} <span class="disclosure-marker" aria-hidden="true"></span></summary>${evidenceHint(item)}${noteImage(item)}</details>`;
+  return `<details class="note-evidence"><summary>${e(item.disclosure)} <span class="disclosure-marker" aria-hidden="true"></span></summary>${noteImage(item)}</details>`;
  }
  if (item.images === undefined) return noteImage(item);
  if (item.layout !== 'paired' || !Array.isArray(item.images) || item.images.length !== 2) throw new Error('Note comparisons require two images and paired layout');
@@ -127,7 +128,6 @@ for (const note of notes) {
  }
 }
 notes.sort((a,b) => b.date.localeCompare(a.date) || a.slug.localeCompare(b.slug));
-const noteMeta = note => `<div class="micro note-meta"><time datetime="${e(note.date)}">${e(note.date)}</time> / ${e(note.project)} / Development note</div>`;
 for (const item of site.projects) {
  if (item.preview !== undefined) {
   previewImage(item.preview);
@@ -140,28 +140,148 @@ for (const item of site.projects) {
   if (!notes.some(note=>item.noteUrl === '/notes/'+note.slug+'/')) throw new Error('Project preview must link to an existing note');
  }
 }
-const noteList = items => items.length ? `<div class="note-list">${items.map(note => `<article class="note-preview"><div class="note-preview-copy">${noteMeta(note)}<h3>${action('/notes/'+note.slug+'/',note.title,'heading-link')}</h3><p>${e(note.summary)}</p></div></article>`).join('')}</div>` : '<p>No development notes published yet.</p>';
-const homeNotes = `<section id="notes" class="home-notes" aria-labelledby="notes-heading"><div class="section-heading"><h2 id="notes-heading">${action('/notes/','Development Notes','heading-link')}</h2></div>${noteList(notes.slice(0,3))}</section>`;
+const noteList = (items, metadata, heading = 'h3') => items.length ? `<div class="note-list">${items.map(note => `<article class="note-preview"><div class="note-preview-copy">${metadata(note)}<${heading}>${action('/notes/'+note.slug+'/',note.title,'heading-link')}</${heading}><p>${e(note.summary)}</p></div></article>`).join('')}</div>` : '<p>No development notes published yet.</p>';
+const noteDate = note => `<time class="note-date" datetime="${e(note.date)}">${e(note.date)}</time>`;
+const homeNotes = `<section id="notes" class="home-notes" aria-labelledby="notes-heading"><div class="section-heading"><h2 id="notes-heading">${action('/notes/','Development Notes','heading-link')}</h2></div>${noteList(notes.slice(0,3),noteDate)}</section>`;
 const featuredProject = site.projects.find(item=>item.slug === 'kinetica' && item.published);
 if (!featuredProject) throw new Error('The completed Kinetica study must remain featured');
 const featuredImage = a('/projects/kinetica/',featuredProject.preview?previewImage(featuredProject.preview,true):media('hero'),'project-image');
-const featuredPreview = featuredProject.preview?.video ? `<div class="project-preview" data-home-preview>${featuredImage}${previewToggle()}</div>` : featuredImage;
-const upcomingProjects = site.projects.filter(item=>!item.published).map((item,index)=>item.preview ? `<article class="future future-preview">${a(item.noteUrl,previewImage(item.preview),'project-image secondary-project-image')}<div class="secondary-project-info"><span class="micro">${String(index+2).padStart(2,'0')} / ${e(item.category)}</span><h3>${action(item.noteUrl,item.name,'heading-link')}</h3><p>${e(item.summary)}</p><span class="micro project-progress">${item.previewLabel?e(item.previewLabel)+' / ':''}${e(item.status)}</span></div></article>` : `<article class="future"><div><span class="micro">${String(index+2).padStart(2,'0')} / ${e(item.category)}</span><h3>${item.noteUrl?action(item.noteUrl,item.name,'heading-link'):e(item.name)}</h3></div><p>${e(item.summary)}</p><span class="micro">${e(item.engine)}<br>${e(item.status)}</span></article>`).join('');
+const featuredPreview = featuredProject.preview?.video ? `<div class="project-preview" data-home-preview data-preview-label="Project Kinetica preview">${featuredImage}${previewToggle()}</div>` : featuredImage;
+const projectTitle = (href, name) => action(href, name.replace(/^Project /, ''), 'heading-link');
+const projectDescription = item => `${item.statement ? `<h4 class="project-statement">${e(item.statement)}</h4>` : ''}<p>${e(item.summary)}</p>`;
+const upcomingProjects = site.projects.filter(item => !item.published).map(item => {
+ const image = item.preview ? a(item.noteUrl,previewImage(item.preview),'project-image secondary-project-image') : '';
+ const title = item.noteUrl ? projectTitle(item.noteUrl,item.name) : e(item.name);
+ return `<article class="future${image?' future-preview':''}">${image}<h3 class="environment-title">${title}</h3><div class="secondary-project-info"><span class="project-progress">${item.previewLabel?e(item.previewLabel)+' / ':''}${e(item.status)}</span>${projectDescription(item)}</div></article>`;
+}).join('');
 
-const footer=()=>`<footer id="contact"><div><span class="micro">CONTACT / ELSEWHERE</span><h2>Lin Wenqi.</h2><p>Dull Pigeon is the public creator identity used for project repositories and video.</p></div><div class="footer-links">${action(site.github,'Dull Pigeon on GitHub')}${site.email?action('mailto:'+site.email,site.email):''}${site.resume?action(site.resume,'Résumé'):''}</div><div class="colophon"><span>${e(site.name)} · Technical Art</span><span class="focus-areas">${site.focusAreas.map(e).join(' / ')}</span>${action('#top','Back to top')}</div></footer>`;
-const shell=(title,description,body,active='work')=>`<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${e(title)} — ${e(site.name)}</title><meta name="description" content="${e(description)}"><meta name="color-scheme" content="light"><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23156280'/%3E%3Cpath d='M8 8v16M9 16l14-8M9 16l14 8' stroke='%23f7f9fb' stroke-width='3'/%3E%3C/svg%3E"><link rel="stylesheet" href="/styles.css"><script type="module" src="/external-video.mjs"></script></head><body id="top"><a class="skip" href="#main">Skip to content</a><header><a class="brand" href="/">${e(site.name)}<span>Technical Art</span></a><nav aria-label="Main navigation">${a('/#work','Work',active==='work'?'active':'')}${a('/#notes','Notes',active==='notes'?'active':'')}${a('/#about','About')}${a('#contact','Contact')}</nav></header><main id="main">${body}</main>${footer()}</body></html>`.replace(/(href|src|poster|data-src)="\/(?!\/)/g, `$1="${basePath}/`);
-const home=`<section class="home-hero home-intro"><div class="eyebrow"><span class="dot"></span> TECHNICAL ART PORTFOLIO</div><h1>Shaders, VFX and<br><span>real-time systems.</span></h1><div class="hero-bottom"><p>${e(site.intro)}</p><span class="micro">COMPUTER SCIENCE UNDERGRADUATE<br>${focusRows.map(labels=>`<span class="hero-focus-row">${labels.map(e).join(' · ')}</span>`).join('<br>')}</span></div></section><section id="work" class="work"><div class="section-heading"><h2>Selected Work</h2><span class="micro">01 / FEATURED STUDY</span></div><article class="featured">${featuredPreview}<div class="project-info"><div><span class="micro">UNITY 6 / TECHNICAL ART</span><h3>${action('/projects/kinetica/','Project Kinetica','heading-link')}</h3><p>${e(featuredProject.summary)}</p><div class="tags"><span>Vertex deformation</span><span>Impact systems</span><span>VFX</span></div></div><div class="project-side"><span class="status">Completed study</span>${action('/projects/kinetica/','Explore case study','button')}</div></div></article>${upcomingProjects}</section>${homeNotes}<section id="about" class="about"><span class="micro">ABOUT / APPROACH</span><div><h2>Connecting code<br>and visual behavior.</h2><p>${e(site.about)}</p><div class="skill-list"><span>Shader development</span><span>Real-time VFX</span><span>Technical systems</span><span>Unity / Unreal Engine 5</span></div></div></section>`;
-writeFileSync(new URL('index.html',root),shell('Technical Art Portfolio',site.intro,home+(featuredProject.preview?.video?'<script type="module" src="/home-preview.mjs"></script>':'')));
+const footer=(design='')=>{
+ return `<footer id="contact"${design==='kinetica-case'?' class="case-footer"':''}><div>${design?'<h2>Contact</h2>':'<span class="micro">CONTACT / ELSEWHERE</span><h2>Lin Wenqi.</h2><p>Dull Pigeon is the public creator identity used for project repositories and video.</p>'}</div><div class="footer-links">${action(site.github,design?'GitHub':'Dull Pigeon on GitHub','text-link github-badge',githubMark)}${site.email?action('mailto:'+site.email,site.email):''}${site.resume?action(site.resume,'Résumé'):''}</div><div class="colophon"><span>${e(site.name)}${design?'':' · Technical Art'}</span>${design?'<span class="footer-studies">TECHNICAL ART &amp; ENVIRONMENT STUDIES</span>':`<span class="focus-areas">${site.focusAreas.map(e).join(' / ')}</span>`}${action('#top','Back to top')}</div></footer>`;
+};
+const shell=(title,description,body,active='work',design='')=>`<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${e(title)} — ${e(site.name)}</title><meta name="description" content="${e(description)}"><meta name="color-scheme" content="light"><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23156280'/%3E%3Cpath d='M8 8v16M9 16l14-8M9 16l14 8' stroke='%23f7f9fb' stroke-width='3'/%3E%3C/svg%3E">${commonStyles}${design?homeStyles:''}${design==='kinetica-case'?caseStyles:''}${design==='portfolio-journal'?notesStyles:''}<script type="module" src="/external-video.mjs"></script></head><body id="top"${design?` class="${design}"`:''}><a class="skip" href="#main">Skip to content</a><header><a class="brand" href="/">${e(site.name)+(design?'':'<span>Technical Art</span>')}</a><nav aria-label="Main navigation">${a('/#work','Work',active==='work'?'active':'')}${a('/#notes','Notes',active==='notes'?'active':'')}${a('/#about','About')}${a('#contact','Contact')}</nav></header><main id="main">${body}</main>${footer(design)}</body></html>`.replace(/(href|src|poster|data-src)="\/(?!\/)/g, `$1="${basePath}/`);
+const home = `
+<section class="home-introduction" aria-labelledby="intro-heading">
+ <h1 class="masthead" id="intro-heading"><strong>${e(site.headline[0])}</strong> <em>${e(site.headline[1])}</em></h1>
+ <p class="cover-intro">${e(site.intro)}</p>
+</section>
+<section id="work" class="work" aria-labelledby="work-heading">
+ <div class="section-heading work-rule"><h2 id="work-heading">Selected Work</h2></div>
+ <article class="featured">
+  ${featuredPreview}
+  <h3 class="study-title">${projectTitle('/projects/kinetica/',featuredProject.name)}</h3>
+  <div class="study-copy">
+   <div><span class="status">${e(featuredProject.status)}</span>${projectDescription(featuredProject)}</div>${action('/projects/kinetica/','Explore case study','button')}
+  </div>
+ </article>
+ ${upcomingProjects}
+</section>
+${homeNotes}
+<section id="about" class="home-about">
+ <h2>About</h2><p>${e(site.about)}</p>
+</section>`;
+const homeScripts = '<script type="module" src="/home-motion.mjs"></script>' +
+ (featuredProject.preview?.video?'<script type="module" src="/home-preview.mjs"></script>':'');
+writeFileSync(new URL('index.html',root),shell('Technical Art Portfolio',site.intro,home+homeScripts,'work','portfolio-home'));
 const sections=[['overview','Overview'],['systems','Systems'],['comparisons','Comparisons'],['iterations','Iterations'],['scope','Sources']];
-const study=`<section class="case-hero">${back('/#work','Selected Work')}<div class="case-heading"><div><span class="micro">01 / REAL-TIME MATERIAL RESPONSE</span><h1>Project Kinetica<span class="period">.</span></h1></div><span class="status">Completed study</span></div><p class="case-intro">${e(project.summary)}</p>${media('showcase')}<dl class="metadata">${project.meta.map(([k,v])=>`<div><dt>${e(k)}</dt><dd>${e(v)}</dd></div>`).join('')}</dl></section><div class="case-layout"><aside><nav aria-label="Case study sections">${sections.map(([id,label],i)=>a('#'+id,`<span>0${i+1}</span> ${label}`)).join('')}</nav></aside><div class="case-content"><section id="overview"><span class="micro">01 / OVERVIEW</span><h2>From weapon motion<br>to material response.</h2><p>The study follows one impact through detection, evaluation and presentation. Reusable weapon and material presets keep the calculations separate from the authored response.</p><ol class="pipeline">${['Weapon motion','Collision','Impact solver','Impact data','Deformation / VFX'].map((s,i)=>`<li><span>0${i+1}</span>${s}</li>`).join('')}</ol><p class="caption">Conceptual pipeline. In the implementation, deformation is called directly; the event payload feeds VFX and Debug observers.</p></section><section id="systems"><span class="micro">02 / SELECTED TECHNICAL HIGHLIGHTS</span><h2>Detection, evaluation<br>and response.</h2>${project.highlights.map(h=>`<article class="highlight"><span class="micro">${e(h.label)}</span><h3>${e(h.title)}</h3><p>${e(h.text)}</p><p class="secondary">${e(h.detail)}</p>${h.media?media(h.media,true):''}</article>`).join('')}</section><section id="comparisons"><span class="micro">03 / COMPARISONS</span><h2>Material and weapon<br>comparisons.</h2><p>Final Showcase excerpts compare authored responses rather than controlled physical measurements.</p>${media('materials')}<div class="materials">${project.materials.map(([n,t,d])=>`<article><span class="micro">${e(n)}</span><h3>${e(t)}</h3><p>${e(d)}</p></article>`).join('')}</div><h3 class="spaced">Changing the weapon</h3><p>Spear, hammer and sword strike Slime with different motion and weapon settings. The localized response follows each recorded contact.</p>${media('weapons')}</section><section id="iterations"><span class="micro">04 / PROBLEMS, ITERATIONS & PERFORMANCE</span><h2>Iteration and performance.</h2>${project.iterations.map(([t,d],i)=>`<article class="iteration"><span class="micro">0${i+1}</span><div><h3>${e(t)}</h3><p>${e(d)}</p></div></article>`).join('')}<details><summary>Supporting evidence / Runtime debugging <span class="disclosure-marker" aria-hidden="true"></span></summary><p>The Debug Panel observes the same impact event as the VFX manager. It shows evaluated data for one recorded impact and is not a profiler. Solver deformation force is an intermediate value that ImpactReceiver scales again before passing it to the shader.</p>${media('debug',true)}</details><details class="technical-evidence"><summary>Architecture and Shader Graph captures <span class="disclosure-marker" aria-hidden="true"></span></summary><p>The architecture diagram follows the frozen implementation. The Shader Graph images are the supplied Unity captures.</p>${media('architecture',true)}${media('shaderSpatial',true)}${media('shaderTemporal',true)}</details></section><section id="scope"><span class="micro">05 / SCOPE, SOURCES & CREDITS</span><h2>Scope, sources and credits.</h2><p>This is a material-response study, not a complete combat or destruction system. Displacement affects rendered vertices, without changing topology or collision geometry. A single swept detection point approximates the weapon’s contact region.</p><p>The implementation is frozen. Effects are instantiated per impact; deformation stores one hit at a time. No performance benchmark is claimed.</p><div class="source-links">${action(project.breakdown,'Technical Breakdown PDF','button')}${action(project.repository,'Public selected source')}</div><p class="caption">Selected source corresponds to the frozen implementation at ${e(project.sourceCommit.slice(0,7))}. The PDF documents the implementation, results and limitations.</p><div class="credits"><h3>Credits</h3>${project.credits.map(([use,asset,source])=>`<div><span class="micro">${e(use)}</span><p><strong>${e(asset)}</strong><br>${e(source)}</p></div>`).join('')}</div></section></div></div><div class="end-link">${back('/#work','Selected Work')}</div>`;
+const study = `
+<section class="case-hero" aria-labelledby="case-title">
+  <div class="case-topline">${back('/#work','Selected Work')}<span class="status">${e(featuredProject.status)}</span></div>
+  <div class="case-masthead"><h1 id="case-title">Kinetica</h1><p>${e(featuredProject.category)}</p></div>
+  <div class="case-opening">
+    <div class="case-brief"><p class="case-intro">${e(project.summary)}</p>
+      <dl class="metadata">${project.meta.map(([label,value])=>`<div><dt>${e(label)}</dt><dd>${e(value)}</dd></div>`).join('')}</dl>
+    </div>
+    ${media('showcase')}
+  </div>
+</section>
+<nav class="case-contents" aria-label="Case study sections">${sections.map(([id,label])=>a('#'+id,label)).join('')}</nav>
+<div class="case-content">
+  <section id="overview">
+    <div class="overview-intro"><h2>From weapon motion<br><em>to material response.</em></h2>
+      <p>The study follows one impact through detection, evaluation and presentation. Reusable weapon and material presets keep the calculations separate from the authored response.</p>
+    </div>
+    <ol class="pipeline">${['Weapon motion','Contact detection','Impact evaluation','Visual response'].map((stage,i)=>`<li><span aria-hidden="true">0${i+1}</span>${stage}</li>`).join('')}</ol>
+  </section>
+  <section id="systems">
+    <h2>Technical <em>systems.</em></h2>
+    <div class="system-highlights">${project.highlights.map(h=>`<article class="highlight"><span class="micro">${e(h.label)}</span><h3>${e(h.title)}</h3><p>${e(h.text)}</p><p class="secondary">${e(h.detail)}</p>${h.media?media(h.media,true):''}</article>`).join('')}</div>
+  </section>
+  <section id="comparisons">
+    <h2>Comparing <em>responses.</em></h2>
+    <div class="comparison-spread"><div class="comparison-text"><h3>Hammer <em>on three materials.</em></h3>
+      <dl class="material-key">${project.materials.map(([name,result,detail])=>`<div><dt>${e(name)}</dt><dd><strong>${e(result)}</strong> ${e(detail)}</dd></div>`).join('')}</dl>
+    </div>${media('materials')}</div>
+    <div class="comparison-spread comparison-weapons"><div class="comparison-text"><h3>Three weapons <em>on Slime.</em></h3>
+      <p>Spear, hammer and sword strike Slime with different motion and weapon settings. The localized response follows each recorded contact.</p>
+    </div>${media('weapons')}</div>
+  </section>
+  <section id="iterations">
+    <div class="chapter-columns"><h2>Iterations <em>&amp; evidence.</em></h2>
+      <div>${project.iterations.map(([title,detail])=>`<article class="iteration"><h3>${e(title)}</h3><p>${e(detail)}</p></article>`).join('')}</div>
+    </div>
+    <details><summary>Runtime debugging <span class="disclosure-marker" aria-hidden="true"></span></summary>
+      <p>The hammer strike on Slime registers a pressure of 8.08 and a solver deformation force of 6.46. The Debug Panel reads the same event as the VFX manager. ImpactReceiver scales the solver force by the material properties before passing it to the shader.</p>${media('debug',true)}
+    </details>
+    <details class="technical-evidence"><summary>Architecture and Shader Graph captures <span class="disclosure-marker" aria-hidden="true"></span></summary>
+      ${media('architecture',true)}${media('shaderSpatial',true)}${media('shaderTemporal',true)}
+    </details>
+  </section>
+  <section id="scope">
+    <h2>Scope <em>&amp; sources.</em></h2>
+    <div class="scope-grid"><div>
+      <p>A single swept point represents the weapon’s contact region. The shader displaces rendered vertices while mesh topology and collision geometry stay fixed.</p>
+      <p>Each renderer stores its most recent hit. Each impact spawns a separate material-specific particle effect.</p>
+      <div class="source-links">${action(project.breakdown,'Download technical breakdown (PDF)','button')}${action(project.repository,'View source on GitHub')}</div>
+    </div><div class="credits"><h3>Credits</h3>${project.credits.map(([use,asset,source])=>`<div><span class="micro">${e(use)}</span><p><strong>${e(asset)}</strong><br>${e(source)}</p></div>`).join('')}</div></div>
+  </section>
+</div>`;
 mkdirSync(new URL('projects/kinetica/',root),{recursive:true});
-writeFileSync(new URL('projects/kinetica/index.html',root),shell('Project Kinetica',project.summary,study+'<script type="module" src="/home-preview.mjs"></script>'));
+writeFileSync(new URL('projects/kinetica/index.html',root),shell('Project Kinetica',project.summary,study+'<script type="module" src="/home-preview.mjs"></script><script type="module" src="/case-contents.mjs"></script>','work','kinetica-case'));
 writeFileSync(new URL('404.html',root),shell('Page not found','Page not found',`<section class="home-hero"><span class="micro">404</span><h1>Page not found.</h1>${back('/','Portfolio')}</section>`));
 mkdirSync(new URL('notes/',root),{recursive:true});
-writeFileSync(new URL('notes/index.html',root),shell('Development Notes','Notes on ongoing Technical Art and game-development work.',`<section class="notes-index">${back('/#notes','Portfolio')}<div class="eyebrow">TECHNICAL ART / DEVELOPMENT</div><h1>Development Notes.</h1>${noteList(notes)}</section>`,'notes'));
+const monthName = new Intl.DateTimeFormat('en', {month:'long', year:'numeric', timeZone:'UTC'});
+const archiveMonths = new Map();
 for (const note of notes) {
- const body = `<article class="note-page">${back('/notes/','Development Notes')}<div class="note-heading">${noteMeta(note)}<h1>${e(note.title)}</h1><p class="note-summary">${e(note.summary)}</p></div>${note.hero?noteImage(note.hero,true):''}<div class="note-body">${note.body.map(block => `<section>${block.heading?`<h2>${e(block.heading)}</h2>`:''}${block.paragraphs.map(p => `<p>${e(p)}</p>`).join('')}${block.media?.length?`<div class="note-section-media">${block.media.map(item => noteSectionMedia(item)).join('')}</div>`:''}${block.links?.length?`<div class="note-links">${block.links.map(link => action(noteUrl(link.url),link.label,link.primary?'button':'text-link')).join('')}</div>`:''}</section>`).join('')}${note.media.map(image => noteImage(image)).join('')}${note.tags?.length?`<div class="tags" aria-label="Technical tags">${note.tags.map(tag => `<span>${e(tag)}</span>`).join('')}</div>`:''}</div><div class="end-link">${back('/notes/','Development Notes')}</div></article>`;
+ const month = note.date.slice(0,7);
+ if (!archiveMonths.has(month)) archiveMonths.set(month,[]);
+ archiveMonths.get(month).push(note);
+}
+const archive = Array.from(archiveMonths, ([month,items]) => `<section class="archive-month">
+ <h2><time datetime="${month}">${monthName.format(new Date(items[0].date))}</time></h2>
+ ${noteList(items,noteDate)}
+</section>`).join('');
+const notesIndex = `<section class="journal" aria-labelledby="journal-title">
+ <div class="journal-opening">${back('/#notes','Portfolio')}
+  <h1 id="journal-title">Development Notes</h1>
+ </div>
+ ${archive || '<p>No development notes published yet.</p>'}
+</section>`;
+writeFileSync(new URL('notes/index.html',root),shell('Development Notes','Development records for technical art and environment projects.',notesIndex,'notes','portfolio-journal'));
+
+const articleSection = (block,index) => `<section>
+${block.heading?`<h2 id="section-${index+1}">${e(block.heading)}</h2>`:''}
+${block.paragraphs.map(p=>`<p>${e(p)}</p>`).join('')}
+${block.media?.length?`<div class="note-section-media">${block.media.map(noteSectionMedia).join('')}</div>`:''}
+${block.links?.length?`<div class="note-links">${block.links.map(link=>action(noteUrl(link.url),link.label,link.primary?'button':'text-link')).join('')}</div>`:''}
+</section>`;
+const adjacentNote = (note,direction) => note ? `<div class="neighbor neighbor-${direction}"><span>${direction === 'previous' ? 'Previous note' : 'Next note'} · ${noteDate(note)}</span>${action('/notes/'+note.slug+'/',note.title,'heading-link')}</div>` : '';
+for (const [index,note] of notes.entries()) {
+ const contents = note.body.flatMap((block,i)=>block.heading?[a('#section-'+(i+1),e(block.heading))]:[]);
+ const body = `<article class="note-page">
+  <div class="article-dateline">${back('/notes/','Development Notes')}${noteDate(note)}</div>
+  <div class="note-heading"><h1>${e(note.title)}</h1><p class="note-summary">${e(note.summary)}</p></div>
+${note.hero?noteImage(note.hero,true):''}
+  <div class="article-reading">
+${contents.length>1?`<aside><nav aria-label="Article contents"><span>Contents</span>${contents.join('')}</nav></aside>`:''}
+   <div class="note-body">${note.body.map(articleSection).join('')}${note.media.map(image=>noteImage(image)).join('')}
+${note.tags?.length?`<div class="tags" aria-label="Technical tags">${note.tags.map(tag=>`<span>${e(tag)}</span>`).join('')}</div>`:''}
+   </div>
+  </div>
+  <nav id="article-navigation" class="article-navigation" aria-label="Development Notes navigation">
+   <div class="neighbors">${adjacentNote(notes[index+1],'previous')}${adjacentNote(notes[index-1],'next')}</div>
+  </nav>
+ </article>`;
  mkdirSync(new URL('notes/'+note.slug+'/',root),{recursive:true});
- writeFileSync(new URL('notes/'+note.slug+'/index.html',root),shell(note.title,note.summary,body,'notes'));
+ writeFileSync(new URL('notes/'+note.slug+'/index.html',root),shell(note.title,note.summary,body,'notes','portfolio-journal'));
 }
 console.log(`Rendered home, Kinetica, 404, notes index and ${notes.length} note pages.`);

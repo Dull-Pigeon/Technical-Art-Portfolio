@@ -1,0 +1,163 @@
+/* Kinetica shares its type, navigation and footer with the portfolio cover. */
+.case-hero, #comparisons {
+  background: var(--spread);
+  box-shadow: 0 0 0 100vmax var(--spread);
+  clip-path: inset(0 -100vmax);
+}
+.case-hero {
+  --spread: var(--ink);
+  color: var(--paper);
+  padding-block: clamp(20px, 2.2vw, 34px) clamp(32px, 4.5vw, 66px);
+}
+.case-topline, .case-masthead { display: flex; align-items: baseline; justify-content: space-between; gap: 18px; }
+.case-topline .text-link, .case-topline .status { color: var(--panel); }
+.case-topline .status::before { background: var(--sky); }
+.case-topline .text-link:is(:hover,:focus-visible) { color: var(--sky); }
+.case-hero a:focus-visible { outline-color: var(--sky); }
+.case-masthead { margin-block: clamp(20px, 2.2vw, 36px) clamp(24px, 2.4vw, 38px); }
+.case-masthead h1 {
+  font: 700 clamp(4rem, 11vw, 10.5rem)/.98 var(--display);
+  letter-spacing: -.022em;
+  text-transform: uppercase;
+}
+.case-masthead p { color: var(--sky); font: italic clamp(1.6rem, 3.55vw, 3.4rem)/1.06 var(--serif); letter-spacing: -.055em; }
+.case-opening, .comparison-spread {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2.6fr);
+  align-items: start;
+  gap: clamp(24px, 4vw, 60px);
+}
+.case-brief { border-top: 1px solid #748799; padding-top: 14px; }
+.case-intro { margin: 0; color: var(--paper); font-size: clamp(1.03rem, 1.35vw, 1.25rem); line-height: 1.5; }
+.metadata { display: grid; grid-template-columns: 1fr; gap: 10px; margin: clamp(18px, 2.8vw, 42px) 0 0; border: 0; padding: 0; }
+.metadata div { display: grid; grid-template-columns: 4.3em minmax(0,1fr); gap: .5em; }
+.metadata dt { color: var(--sky); align-self: baseline; }
+.metadata dd { margin: 0; line-height: 1.5; color: var(--panel); }
+.case-opening figure, .comparison-spread figure { margin: 0; min-width: 0; }
+.case-opening figure { border-color: #475d73; }
+.case-opening figcaption { background: var(--ink); color: var(--panel); border-color: #475d73; }
+figcaption { border-top: 1px solid var(--line); }
+.external-video.is-ready:focus-visible { outline: 3px solid var(--sky); outline-offset: -4px; }
+.case-contents {
+  --surface: var(--paper);
+  position: relative;
+  z-index: 2;
+  background: var(--surface);
+  box-shadow: 0 0 0 100vmax var(--surface);
+  clip-path: inset(0 -100vmax);
+  display: flex;
+  justify-content: space-between;
+  gap: 8px 16px;
+  border-bottom: 1px solid var(--line);
+  padding-block: 5px;
+}
+@media (min-width: 651px) {
+  .case-contents.can-stick { position: sticky; top: 0; }
+  .case-contents.over-comparisons { --surface: var(--panel); }
+}
+.case-contents a { display: inline-flex; min-height: 44px; align-items: center; }
+.case-contents a:focus-visible { outline-offset: 0; }
+.case-content { font-size: 1.0625rem; }
+.case-content section { margin: 0; padding: clamp(44px, 5.5vw, 84px) 0; scroll-margin-top: 48px; }
+.case-content h2 {
+  margin: 0;
+  font: 500 clamp(2.2rem, 4.4vw, 4.2rem)/1.05 var(--serif);
+  letter-spacing: -.055em;
+}
+.case-content :is(h2,h3) em { color: var(--accent); font-weight: inherit; }
+.case-content p { max-width: 69ch; text-wrap: pretty; }
+.overview-intro, .chapter-columns, .scope-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr);
+  align-items: baseline;
+  gap: 24px clamp(30px, 6vw, 90px);
+}
+.overview-intro { align-items: end; grid-template-columns: minmax(0,1.1fr) minmax(0,1fr); }
+.pipeline { grid-template-columns: repeat(4,minmax(0,1fr)); margin: clamp(24px, 3vw, 46px) 0 0; }
+.pipeline li { padding: 18px clamp(12px, 2.1vw, 32px); font: 500 clamp(1.15rem, 2vw, 1.9rem)/1.2 var(--serif); letter-spacing: -.035em; }
+.pipeline li span { letter-spacing: .06em; }
+.highlight, .iteration { margin: 0; padding: 22px 0; border-top: 1px solid var(--line); }
+.system-highlights {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  column-gap: clamp(24px, 5vw, 76px);
+  margin-top: clamp(24px, 3vw, 40px);
+}
+.iteration:first-child { padding-top: 0; border-top: 0; }
+.iteration:last-child { padding-bottom: 0; }
+.system-highlights .highlight { margin: 0; padding: 20px 0; }
+.highlight h3, .iteration h3 { margin: 5px 0 10px; font-size: clamp(1.35rem, 2vw, 1.85rem); }
+.highlight .micro { color: var(--accent); }
+.highlight .secondary { margin-top: .6em; }
+#comparisons { --spread: var(--panel); }
+.comparison-spread { margin-top: clamp(28px, 3vw, 45px); }
+.comparison-spread h3 { font: 500 clamp(1.7rem, 2.75vw, 2.65rem)/1.09 var(--serif); }
+.comparison-text h3 em { display: block; }
+.material-key { margin: 22px 0 0; }
+.material-key div { border-top: 1px solid var(--line); padding: 10px 0; }
+.material-key dt { color: var(--accent); }
+.material-key dd, .comparison-text p { margin-top: 4px; line-height: 1.5; font-size: 1rem; }
+.material-key strong { display: block; font-weight: 600; }
+.comparison-weapons { grid-template-columns: minmax(0, 2.6fr) minmax(0,1fr); padding-top: clamp(24px, 3vw, 46px); border-top: 1px solid var(--line); }
+.comparison-weapons .comparison-text { grid-column: 2; }
+.comparison-weapons figure { grid-area: 1 / 1; }
+.comparison-text p { margin-top: 16px; }
+.iteration { display: block; }
+.case-content #iterations { padding-bottom: 0; }
+#iterations details { margin: 0; padding: 0; border-bottom: 0; }
+#iterations .chapter-columns { margin-bottom: 32px; }
+#iterations summary { align-items: center; min-height: 56px; font-size: 1.0625rem; padding: 12px 6px; color: var(--accent); }
+#iterations summary:is(:hover,:focus-visible) { color: var(--ink); }
+#iterations details[open] summary { margin-bottom: 8px; }
+#iterations details > p { max-width: none; text-wrap: wrap; }
+.scope-grid { margin-top: 25px; grid-template-columns: minmax(0,1.5fr) minmax(0,1fr); align-items: start; }
+.credits { margin: 0; }
+.credits h3 { margin: 14px 0 10px; font: italic 1.75rem/1.2 var(--serif); }
+.credits > div { display: block; padding: 12px 0; }
+.credits strong { font-weight: 600; }
+.source-links { flex-wrap: wrap; }
+.case-footer { padding-block: 24px; }
+@media (min-width: 651px) {
+  .credits { border-top: 0; }
+  .credits h3 { margin-top: 0; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .case-masthead h1 { animation: hero-arrive 500ms cubic-bezier(.22,.65,.28,1) backwards; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .video-play-icon { transition: none; }
+  .external-video.is-ready:is(:hover,:focus-visible) .video-play-icon { transform: translate(-50%,-50%); }
+}
+@media (max-width: 900px) {
+  .case-opening, .comparison-spread { grid-template-columns: minmax(0,1fr); }
+  .comparison-spread:not(.comparison-weapons) .comparison-text { display: contents; }
+  .comparison-spread:not(.comparison-weapons) figure { grid-row: 2; }
+  .case-brief { display: grid; grid-template-columns: 1fr 1.2fr; align-items: start; gap: 24px; }
+  .metadata { margin-top: 0; gap: 6px; }
+  .comparison-weapons .comparison-text, .comparison-weapons figure { grid-area: auto; }
+  .material-key { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px; }
+  .chapter-columns { grid-template-columns: minmax(0,.65fr) minmax(0,1.35fr); }
+}
+@media (max-width: 650px) {
+  .case-masthead { display: block; }
+  .case-masthead h1 { font-size: clamp(3.5rem, 18vw, 6.5rem); }
+  .case-masthead p { margin: 4px 0 0 9%; }
+  .case-brief { display: contents; }
+  .case-opening { gap: 18px; }
+  .case-intro { font-size: 1rem; }
+  .case-opening .metadata { grid-row: 3; grid-template-columns: 1fr 1fr; gap: 12px 18px; }
+  .metadata div { display: block; }
+  .case-contents { position: static; flex-wrap: wrap; gap: 0 6px; font-size: .8125rem; }
+  .case-content section { scroll-margin-top: 0; }
+  .overview-intro, .chapter-columns, .scope-grid { grid-template-columns: minmax(0,1fr); gap: 20px; }
+  .chapter-columns h2 br { display: none; }
+  .system-highlights { grid-template-columns: minmax(0,1fr); }
+  .system-highlights .highlight:last-child { padding-bottom: 0; }
+  .case-footer { padding-block: 20px 10px; }
+  .pipeline { grid-template-columns: 1fr 1fr; }
+  .pipeline li, .pipeline li:first-child { display: block; padding: 13px 8px; border: 0; }
+  .pipeline li span { margin-bottom: 4px; }
+  .material-key { display: block; margin-top: 16px; }
+  .comparison-spread { gap: 16px; }
+  .comparison-text h3 em { display: inline; }
+}
